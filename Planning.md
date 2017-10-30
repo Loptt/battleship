@@ -1,23 +1,23 @@
 # 5 Phases of Planning
 
-Analysis
+## Analysis
 -----------------------------------
-Input:             
-Processing:                  
-Output:                        
+**Input:**_             
+**Processing:**                  
+**Output:_**                        
 
 
-Design
------------------------------------
-
-
-Implementation
+## Design
 -----------------------------------
 
 
-Testing
+## Implementation
 -----------------------------------
 
 
-Manteinance
+## Testing
+-----------------------------------
+
+
+## Manteinance
 -----------------------------------
