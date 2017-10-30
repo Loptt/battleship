@@ -1,43 +1,21 @@
 /*
- Erick Francisco González Martínez  A01039859
- Carlos Daniel Estrada Guerra       A01039919
+MAIN FILE
+Erick Francisco González Martínez  A01039859
+Carlos Daniel Estrada Guerra       A01039919
  
- 
- 
- 
- */
+*/
 
 #include <iostream>
-
+#include "createdlibraries.h" //Own created libraries
 using namespace std;
 
-bool bGameOver;
+const int iWidth =10;
+const int iHeight =10;
 
-const int iWidth =30;
-
-const int iHeight =30;
-
-int iPositionX, iPositionY;
-
-void Setup(){
-    
-    bGameOver= false;
-}
-
-void Input(){
-    
-    
-    
-    
-}
-
-
-int main(){
-    
- 
-    
-    
-    
+int main()
+{
+	
+	return 0;    
 }
 
 
