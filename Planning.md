@@ -2,9 +2,9 @@
 
 Analysis
 -----------------------------------
-Input:
-Processing:
-Output:
+Input:             
+Processing:                  
+Output:                        
 
 
 Design
