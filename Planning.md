@@ -1,4 +1,4 @@
-<h1>5 Phases of Planning<h1>
+# 5 Phases of Planning
 
 Analysis
 -----------------------------------
