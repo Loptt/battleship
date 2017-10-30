@@ -28,6 +28,6 @@ struct Destroyer {
 
 int iPositionX, iPositionY,iLength;
   
-   iLength = 3;
+   iLength = 2;
   
 };
