@@ -1,4 +1,4 @@
-# battleship
+# Statistics
 Programming Fundamentals final project
 
 PROJECT
