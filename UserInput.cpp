@@ -5,7 +5,52 @@ using namespace std;
 
 void writeInput(int iMatBoard[10][10], string sFirstPosition, string sSecondPosition, int iShipSize)
 {
-		
+	char cFirstLetterCoordinate = sFirstPosition[0];
+	char cSecondLetterCoordinate = sSecondPosition[0];
+	int iFirstNumberCoordinate = sFirstPosition[1] - 49;
+	int iSecondNumberCoordinate = sSecondPosition[1] - 49;
+
+	cout << iFirstNumberCoordinate << iSecondNumberCoordinate << endl;
+
+	int iRowIndex;
+	int iColIndex;
+
+	//For vertical positioning
+	if (cFirstLetterCoordinate == cSecondLetterCoordinate)
+	{
+		if (iFirstNumberCoordinate > iSecondNumberCoordinate)
+		{
+			iRowIndexStart = iSecondNumberCoordinate;
+			iRowIndexEnd = iFirstNumberCoordinate;
+		}
+		else
+		{
+			iRowIndex = iFirstNumberCoordinate;
+			iRowIndexEnd = iSecondNumberCoordinate;
+		}
+
+		for (iRowIndex; iRowIndex <= iRowIndexEnd; ++iRowIndex)
+		{
+			iMatBoard[iRowIndex][iColIndex] = 1;
+		}
+	}
+	//For horizontal positioning
+	else
+	{
+		if (cFirstLetterCoordinate > cSecondLetterCoordinate)
+		{
+			iRowIndex = sSecondPosition[0] - 64;
+		}
+		else
+		{
+			iRowIndex = sFirstPosition[0] - 64;
+		}
+
+		for (int iColIndex = sFirstPosition[1] - 49; iColIndex <= sSecondPosition[1] - 49; ++iColIndex)
+		{
+			iMatBoard[iRowIndex][iColIndex] = 1;
+		}
+	}
 }
 
 void getPositions(int iMatBoard[10][10], int iShipSize)
@@ -55,7 +100,7 @@ void getPositions(int iMatBoard[10][10], int iShipSize)
 		}
 		else
 		{
-			iDifference = abs(sFirstPosition[0] - sSecondPosition[0]) - 48 + 1; 
+			iDifference = abs(sFirstPosition[0] - sSecondPosition[0]) + 1; 
 		}
 
 		if (iDifference != iShipSize)
@@ -71,9 +116,34 @@ void getPositions(int iMatBoard[10][10], int iShipSize)
 	writeInput(iMatBoard, sFirstPosition, sSecondPosition, iShipSize);
 }
 
+void eraseBoard(int iMatBoard[10][10])
+{
+	for (int iRowIndex = 0; iRowIndex < 10; ++iRowIndex)
+	{
+		for (int iColIndex = 0; iColIndex < 10; ++iColIndex)
+		{
+			iMatBoard[iRowIndex][iColIndex] = 0;
+		}
+	}
+}
+
 int main()
 {
 	int matrix[10][10];
+	eraseBoard(matrix);
 	getPositions(matrix, 5);
+
+	cout << "  ABCDEFGHIJ" << endl;
+	for (int i = 0; i < 10; ++i)
+	{
+		cout << i << " ";
+		for (int j = 0; j < 10; ++j)
+		{
+			cout << matrix[i][j];
+		}
+
+		cout << endl;
+	}
+
 	return 0;
 }

@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <cmath>
 using namespace std;
 
 /*
@@ -46,7 +47,7 @@ void eraseBoard(int iMatBoard[10][10])
 	{
 		for (int iColIndex = 0; iColIndex < 10; ++iColIndex)
 		{
-			bMatBoard[iRowIndex][iColIndex] = 0;
+			iMatBoard[iRowIndex][iColIndex] = 0;
 		}
 	}
 }
