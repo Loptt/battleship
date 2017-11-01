@@ -3,7 +3,7 @@
 #include <cmath>
 using namespace std;
 
-void writeInput(int iMatBoard[10][10], bool &bIsWrongInput, string sFirstPosition, string sSecondPosition, int iShipSize)
+void writeInput(int iMatBoard[10][10], bool &bIsWrongInput, string sFirstPosition, string sSecondPosition)
 {
 	int iFirstLetterCoordinate = sFirstPosition[0] - 65;
 	int iSecondLetterCoordinate = sSecondPosition[0] - 65;
@@ -36,12 +36,16 @@ void writeInput(int iMatBoard[10][10], bool &bIsWrongInput, string sFirstPositio
 
 		for (iRowIndexStart; iRowIndexStart <= iRowIndexEnd; ++iRowIndexStart)
 		{
-			if (iMatBoard[iRowIndexStart][iColIndex] == 1)
+			if (iMatBoard[iRowIndexStart][iColIndex])
 			{
 				bIsWrongInput = true;
 				break;
 			}
-			else
+		}
+
+		if (!bIsWrongInput)
+		{
+			for (iRowIndexStart; iRowIndexStart <= iRowIndexEnd; ++iRowIndexStart)
 			{
 				iMatBoard[iRowIndexStart][iColIndex] = 1;
 			}
@@ -66,7 +70,19 @@ void writeInput(int iMatBoard[10][10], bool &bIsWrongInput, string sFirstPositio
 
 		for (iColIndexStart; iColIndexStart <= iColIndexEnd; ++iColIndexStart)
 		{
-			iMatBoard[iRowIndex][iColIndexStart] = 1;
+			if (iMatBoard[iRowIndex][iColIndexStart])
+			{
+				bIsWrongInput = true;
+				break;
+			}
+		}
+
+		if (!bIsWrongInput)
+		{
+			for (iColIndexStart; iColIndexStart <= iColIndexEnd; ++iColIndexStart)
+			{
+				iMatBoard[iRowIndex][iColIndexStart] = 1;
+			}
 		}
 	}
 }
@@ -130,7 +146,7 @@ void getPositions(int iMatBoard[10][10], int iShipSize)
 						}
 						else
 						{
-							writeInput(iMatBoard, sFirstPosition, sSecondPosition, iShipSize);
+							writeInput(iMatBoard, bIsWrongInput, sFirstPosition, sSecondPosition);
 							bIsWrongInput = false;
 						}
 					}
