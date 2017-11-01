@@ -5,7 +5,7 @@ using namespace std;
 
 void writeInput(int iMatBoard[10][10], string sFirstPosition, string sSecondPosition, int iShipSize)
 {
-
+		
 }
 
 void getPositions(int iMatBoard[10][10], int iShipSize)
@@ -20,7 +20,7 @@ void getPositions(int iMatBoard[10][10], int iShipSize)
 	//Check if the coordinates are two characters long
 	while (sFirstPosition.length() != 2 || sSecondPosition.length() != 2)
 	{
-		cout << "Invalid coordinates. Please enter only two characters per coordinate" << endl;
+		cout << "Invalid coordinates. Please enter two characters per coordinate" << endl;
 		cin >> sFirstPosition >> sSecondPosition;
 	}
 
@@ -58,7 +58,6 @@ void getPositions(int iMatBoard[10][10], int iShipSize)
 			iDifference = abs(sFirstPosition[0] - sSecondPosition[0]) - 48 + 1; 
 		}
 
-		cout << iDifference << " " << iShipSize << endl;
 		if (iDifference != iShipSize)
 		{
 			cout << "Invalid coordinates. Please make sure the coordinates for a ship of size ";
