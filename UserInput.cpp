@@ -5,19 +5,24 @@ using namespace std;
 
 void writeInput(int iMatBoard[10][10], string sFirstPosition, string sSecondPosition, int iShipSize)
 {
-	char cFirstLetterCoordinate = sFirstPosition[0];
-	char cSecondLetterCoordinate = sSecondPosition[0];
-	int iFirstNumberCoordinate = sFirstPosition[1] - 49;
-	int iSecondNumberCoordinate = sSecondPosition[1] - 49;
+	int iFirstLetterCoordinate = sFirstPosition[0] - 65;
+	int iSecondLetterCoordinate = sSecondPosition[0] - 65;
+	int iFirstNumberCoordinate = sFirstPosition[1] - 48;
+	int iSecondNumberCoordinate = sSecondPosition[1] - 48;
 
-	cout << iFirstNumberCoordinate << iSecondNumberCoordinate << endl;
+	cout << iFirstLetterCoordinate << iSecondLetterCoordinate << endl;
 
-	int iRowIndex;
-	int iColIndex;
+	int iRowIndexStart;
+	int iColIndexStart;
+
+	int iColIndexEnd;
+	int iRowIndexEnd;
 
 	//For vertical positioning
-	if (cFirstLetterCoordinate == cSecondLetterCoordinate)
+	if (iFirstLetterCoordinate == iSecondLetterCoordinate)
 	{
+		int iColIndex = iFirstLetterCoordinate;
+
 		if (iFirstNumberCoordinate > iSecondNumberCoordinate)
 		{
 			iRowIndexStart = iSecondNumberCoordinate;
@@ -25,30 +30,35 @@ void writeInput(int iMatBoard[10][10], string sFirstPosition, string sSecondPosi
 		}
 		else
 		{
-			iRowIndex = iFirstNumberCoordinate;
+			iRowIndexStart = iFirstNumberCoordinate;
 			iRowIndexEnd = iSecondNumberCoordinate;
 		}
 
-		for (iRowIndex; iRowIndex <= iRowIndexEnd; ++iRowIndex)
+		for (iRowIndexStart; iRowIndexStart <= iRowIndexEnd; ++iRowIndexStart)
 		{
-			iMatBoard[iRowIndex][iColIndex] = 1;
+			iMatBoard[iRowIndexStart][iColIndex] = 1;
 		}
 	}
+
 	//For horizontal positioning
 	else
 	{
-		if (cFirstLetterCoordinate > cSecondLetterCoordinate)
+		int iRowIndex = iFirstNumberCoordinate;
+
+		if (iFirstLetterCoordinate > iSecondLetterCoordinate)
 		{
-			iRowIndex = sSecondPosition[0] - 64;
+			iColIndexStart = iSecondLetterCoordinate;
+			iColIndexEnd = iFirstLetterCoordinate;
 		}
 		else
 		{
-			iRowIndex = sFirstPosition[0] - 64;
+			iColIndexStart = iFirstLetterCoordinate;
+			iColIndexEnd = iSecondLetterCoordinate ;
 		}
 
-		for (int iColIndex = sFirstPosition[1] - 49; iColIndex <= sSecondPosition[1] - 49; ++iColIndex)
+		for (iColIndexStart; iColIndexStart <= iColIndexEnd; ++iColIndexStart)
 		{
-			iMatBoard[iRowIndex][iColIndex] = 1;
+			iMatBoard[iRowIndex][iColIndexStart] = 1;
 		}
 	}
 }
@@ -139,7 +149,14 @@ int main()
 		cout << i << " ";
 		for (int j = 0; j < 10; ++j)
 		{
-			cout << matrix[i][j];
+			if (matrix[i][j])
+			{
+				cout << "O";
+			}
+			else
+			{
+				cout << ".";
+			}
 		}
 
 		cout << endl;
