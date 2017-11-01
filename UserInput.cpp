@@ -3,20 +3,20 @@
 #include <cmath>
 using namespace std;
 
-void writeInput(int iMatBoard[10][10], string sFirstPosition, string sSecondPosition, int iShipSize)
+void writeInput(int iMatBoard[10][10], bool &bIsWrongInput, string sFirstPosition, string sSecondPosition, int iShipSize)
 {
 	int iFirstLetterCoordinate = sFirstPosition[0] - 65;
 	int iSecondLetterCoordinate = sSecondPosition[0] - 65;
 	int iFirstNumberCoordinate = sFirstPosition[1] - 48;
 	int iSecondNumberCoordinate = sSecondPosition[1] - 48;
 
-	cout << iFirstLetterCoordinate << iSecondLetterCoordinate << endl;
-
 	int iRowIndexStart;
 	int iColIndexStart;
 
 	int iColIndexEnd;
 	int iRowIndexEnd;
+
+	bIsWrongInput = false;
 
 	//For vertical positioning
 	if (iFirstLetterCoordinate == iSecondLetterCoordinate)
@@ -36,7 +36,15 @@ void writeInput(int iMatBoard[10][10], string sFirstPosition, string sSecondPosi
 
 		for (iRowIndexStart; iRowIndexStart <= iRowIndexEnd; ++iRowIndexStart)
 		{
-			iMatBoard[iRowIndexStart][iColIndex] = 1;
+			if (iMatBoard[iRowIndexStart][iColIndex] == 1)
+			{
+				bIsWrongInput = true;
+				break;
+			}
+			else
+			{
+				iMatBoard[iRowIndexStart][iColIndex] = 1;
+			}
 		}
 	}
 
@@ -70,60 +78,66 @@ void getPositions(int iMatBoard[10][10], int iShipSize)
 
 	int iDifference = 0;
 
-	cin >> sFirstPosition >> sSecondPosition;
+	bool bIsWrongInput = true; 
 
-	//Check if the coordinates are two characters long
-	while (sFirstPosition.length() != 2 || sSecondPosition.length() != 2)
+	while (bIsWrongInput)
 	{
-		cout << "Invalid coordinates. Please enter two characters per coordinate" << endl;
 		cin >> sFirstPosition >> sSecondPosition;
-	}
 
-	//Check if the first character is a letter in valid range
-	while (sFirstPosition[0] < 65 || sFirstPosition[0] > 74)
-	{
-		cout << "Invalid coordinates. Please enter letters from A to J capitalized" << endl;
-		cin >> sFirstPosition >> sSecondPosition;
-	}
-	
-	//Check if the second character is a number in valid range
-	while (sFirstPosition[1] < 48 || sSecondPosition[1] > 57)
-	{
-		cout << "Invalid coordinates. Please enter a digit as second parameter" << endl;
-		cin >> sFirstPosition >> sSecondPosition;
-	}
-
-	//Check if the coordinates are valid positions
-	while (sFirstPosition[0] != sSecondPosition[0] &&
-      	   sFirstPosition[1] != sSecondPosition[1])
-	{
-		cout << "Invalid coordinates. Please place ships horizontally or vertically" << endl;
-		cin >> sFirstPosition >> sSecondPosition;
-	}
-
-	//Check if the ship is of adequate size
-	do
-	{
-		if (sFirstPosition[0] == sSecondPosition[0])
+		//Check if the coordinates are two characters long
+		if (sFirstPosition.length() != 2 || sSecondPosition.length() != 2)
 		{
-			iDifference = abs(sFirstPosition[1] - sSecondPosition[1]) + 1; 
+			cout << "Invalid coordinates. Please enter two characters per coordinate" << endl;
 		}
 		else
 		{
-			iDifference = abs(sFirstPosition[0] - sSecondPosition[0]) + 1; 
-		}
+			//Check if the first character is a letter in valid range
+			if (sFirstPosition[0] < 65 || sFirstPosition[0] > 74)
+			{
+				cout << "Invalid coordinates. Please enter letters from A to J capitalized" << endl;
+			}
+			else
+			{
+				//Check if the second character is a number in valid range
+				if (sFirstPosition[1] < 48 || sSecondPosition[1] > 57)
+				{
+					cout << "Invalid coordinates. Please enter a digit as second parameter" << endl;
+				}
+				else
+				{
+					//Check if the coordinates are valid positions
+					if (sFirstPosition[0] != sSecondPosition[0] &&
+	      	   			sFirstPosition[1] != sSecondPosition[1])
+					{
+						cout << "Invalid coordinates. Please place ships horizontally or vertically" << endl;
+					}
+					else
+					{
+						if (sFirstPosition[0] == sSecondPosition[0])
+						{
+							iDifference = abs(sFirstPosition[1] - sSecondPosition[1]) + 1; 
+						}
+						else
+						{
+							iDifference = abs(sFirstPosition[0] - sSecondPosition[0]) + 1; 
+						}
 
-		if (iDifference != iShipSize)
-		{
-			cout << "Invalid coordinates. Please make sure the coordinates for a ship of size ";
-			cout << iShipSize << endl;
-			cin >> sFirstPosition >> sSecondPosition;
+						//Check if the ship is of adequate size
+						if (iDifference != iShipSize)
+						{
+							cout << "Invalid coordinates. Please make sure the coordinates are for a ship of size ";
+							cout << iShipSize << endl;
+						}
+						else
+						{
+							writeInput(iMatBoard, sFirstPosition, sSecondPosition, iShipSize);
+							bIsWrongInput = false;
+						}
+					}
+				}
+			}
 		}
-
 	}
-	while (iDifference != iShipSize);
-
-	writeInput(iMatBoard, sFirstPosition, sSecondPosition, iShipSize);
 }
 
 void eraseBoard(int iMatBoard[10][10])

@@ -52,7 +52,9 @@ int main()
 	{
 		int iMatPlayer1Board[10][10];
 		int iMatPlayer2Board[10][10];
+
 		string sPlayerName;
+		
 		char cTeam;
 
 		char cInput = getMenuInput();
