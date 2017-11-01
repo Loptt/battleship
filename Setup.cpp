@@ -66,15 +66,87 @@ void setupGame(int iMatPlayer1Board[10][10], int iMatPlayer2Board[10][10], &sPla
 
 	cTeam = chooseTeam();
 
+	int iShipSize;
+
 	if (cTeam == 'J')
 	{
-		int iShipSize = 5;
 
-		cout << "Enter the starting and Ending coordinate of your ________"
-		//Call for getPositions function
+		//Carrier
+		iShipSize = 5;
+
+		cout << "Enter the starting and ending coordinates of your " << sJapananeseCarrier;
+		cout << " (" << iShipSize << " spaces)" << endl;
+
+		getPositions(iMatPlayer1Board, iShipSize);
+
+		//Battleship
+		iShipSize = 4;
+
+		cout << "Enter the starting and ending coordinates of your " << sJapananeseBattleship;
+		cout << " (" << iShipSize << " spaces)" << endl;
+
+		getPositions(iMatPlayer1Board, iShipSize);
+
+		//Cruiser
+		iShipSize = 3;
+
+		cout << "Enter the starting and ending coordinates of your " << sJapananeseCruiser;
+		cout << " (" << iShipSize << " spaces)" << endl;
+
+		getPositions(iMatPlayer1Board, iShipSize);
+
+		//Submarine
+		cout << "Enter the starting and ending coordinates of your " << sJapananeseSubmarine;
+		cout << " (" << iShipSize << " spaces)" << endl;
+
+		getPositions(iMatPlayer1Board, iShipSize);
+
+		//Destroyer
+		int iShipSize = 2;
+
+		cout << "Enter the starting and ending coordinates of your " << sJapananeseSubmarine;
+		cout << " (" << iShipSize << " spaces)" << endl;
+
+		getPositions(iMatPlayer1Board, iShipSize);
 	}
 	else
 	{
+		//Carrier
+		iShipSize = 5;
 
+		cout << "Enter the starting and ending coordinates of your " << sAmericanCarrier;
+		cout << " (" << iShipSize << " spaces)" << endl;
+
+		getPositions(iMatPlayer1Board, iShipSize);
+
+		//Battleship
+		iShipSize = 4;
+
+		cout << "Enter the starting and ending coordinates of your " << sAmericanBattleship;
+		cout << " (" << iShipSize << " spaces)" << endl;
+
+		getPositions(iMatPlayer1Board, iShipSize);
+
+		//Cruiser
+		iShipSize = 3;
+
+		cout << "Enter the starting and ending coordinates of your " << sAmericanCruiser;
+		cout << " (" << iShipSize << " spaces)" << endl;
+
+		getPositions(iMatPlayer1Board, iShipSize);
+
+		//Submarine
+		cout << "Enter the starting and ending coordinates of your " << sAmericanSubmarine;
+		cout << " (" << iShipSize << " spaces)" << endl;
+
+		getPositions(iMatPlayer1Board, iShipSize);
+
+		//Destroyer
+		int iShipSize = 2;
+
+		cout << "Enter the starting and ending coordinates of your " << sAmericanSubmarine;
+		cout << " (" << iShipSize << " spaces)" << endl;
+
+		getPositions(iMatPlayer1Board, iShipSize);
 	}
 }

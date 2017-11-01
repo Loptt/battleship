@@ -7,13 +7,30 @@ Carlos Daniel Estrada Guerra       A01039919
 */
 
 #include <iostream>
+#include <cmath>
 #include <string>
 using namespace std;
 
-//Battle space matrix constant size
-const int iWidth =10;
-const int iHeight =10;
+//Japanese ships names
+const string sJapaneseCarrier = "Ryujo Carrier";
+const string sJapananeseBattleship = "Nagato Battleship";
+const string sJapaneseCruiser = "Furutaka Cruiser";
+const string sJapaneseSubmarine = "Ro-51 Submarine";
+const string sJapaneseDestroyer = "Kamikaze Destroyer";
 
+//American ships names
+const string sAmericanCarrier = "USS Princeton Carrier";
+const string sAmericanBattleship = "USS Arizona Battleship";
+const string sAmericanCruiser = "USS Minneapolis Cruiser";
+const string sAmericanSubmarine = "USS Hawkbill Submarine";
+const string sAmericanDestroyer = "USS Frankford Destroyer";
+
+/*
+getMenuInput
+Function to get the input in the menu function
+Paramenters: none
+Return: a char provided by the user
+*/
 char getMenuInput()
 {
 	char cInput;
@@ -43,7 +60,8 @@ int main()
 		switch(cInput)
 		{	
 			//Start game
-			case 'S':
+			case 'P':
+			case 'p':
 				setupGame(iMatPlayer1Board,iMatPlayer2Board, sPlayerName, cTeam);
 				runGame(iMatPlayer1Board, iMatPlayer2Board, sPlayerName, cTeam);
 				endGame();
@@ -51,16 +69,19 @@ int main()
 
 			//Show instructions
 			case 'I':
+			case 'i':
 				displayInstructions();
 				break;
 
 			//Show about information	
 			case 'A':
+			case 'a':
 				displayAbout();
 				break;
 
 			//Exit game
 			case 'E':
+			case 'e':
 				bRunGame = false;
 				break;
 
