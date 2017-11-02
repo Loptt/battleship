@@ -53,7 +53,7 @@ char chooseTeam()
 	cout << "Do you want to play as Japan (J) or the United States (U)?" << endl;
 	cin >> cTeam;
 
-	while (cTeam != 'J' && cTeam != 'U')
+	while (cTeam != 'J' && cTeam != 'U' && cTeam != 'j' && cTeam != 'u')
 	{
 		cout << "Invalid team, please enter a valid letter" << endl;
 		cin >> cTeam;
@@ -252,6 +252,7 @@ void getPositions(int iMatBoard[10][10], int iShipSize)
 
 void printBoard(int iMatBoard[10][10])
 {
+	cout << "                             YOUR BOARD" << endl << endl;
 	cout << "              A   B   C   D   E   F   G   H   I   J" << endl;
 	cout << "             _______________________________________ " << endl;
 
