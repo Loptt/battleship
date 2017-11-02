@@ -1,8 +1,10 @@
 #include <iostream>
 #include <string>
 #include <cmath>
+#include <unistd.h>
 using namespace std;
 
+//Japanese ship names
 const string sJapaneseCarrier = "Ryujo Carrier";
 const string sJapananeseBattleship = "Nagato Battleship";
 const string sJapaneseCruiser = "Furutaka Cruiser";
@@ -16,6 +18,14 @@ const string sAmericanCruiser = "USS Minneapolis Cruiser";
 const string sAmericanSubmarine = "USS Hawkbill Submarine";
 const string sAmericanDestroyer = "USS Frankford Destroyer";
 
+void cleanScreen()
+{
+	for (int iCounter = 0; iCounter < 50; ++iCounter)
+	{
+		cout << endl;
+	}
+}
+
 /*
 getPlayerName
 Function to let the user input a name to use
@@ -25,6 +35,7 @@ Return: a string with the name
 string getPlayerName()
 {
 	string sName;
+	cout << "Enter your name: " << endl;
 	cin >> sName;
 	return sName;
 }
@@ -38,7 +49,10 @@ Return: a char representing a team
 char chooseTeam()
 {
 	char cTeam;
+
+	cout << "Do you want to play as Japan (J) or the United States (U)?" << endl;
 	cin >> cTeam;
+
 	while (cTeam != 'J' && cTeam != 'U')
 	{
 		cout << "Invalid team, please enter a valid letter" << endl;
@@ -236,26 +250,31 @@ void getPositions(int iMatBoard[10][10], int iShipSize)
 	}
 }
 
-void printMatrix(int matrix[10][10])
+void printBoard(int iMatBoard[10][10])
 {
-	cout << "  ABCDEFGHIJ" << endl;
-	for (int i = 0; i < 10; ++i)
+	cout << "              A   B   C   D   E   F   G   H   I   J" << endl;
+	cout << "             _______________________________________ " << endl;
+
+	for (int iRowIndex = 0; iRowIndex < 10; ++iRowIndex)
 	{
-		cout << i << " ";
-		for (int j = 0; j < 10; ++j)
+		cout << "            |   |   |   |   |   |   |   |   |   |   |" << endl;
+		cout << "          " << iRowIndex << " ";
+
+		for (int iColIndex = 0; iColIndex < 10; ++iColIndex)
 		{
-			if (matrix[i][j])
+			if (iMatBoard[iRowIndex][iColIndex])
 			{
-				cout << "O";
+				cout << "| O ";
 			}
 			else
 			{
-				cout << ".";
+				cout << "|   ";
 			}
 		}
-
-		cout << endl;
+		cout << "|" << endl;
+		cout << "            |___|___|___|___|___|___|___|___|___|___|" << endl;		
 	}
+	cout << endl << endl;
 }
 
 /*
@@ -269,116 +288,142 @@ void setupGame(int iMatPlayerBoard[10][10], int iMatComputerBoard[10][10], strin
 	eraseBoard(iMatPlayerBoard);
 	eraseBoard(iMatComputerBoard);
 
+	cleanScreen();
+
 	sPlayerName = getPlayerName();
+
+	cleanScreen();
 
 	cTeam = chooseTeam();
 
 	int iShipSize;
 
+	cleanScreen();
+
 	if (cTeam == 'J')
 	{
-		printMatrix(iMatPlayerBoard);
+		printBoard(iMatPlayerBoard);
 
 		//Carrier
 		iShipSize = 5;
 
-		cout << "Enter the starting and ending coordinates of your " << sJapaneseCarrier;
+		cout << "Admiral " << sPlayerName << "-San, enter the starting and ending coordinates of your " << sJapaneseCarrier;
 		cout << " (" << iShipSize << " spaces)" << endl;
 
 		getPositions(iMatPlayerBoard, iShipSize);
 
-		printMatrix(iMatPlayerBoard);
+		cleanScreen();
+
+		printBoard(iMatPlayerBoard);
 
 		//Battleship
 		iShipSize = 4;
 
-		cout << "Enter the starting and ending coordinates of your " << sJapananeseBattleship;
+		cout << "Admiral " << sPlayerName << "-San, enter the starting and ending coordinates of your " << sJapananeseBattleship;
 		cout << " (" << iShipSize << " spaces)" << endl;
 
 		getPositions(iMatPlayerBoard, iShipSize);	
 
-		printMatrix(iMatPlayerBoard);
+		cleanScreen();
+
+		printBoard(iMatPlayerBoard);
 
 		//Cruiser
 		iShipSize = 3;
 
-		cout << "Enter the starting and ending coordinates of your " << sJapaneseCruiser;
+		cout << "Admiral " << sPlayerName << "-San, enter the starting and ending coordinates of your " << sJapaneseCruiser;
 		cout << " (" << iShipSize << " spaces)" << endl;
 
 		getPositions(iMatPlayerBoard, iShipSize);
 
-		printMatrix(iMatPlayerBoard);
+		cleanScreen();
+
+		printBoard(iMatPlayerBoard);
 
 		//Submarine
-		cout << "Enter the starting and ending coordinates of your " << sJapaneseSubmarine;
+		cout << "Admiral " << sPlayerName << "-San, enter the starting and ending coordinates of your " << sJapaneseSubmarine;
 		cout << " (" << iShipSize << " spaces)" << endl;
 
 		getPositions(iMatPlayerBoard, iShipSize);
 
-		printMatrix(iMatPlayerBoard);
+		cleanScreen();
+
+		printBoard(iMatPlayerBoard);
 
 		//Destroyer
 		int iShipSize = 2;
 
-		cout << "Enter the starting and ending coordinates of your " << sJapaneseSubmarine;
+		cout << "Admiral " << sPlayerName << "-San, enter the starting and ending coordinates of your " << sJapaneseDestroyer;
 		cout << " (" << iShipSize << " spaces)" << endl;
 
 		getPositions(iMatPlayerBoard, iShipSize);
 
-		printMatrix(iMatPlayerBoard);
+		cleanScreen();
+
+		printBoard(iMatPlayerBoard);
 
 	}
 	else
 	{
-		printMatrix(iMatPlayerBoard);
+		printBoard(iMatPlayerBoard);
 
 		//Carrier
 		iShipSize = 5;
 
-		cout << "Enter the starting and ending coordinates of your " << sAmericanCarrier;
+		cout << "Admiral " << sPlayerName << ", enter the starting and ending coordinates of your " << sAmericanCarrier;
 		cout << " (" << iShipSize << " spaces)" << endl;
 
 		getPositions(iMatPlayerBoard, iShipSize);
 
-		printMatrix(iMatPlayerBoard);
+		cleanScreen();
+
+		printBoard(iMatPlayerBoard);
 
 		//Battleship
 		iShipSize = 4;
 
-		cout << "Enter the starting and ending coordinates of your " << sAmericanBattleship;
+		cout << "Admiral " << sPlayerName << ", enter the starting and ending coordinates of your " << sAmericanBattleship;
 		cout << " (" << iShipSize << " spaces)" << endl;
 
 		getPositions(iMatPlayerBoard, iShipSize);
 
-		printMatrix(iMatPlayerBoard);
+		cleanScreen();
+
+		printBoard(iMatPlayerBoard);
 
 		//Cruiser
 		iShipSize = 3;
 
-		cout << "Enter the starting and ending coordinates of your " << sAmericanCruiser;
+		cout << "Admiral " << sPlayerName << ", enter the starting and ending coordinates of your " << sAmericanCruiser;
 		cout << " (" << iShipSize << " spaces)" << endl;
 
 		getPositions(iMatPlayerBoard, iShipSize);
 
-		printMatrix(iMatPlayerBoard);
+		cleanScreen();
+
+		printBoard(iMatPlayerBoard);
 
 		//Submarine
-		cout << "Enter the starting and ending coordinates of your " << sAmericanSubmarine;
+		cout << "Admiral " << sPlayerName << ", enter the starting and ending coordinates of your " << sAmericanSubmarine;
 		cout << " (" << iShipSize << " spaces)" << endl;
 
 		getPositions(iMatPlayerBoard, iShipSize);
 
-		printMatrix(iMatPlayerBoard);
+		cleanScreen();
+
+		printBoard(iMatPlayerBoard);
 
 		//Destroyer
 		int iShipSize = 2;
 
-		cout << "Enter the starting and ending coordinates of your " << sAmericanSubmarine;
+		cout << "Admiral " << sPlayerName << ", enter the starting and ending coordinates of your " << sAmericanDestroyer;
 		cout << " (" << iShipSize << " spaces)" << endl;
 
 		getPositions(iMatPlayerBoard, iShipSize);
 
-		printMatrix(iMatPlayerBoard);
+		cleanScreen();
+
+		printBoard(iMatPlayerBoard);
 
 	}
 }

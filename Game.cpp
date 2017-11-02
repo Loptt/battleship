@@ -9,6 +9,7 @@ Carlos Daniel Estrada Guerra       A01039919
 #include <iostream>
 #include <cmath>
 #include <string>
+#include <unistd.h>
 using namespace std;
 
 //Japanese ships names
