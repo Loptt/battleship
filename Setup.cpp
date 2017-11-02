@@ -18,7 +18,7 @@ const string sAmericanCruiser = "USS Minneapolis Cruiser";
 const string sAmericanSubmarine = "USS Hawkbill Submarine";
 const string sAmericanDestroyer = "USS Frankford Destroyer";
 
-/*
+/*	
 cleanScreen
 Function to clean up the screen of any element
 Parameters: none
@@ -86,6 +86,45 @@ void eraseBoard(int iMatBoard[10][10])
 }
 
 /*
+printSetupBoard
+Function to print the player or computer board in the console
+Parameters: The board to print
+Return: nothing
+*/
+void printSetupBoard(int iMatBoard[10][10])
+{
+	cout << "\x1b[37m                           YOUR BOARD" << endl << endl;
+	cout << "              A   B   C   D   E   F   G   H   I   J" << endl;
+	cout << "             _______________________________________ " << endl;
+
+	for (int iRowIndex = 0; iRowIndex < 10; ++iRowIndex)
+	{
+		cout << "            |   |   |   |   |   |   |   |   |   |   |" << endl;
+		cout << "          " << iRowIndex << " ";
+
+		for (int iColIndex = 0; iColIndex < 10; ++iColIndex)
+		{
+			if (iMatBoard[iRowIndex][iColIndex])
+			{
+				cout << "|\x1b[0m O \x1b[37m";
+			}
+			else
+			{
+				cout << "|\x1b[34m . \x1b[37m";
+			}
+		}
+		cout << "|" << endl;
+		cout << "            |___|___|___|___|___|___|___|___|___|___|" << endl;		
+	}
+	cout << "\x1b[0m" << endl << endl;
+}
+
+void getComputerPositions(int iMatBoard[10][10])
+{
+
+}
+
+/*
 writeInput
 Function to write the ship position on the board
 Parameters: The board, a boolean to validate the position, the first position, and the second position
@@ -128,7 +167,7 @@ void writeInput(int iMatBoard[10][10], bool &bIsWrongInput, string sFirstPositio
 		{
 			if (iMatBoard[iRowIndexStart][iColIndex])
 			{
-				cout << "Invalid coordinates. Space already occupied by another ship" << endl;
+				cout << "\x1b[31mInvalid coordinates. Space already occupied by another ship\x1b[0m" << endl;
 				bIsWrongInput = true;
 				break;
 			}
@@ -165,7 +204,7 @@ void writeInput(int iMatBoard[10][10], bool &bIsWrongInput, string sFirstPositio
 		{
 			if (iMatBoard[iRowIndex][iColIndexStart])
 			{
-				cout << "Invalid coordinates. Space already occupied by another ship" << endl;
+				cout << "\x1b[31mInvalid coordinates. Space already occupied by another ship\x1b[0m" << endl;
 				bIsWrongInput = true;
 				break;
 			}
@@ -183,46 +222,12 @@ void writeInput(int iMatBoard[10][10], bool &bIsWrongInput, string sFirstPositio
 }
 
 /*
-printSetupBoard
-Function to print the player or computer board in the console
-Parameters: The board to print
-Return: nothing
-*/
-void printSetupBoard(int iMatBoard[10][10])
-{
-	cout << "                             YOUR BOARD" << endl << endl;
-	cout << "              A   B   C   D   E   F   G   H   I   J" << endl;
-	cout << "             _______________________________________ " << endl;
-
-	for (int iRowIndex = 0; iRowIndex < 10; ++iRowIndex)
-	{
-		cout << "            |   |   |   |   |   |   |   |   |   |   |" << endl;
-		cout << "          " << iRowIndex << " ";
-
-		for (int iColIndex = 0; iColIndex < 10; ++iColIndex)
-		{
-			if (iMatBoard[iRowIndex][iColIndex])
-			{
-				cout << "| O ";
-			}
-			else
-			{
-				cout << "|   ";
-			}
-		}
-		cout << "|" << endl;
-		cout << "            |___|___|___|___|___|___|___|___|___|___|" << endl;		
-	}
-	cout << endl << endl;
-}
-
-/*
-getPositions
+readUserPositions
 Function to let the user input coordinates
 Parameters: The player board and the size of the ship to input
 Return: nothing
 */
-void getPositions(int iMatBoard[10][10], int iShipSize)
+void readUserPositions(int iMatBoard[10][10], int iShipSize)
 {
 	string sFirstPosition;
 	string sSecondPosition;
@@ -238,21 +243,21 @@ void getPositions(int iMatBoard[10][10], int iShipSize)
 		//Check if the coordinates are two characters long
 		if (sFirstPosition.length() != 2 || sSecondPosition.length() != 2)
 		{
-			cout << "Invalid coordinates. Please enter two characters per coordinate" << endl;
+			cout << "\x1b[31mInvalid coordinates. Please enter two characters per coordinate\x1b[0m" << endl;
 		}
 		else
 		{
 			//Check if the first character is a letter in valid range
 			if (sFirstPosition[0] < 65 || sFirstPosition[0] > 74)
 			{
-				cout << "Invalid coordinates. Please enter letters from A to J capitalized" << endl;
+				cout << "\x1b[31mInvalid coordinates. Please enter letters from A to J capitalized\x1b[0m" << endl;
 			}
 			else
 			{
 				//Check if the second character is a number in valid range
 				if (sFirstPosition[1] < 48 || sSecondPosition[1] > 57)
 				{
-					cout << "Invalid coordinates. Please enter a digit as second parameter" << endl;
+					cout << "\x1b[31mInvalid coordinates. Please enter a digit as second parameter\x1b[0m" << endl;
 				}
 				else
 				{
@@ -260,7 +265,7 @@ void getPositions(int iMatBoard[10][10], int iShipSize)
 					if (sFirstPosition[0] != sSecondPosition[0] &&
 	      	   			sFirstPosition[1] != sSecondPosition[1])
 					{
-						cout << "Invalid coordinates. Please place ships horizontally or vertically" << endl;
+						cout << "\x1b[31mInvalid coordinates. Please place ships horizontally or vertically\x1b[0m" << endl;
 					}
 					else
 					{
@@ -276,8 +281,8 @@ void getPositions(int iMatBoard[10][10], int iShipSize)
 						//Check if the ship is of adequate size
 						if (iDifference != iShipSize)
 						{
-							cout << "Invalid coordinates. Please make sure the coordinates are for a ship of size ";
-							cout << iShipSize << endl;
+							cout << "\x1b[31mInvalid coordinates. Please make sure the coordinates are for a ship of size ";
+							cout << iShipSize << "\x1b[0m" <<endl;
 						}
 						else
 						{
@@ -310,7 +315,7 @@ void getPlayerPositions(int iMatPlayerBoard[10][10], string sPlayerName, char cT
 		cout << "Admiral " << sPlayerName << "-San, enter the starting and ending coordinates of your " << sJapaneseCarrier;
 		cout << " (" << iShipSize << " spaces)" << endl;
 
-		getPositions(iMatPlayerBoard, iShipSize);
+		readUserPositions(iMatPlayerBoard, iShipSize);
 
 		cleanScreen();
 
@@ -322,7 +327,7 @@ void getPlayerPositions(int iMatPlayerBoard[10][10], string sPlayerName, char cT
 		cout << "Admiral " << sPlayerName << "-San, enter the starting and ending coordinates of your " << sJapananeseBattleship;
 		cout << " (" << iShipSize << " spaces)" << endl;
 
-		getPositions(iMatPlayerBoard, iShipSize);	
+		readUserPositions(iMatPlayerBoard, iShipSize);	
 
 		cleanScreen();
 
@@ -334,7 +339,7 @@ void getPlayerPositions(int iMatPlayerBoard[10][10], string sPlayerName, char cT
 		cout << "Admiral " << sPlayerName << "-San, enter the starting and ending coordinates of your " << sJapaneseCruiser;
 		cout << " (" << iShipSize << " spaces)" << endl;
 
-		getPositions(iMatPlayerBoard, iShipSize);
+		readUserPositions(iMatPlayerBoard, iShipSize);
 
 		cleanScreen();
 
@@ -344,7 +349,7 @@ void getPlayerPositions(int iMatPlayerBoard[10][10], string sPlayerName, char cT
 		cout << "Admiral " << sPlayerName << "-San, enter the starting and ending coordinates of your " << sJapaneseSubmarine;
 		cout << " (" << iShipSize << " spaces)" << endl;
 
-		getPositions(iMatPlayerBoard, iShipSize);
+		readUserPositions(iMatPlayerBoard, iShipSize);
 
 		cleanScreen();
 
@@ -356,7 +361,7 @@ void getPlayerPositions(int iMatPlayerBoard[10][10], string sPlayerName, char cT
 		cout << "Admiral " << sPlayerName << "-San, enter the starting and ending coordinates of your " << sJapaneseDestroyer;
 		cout << " (" << iShipSize << " spaces)" << endl;
 
-		getPositions(iMatPlayerBoard, iShipSize);
+		readUserPositions(iMatPlayerBoard, iShipSize);
 
 		cleanScreen();
 
@@ -373,7 +378,7 @@ void getPlayerPositions(int iMatPlayerBoard[10][10], string sPlayerName, char cT
 		cout << "Admiral " << sPlayerName << ", enter the starting and ending coordinates of your " << sAmericanCarrier;
 		cout << " (" << iShipSize << " spaces)" << endl;
 
-		getPositions(iMatPlayerBoard, iShipSize);
+		readUserPositions(iMatPlayerBoard, iShipSize);
 
 		cleanScreen();
 
@@ -385,7 +390,7 @@ void getPlayerPositions(int iMatPlayerBoard[10][10], string sPlayerName, char cT
 		cout << "Admiral " << sPlayerName << ", enter the starting and ending coordinates of your " << sAmericanBattleship;
 		cout << " (" << iShipSize << " spaces)" << endl;
 
-		getPositions(iMatPlayerBoard, iShipSize);
+		readUserPositions(iMatPlayerBoard, iShipSize);
 
 		cleanScreen();
 
@@ -397,7 +402,7 @@ void getPlayerPositions(int iMatPlayerBoard[10][10], string sPlayerName, char cT
 		cout << "Admiral " << sPlayerName << ", enter the starting and ending coordinates of your " << sAmericanCruiser;
 		cout << " (" << iShipSize << " spaces)" << endl;
 
-		getPositions(iMatPlayerBoard, iShipSize);
+		readUserPositions(iMatPlayerBoard, iShipSize);
 
 		cleanScreen();
 
@@ -407,7 +412,7 @@ void getPlayerPositions(int iMatPlayerBoard[10][10], string sPlayerName, char cT
 		cout << "Admiral " << sPlayerName << ", enter the starting and ending coordinates of your " << sAmericanSubmarine;
 		cout << " (" << iShipSize << " spaces)" << endl;
 
-		getPositions(iMatPlayerBoard, iShipSize);
+		readUserPositions(iMatPlayerBoard, iShipSize);
 
 		cleanScreen();
 
@@ -419,7 +424,7 @@ void getPlayerPositions(int iMatPlayerBoard[10][10], string sPlayerName, char cT
 		cout << "Admiral " << sPlayerName << ", enter the starting and ending coordinates of your " << sAmericanDestroyer;
 		cout << " (" << iShipSize << " spaces)" << endl;
 
-		getPositions(iMatPlayerBoard, iShipSize);
+		readUserPositions(iMatPlayerBoard, iShipSize);
 
 		cleanScreen();
 
@@ -451,11 +456,12 @@ void setupGame(int iMatPlayerBoard[10][10], int iMatComputerBoard[10][10], strin
 
 	getPlayerPositions(iMatPlayerBoard, sPlayerName, cTeam);
 
-	//getComputerPositions();
+	//getComputerPositions(iMatComputerBoard);
 }
 
 int main()
 {
+
 	int matrix1[10][10], matrix2[10][10];
 	string name;
 	char team;

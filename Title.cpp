@@ -1,48 +1,46 @@
 #include <iostream>
 using namespace std;
-char cMatMap[22][22] =
-{   "####################",
-    "#                  #",
-    "#                  #",
-    "#                  #",
-    "#                  #",
-    "#                  #",
-    "#                  #",
-    "#                  #",
-    "#                  #",
-    "#                  #",
-    "#                  #",
-    "#                  #",
-    "#                  #",
-    "#                  #",
-    "#                  #",
-    "#                  #",
-    "#                  #",
-    "#                  #",
-    "#                  #",
-    "#                  #",
-    "#                  #",
-    "####################",};
 
-void displayMap( int &iArrCol,int &iArrRow, char cMatMap[22][22]){
+char cMatMap[100][100] =
+{   "################################################################################",
+    "#                                                                              #",
+    "#                                                                              #",
+    "#                                                                              #",
+    "#                                                                              #",
+    "#         ****   ***   ****                                                    #",
+    "#          ***   ***   ***                                                     #",
+    "#          ***   ***   ***                                                     #",
+    "#          ***   ***   ***                                                     #",
+    "#           ***  ***   ***                                                     #",
+    "#            *** ***  ***                                                      #",
+    "#               *****                                                          #",
+    "#                                                                              #",
+    "#                                                                              #",
+    "#                              PLAY GAME                                       #",
+    "#                                                                              #",
+    "#                             INSTRUCTIONS                                     #",
+    "#                                                                              #",
+    "#                                ABOUT                                         #",
+    "#                                                                              #",
+    "#                                                                              #",
+    "################################################################################",};
+
+void displayMap( int &iArrCol,int &iArrRow, char cMatMap[100][100]){
     int iRowIndex,iColIndex;
     for (iColIndex = 0; iColIndex < iArrCol; iColIndex++)
-        //iRowIndex = 0; iRowIndex < iArrRow; iRowIndex++ )
     {
         for(iRowIndex = 0; iRowIndex < iArrRow; iRowIndex++ )
         {
-            cout<< cMatMap[iColIndex][iRowIndex]<<endl;
+            cout<< cMatMap[iColIndex][iRowIndex];
         }
         cout<<endl;
     }
 }
 
 int main(){
-    int iHeight = 22, iWidth =22;
-    
+    int iHeight = 100, iWidth =100;
     displayMap(iHeight,iWidth,cMatMap);
     
     return 0;
 }
-
 
