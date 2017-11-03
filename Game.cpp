@@ -51,11 +51,22 @@ int main()
 
 	while (bRunGame)
 	{
-		int iMatPlayer1Board[10][10];
-		int iMatPlayer2Board[10][10];
+		iint iMatPlayerBoard[10][10], iMatComputerBoard[10][10];
+
+		int iArrPlayerCarrierPosition[7];
+		int iArrPlayerBattleshipPosition[6];
+		int iArrPlayerCruiserPosition[5];
+		int iArrPlayerSubmarinePosition[5];
+		int iArrPlayerDestroyerPosition[4];
+
+		int iArrComputerCarrierPosition[7];
+		int iArrComputerBattleshipPosition[6];
+		int iArrComputerCruiserPosition[5];
+		int iArrComputerSubmarinePosition[5];
+		int iArrComputerDestroyerPosition[4];	 
 
 		string sPlayerName;
-		
+
 		char cTeam;
 
 		char cInput = getMenuInput();
@@ -65,9 +76,19 @@ int main()
 			//Start game
 			case 'P':
 			case 'p':
-				setupGame(iMatPlayer1Board,iMatPlayer2Board, sPlayerName, cTeam);
-				runGame(iMatPlayer1Board, iMatPlayer2Board, sPlayerName, cTeam);
+
+				setupGame(iMatPlayerBoard, iMatComputerBoard, sPlayerName, cTeam, iArrPlayerCarrierPosition,
+						  iArrPlayerBattleshipPosition, iArrPlayerCruiserPosition, iArrPlayerSubmarinePosition,
+						  iArrPlayerDestroyerPosition, iArrComputerCarrierPosition, iArrComputerBattleshipPosition,
+						  iArrComputerCruiserPosition, iArrComputerSubmarinePosition, iArrComputerDestroyerPosition);
+
+				runGame(iMatPlayerBoard, iMatComputerBoard, sPlayerName, cTeam, iArrPlayerCarrierPosition,
+						iArrPlayerBattleshipPosition, iArrPlayerCruiserPosition, iArrPlayerSubmarinePosition,
+						iArrPlayerDestroyerPosition, iArrComputerCarrierPosition, iArrComputerBattleshipPosition,
+						iArrComputerCruiserPosition, iArrComputerSubmarinePosition, iArrComputerDestroyerPosition);
+
 				endGame();
+
 				break;
 
 			//Show instructions
@@ -90,7 +111,7 @@ int main()
 
 			//Case when a wrong letter is introduced
 			default:
-				cout << "Invalid Option" << endl;
+				cout << "Invalid option" << endl;
 				break;
 		}
 	}

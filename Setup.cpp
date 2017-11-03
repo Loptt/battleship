@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <cmath>
+#include <cstdlib>
 #include <unistd.h>
 using namespace std;
 
@@ -119,18 +120,13 @@ void printSetupBoard(int iMatBoard[10][10])
 	cout << "\x1b[0m" << endl << endl;
 }
 
-void getComputerPositions(int iMatBoard[10][10])
-{
-
-}
-
 /*
-writeInput
+writeUserInput
 Function to write the ship position on the board
 Parameters: The board, a boolean to validate the position, the first position, and the second position
 Return: nothing
 */
-void writeInput(int iMatBoard[10][10], bool &bIsWrongInput, string sFirstPosition, string sSecondPosition, int iArrShipPosition[],
+void writeUserInput(int iMatBoard[10][10], bool &bIsWrongInput, string sFirstPosition, string sSecondPosition, int iArrShipPosition[],
 				int iShipSize)
 {
 	int iFirstLetterCoordinate = sFirstPosition[0] - 65;
@@ -302,7 +298,7 @@ void readUserPositions(int iMatBoard[10][10], int iShipSize, int iArrShipPositio
 						}
 						else
 						{
-							writeInput(iMatBoard, bIsWrongInput, sFirstPosition, sSecondPosition, iArrShipPosition, iShipSize);
+							writeUserInput(iMatBoard, bIsWrongInput, sFirstPosition, sSecondPosition, iArrShipPosition, iShipSize);
 						}
 					}
 				}
@@ -451,6 +447,26 @@ void getPlayerPositions(int iMatPlayerBoard[10][10], string sPlayerName, char cT
 	}
 }
 
+void generateRandomPosition(int iMatBoard[10][10], iArrShipPosition[], iShipSize)
+{
+	RAND_MAX = 1;
+	iArrShipPosition[0] = rand();
+
+	//Horizontal positioning
+	if (iArrShipPosition[0])
+	{
+		
+	}
+}
+
+void getComputerPositions(int iMatBoard[10][10], int iArrComputerCarrierPosition, int iArrComputerBattleshipPosition,
+			           	  int iArrComputerCruiserPosition, int iArrComputerSubmarinePosition, int iArrComputerDestroyerPosition);
+{
+	int iShipSize = 5;
+
+	generateRandomPosition(iMatBoard[10][10], iArrComputerCarrierPosition[7], iShipSize);
+}
+
 /*
 setupGame
 Function to set the boards and ships for a new game
@@ -479,7 +495,8 @@ void setupGame(int iMatPlayerBoard[10][10], int iMatComputerBoard[10][10], strin
 	getPlayerPositions(iMatPlayerBoard, sPlayerName, cTeam, iArrPlayerCarrierPosition, iArrPlayerBattleshipPosition,
 			           iArrPlayerCruiserPosition, iArrPlayerSubmarinePosition, iArrPlayerDestroyerPosition);
 
-	//getComputerPositions(iMatComputerBoard);
+	getComputerPositions(iMatComputerBoard, iArrComputerCarrierPosition, iArrComputerBattleshipPosition, iArrComputerCruiserPosition,
+						 iArrComputerSubmarinePosition, iArrComputerDestroyerPosition);
 }
 
 int main()
@@ -507,6 +524,10 @@ int main()
 			  iArrPlayerCruiserPosition, iArrPlayerSubmarinePosition, iArrPlayerDestroyerPosition, iArrComputerCarrierPosition, 
 			  iArrComputerBattleshipPosition, iArrComputerCruiserPosition, iArrComputerSubmarinePosition, iArrComputerDestroyerPosition);
 
+
+	/*
+	TESTING FOR POSITION ARRAYS
+	*/
 	cout << "Your " <<  sJapaneseCarrier << " is ";
 
 	if (!iArrPlayerCarrierPosition[0])
