@@ -165,7 +165,7 @@ void writeInput(int iMatBoard[10][10], bool &bIsWrongInput, string sFirstPositio
 		else
 		{
 			iRowIndexStart = iFirstNumberCoordinate;
-			iRowIndexEnd = iSecondNumberCoordinate;
+			iRowIndexEnd = iSecondNumberCoordinate;	
 		}
 
 		int iLoopInitiator = iRowIndexStart;
@@ -227,17 +227,11 @@ void writeInput(int iMatBoard[10][10], bool &bIsWrongInput, string sFirstPositio
 
 		if (!bIsWrongInput)
 		{
-			int iCounter = 2;
-			for (iColIndexStart = iLoopInitiator; iColIndexStart <= iColIndexEnd; ++iColIndexStart)
+			int iCounter = 2;	
+			for (iColIndexStart = iLoopInitiator; iColIndexStart <= iColIndexEnd; ++iColIndexStart, ++iCounter)
 			{
-				iArrShipPosition[iCounter] = iColIndexStart;
-				cout << iColIndexStart << endl;
+				iArrShipPosition[iCounter] = iColIndexStart;S
 				iMatBoard[iRowIndex][iColIndexStart] = 1;
-			}
-
-			for (int i = 2; i < 7; ++i)
-			{
-				cout << iArrShipPosition[i] << endl;
 			}
 		}
 	}
