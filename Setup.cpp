@@ -6,7 +6,7 @@ using namespace std;
 
 //Japanese ship names
 const string sJapaneseCarrier = "Ryujo Carrier";
-const string sJapananeseBattleship = "Nagato Battleship";
+const string sJapaneseBattleship = "Nagato Battleship";
 const string sJapaneseCruiser = "Furutaka Cruiser";
 const string sJapaneseSubmarine = "Ro-51 Submarine";
 const string sJapaneseDestroyer = "Kamikaze Destroyer";
@@ -185,7 +185,7 @@ void writeInput(int iMatBoard[10][10], bool &bIsWrongInput, string sFirstPositio
 			int iCounter = 2;
 			for (iRowIndexStart = iLoopInitiator; iRowIndexStart <= iRowIndexEnd; ++iRowIndexStart, ++iCounter)
 			{
-				iArrShipPosition[iCounter] = iRowIndexStart; 
+				iArrShipPosition[iCounter] = iRowIndexStart;
 				iMatBoard[iRowIndexStart][iColIndex] = 1;
 			}
 		}
@@ -231,7 +231,13 @@ void writeInput(int iMatBoard[10][10], bool &bIsWrongInput, string sFirstPositio
 			for (iColIndexStart = iLoopInitiator; iColIndexStart <= iColIndexEnd; ++iColIndexStart)
 			{
 				iArrShipPosition[iCounter] = iColIndexStart;
+				cout << iColIndexStart << endl;
 				iMatBoard[iRowIndex][iColIndexStart] = 1;
+			}
+
+			for (int i = 2; i < 7; ++i)
+			{
+				cout << iArrShipPosition[i] << endl;
 			}
 		}
 	}
@@ -302,7 +308,7 @@ void readUserPositions(int iMatBoard[10][10], int iShipSize, int iArrShipPositio
 						}
 						else
 						{
-							writeInput(iMatBoard, bIsWrongInput, sFirstPosition, sSecondPosition, iArrPlayerBattleshipPosition, iShipSize);
+							writeInput(iMatBoard, bIsWrongInput, sFirstPosition, sSecondPosition, iArrShipPosition, iShipSize);
 						}
 					}
 				}
@@ -342,7 +348,7 @@ void getPlayerPositions(int iMatPlayerBoard[10][10], string sPlayerName, char cT
 		//Battleship
 		iShipSize = 4;
 
-		cout << "Admiral " << sPlayerName << "-San, enter the starting and ending coordinates of your " << sJapananeseBattleship;
+		cout << "Admiral " << sPlayerName << "-San, enter the starting and ending coordinates of your " << sJapaneseBattleship;
 		cout << " (" << iShipSize << " spaces)" << endl;
 
 		readUserPositions(iMatPlayerBoard, iShipSize, iArrPlayerBattleshipPosition);	
@@ -506,6 +512,142 @@ int main()
 	setupGame(iMatPlayerBoard, iMatComputerBoard, sPlayerName, cTeam, iArrPlayerCarrierPosition, iArrPlayerBattleshipPosition,
 			  iArrPlayerCruiserPosition, iArrPlayerSubmarinePosition, iArrPlayerDestroyerPosition, iArrComputerCarrierPosition, 
 			  iArrComputerBattleshipPosition, iArrComputerCruiserPosition, iArrComputerSubmarinePosition, iArrComputerDestroyerPosition);
+
+	cout << "Your " <<  sJapaneseCarrier << " is ";
+
+	if (!iArrPlayerCarrierPosition[0])
+	{
+		cout << "vertically placed, and is at column " << iArrPlayerCarrierPosition[1];
+		cout << " within these vertical coordinates " << endl;
+
+		for (int i = 2; i < 7; ++i)
+		{
+			cout << iArrPlayerCarrierPosition[i] << " ";
+		}
+
+		cout << endl;
+	}
+	else
+	{
+		cout << "horizontally placed, and is at row " << iArrPlayerCarrierPosition[1];
+		cout << " within these horizontal coordinates " << endl;
+
+		for (int i = 2; i < 7; ++i)
+		{
+			cout << iArrPlayerCarrierPosition[i] << " ";
+		}
+
+		cout << endl;
+	}
+
+	cout << "Your " <<  sJapaneseBattleship << " is ";
+
+	if (!iArrPlayerBattleshipPosition[0])
+	{
+		cout << "vertically placed, and is at column " << iArrPlayerBattleshipPosition[1];
+		cout << " within these vertical coordinates " << endl;
+
+		for (int i = 2; i < 6; ++i)
+		{
+			cout << iArrPlayerBattleshipPosition[i] << " ";
+		}
+
+		cout << endl;
+	}
+	else
+	{
+		cout << "horizontally placed, and is at row " << iArrPlayerBattleshipPosition[1];
+		cout << " within these horizontal coordinates " << endl;
+
+		for (int i = 2; i < 6; ++i)
+		{
+			cout << iArrPlayerBattleshipPosition[i] << " ";
+		}
+
+		cout << endl;
+	}
+
+	cout << "Your " <<  sJapaneseCruiser << " is ";
+
+	if (!iArrPlayerCruiserPosition[0])
+	{
+		cout << "vertically placed, and is at column " << iArrPlayerCruiserPosition[1];
+		cout << " within these vertical coordinates " << endl;
+
+		for (int i = 2; i < 5; ++i)
+		{
+			cout << iArrPlayerCruiserPosition[i] << " ";
+		}
+
+		cout << endl;
+	}
+	else
+	{
+		cout << "horizontally placed, and is at row " << iArrPlayerCruiserPosition[1];
+		cout << " within these horizontal coordinates " << endl;
+
+		for (int i = 2; i < 5; ++i)
+		{
+			cout << iArrPlayerCruiserPosition[i] << " ";
+		}
+
+		cout << endl;
+	}
+
+	cout << "Your " <<  sJapaneseSubmarine << " is ";
+
+	if (!iArrPlayerCruiserPosition[0])
+	{
+		cout << "vertically placed, and is at column " << iArrPlayerSubmarinePosition[1];
+		cout << " within these vertical coordinates " << endl;
+
+		for (int i = 2; i < 5; ++i)
+		{
+			cout << iArrPlayerSubmarinePosition[i] << " ";
+		}
+
+		cout << endl;
+	}
+	else
+	{
+		cout << "horizontally placed, and is at row " << iArrPlayerSubmarinePosition[1];
+		cout << " within these horizontal coordinates " << endl;
+
+		for (int i = 2; i < 5; ++i)
+		{
+			cout << iArrPlayerSubmarinePosition[i] << " ";
+		}
+
+		cout << endl;
+	}
+
+	cout << "Your " <<  sJapaneseDestroyer << " is ";
+
+	if (!iArrPlayerDestroyerPosition[0])
+	{
+		cout << "vertically placed, and is at column " << iArrPlayerDestroyerPosition[1];
+		cout << " within these vertical coordinates " << endl;
+
+		for (int i = 2; i < 4; ++i)
+		{
+			cout << iArrPlayerDestroyerPosition[i] << " ";
+		}
+
+		cout << endl;
+	}
+	else
+	{
+		cout << "horizontally placed, and is at row " << iArrPlayerDestroyerPosition[1];
+		cout << " within these horizontal coordinates " << endl;
+
+		for (int i = 2; i < 4; ++i)
+		{
+			cout << iArrPlayerDestroyerPosition[i] << " ";
+		}
+
+		cout << endl;
+	}
+
  
 	return 0;
 }
