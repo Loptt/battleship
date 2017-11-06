@@ -2,6 +2,7 @@
 #include <string>
 #include <cmath>
 #include <cstdlib>
+#include <time.h>
 #include <unistd.h>
 using namespace std;
 
@@ -123,7 +124,7 @@ void printSetupBoard(int iMatBoard[10][10])
 /*
 writeUserInput
 Function to write the ship position on the board
-Parameters: The board, a boolean to validate the position, the first position, and the second position
+Parameters: The board, a boolean to validate the position, the first position, and the second position, and an array to store the location
 Return: nothing
 */
 void writeUserInput(int iMatBoard[10][10], bool &bIsWrongInput, string sFirstPosition, string sSecondPosition, int iArrShipPosition[],
@@ -226,7 +227,7 @@ void writeUserInput(int iMatBoard[10][10], bool &bIsWrongInput, string sFirstPos
 			int iCounter = 2;	
 			for (iColIndexStart = iLoopInitiator; iColIndexStart <= iColIndexEnd; ++iColIndexStart, ++iCounter)
 			{
-				iArrShipPosition[iCounter] = iColIndexStart;S
+				iArrShipPosition[iCounter] = iColIndexStart;
 				iMatBoard[iRowIndex][iColIndexStart] = 1;
 			}
 		}
@@ -236,7 +237,7 @@ void writeUserInput(int iMatBoard[10][10], bool &bIsWrongInput, string sFirstPos
 /*
 readUserPositions
 Function to let the user input coordinates
-Parameters: The player board and the size of the ship to input
+Parameters: The player board, the size of the ship to input, and an array storing the location
 Return: nothing
 */
 void readUserPositions(int iMatBoard[10][10], int iShipSize, int iArrShipPosition[])
@@ -310,7 +311,7 @@ void readUserPositions(int iMatBoard[10][10], int iShipSize, int iArrShipPositio
 /*
 getPlayerPositions
 Function to ask the user for the ship positions 
-Parameters: The Player board, the name, and the char of the team
+Parameters: The Player board, the name, the char of the team, and an array for each ship to store location
 Retrun nothing
 */
 void getPlayerPositions(int iMatPlayerBoard[10][10], string sPlayerName, char cTeam, int iArrPlayerCarrierPosition[7],
@@ -447,30 +448,135 @@ void getPlayerPositions(int iMatPlayerBoard[10][10], string sPlayerName, char cT
 	}
 }
 
-void generateRandomPosition(int iMatBoard[10][10], iArrShipPosition[], iShipSize)
+/*
+writeComputerInput
+Function to write the ship position on the board given random generated data
+Parameters: The board, a boolean to validate the position, and the array with the position
+Return: nothing
+*/
+void writeComputerInput(int iMatBoard[10][10], int iArrShipPosition[], int iShipSize, bool &bIsOverlapped)
 {
-	RAND_MAX = 1;
-	iArrShipPosition[0] = rand();
+	bIsOverlapped = false;
 
 	//Horizontal positioning
 	if (iArrShipPosition[0])
 	{
-		
+		int iRowIndex = iArrShipPosition[1];
+
+		for (int iColIndex = iArrShipPosition[2]; iColIndex <= iArrShipPosition[iShipSize+1]; ++iColIndex)
+		{
+			if (iMatBoard[iRowIndex][iColIndex])
+			{
+				bIsOverlapped = true;
+				break;
+			}
+		}
+
+		if (!bIsOverlapped)
+		{
+			for (int iColIndex = iArrShipPosition[2]; iColIndex <= iArrShipPosition[iShipSize+1]; ++iColIndex)
+			{
+				iMatBoard[iRowIndex][iColIndex] = 1;
+			}
+		}
+	}
+
+	//Vertical Positioning
+	else
+	{
+		int iColIndex = iArrShipPosition[1];
+
+		for (int iRowIndex = iArrShipPosition[2]; iRowIndex <= iArrShipPosition[iShipSize+1]; ++iRowIndex)
+		{
+			if (iMatBoard[iRowIndex][iColIndex])
+			{
+				bIsOverlapped = true;
+				break;
+			}
+		}
+
+		if (!bIsOverlapped)
+		{
+			for (int iRowIndex = iArrShipPosition[2]; iRowIndex <= iArrShipPosition[iShipSize+1]; ++iRowIndex)
+			{
+				iMatBoard[iRowIndex][iColIndex] = 1;
+			}
+		}
 	}
 }
 
-void getComputerPositions(int iMatBoard[10][10], int iArrComputerCarrierPosition, int iArrComputerBattleshipPosition,
-			           	  int iArrComputerCruiserPosition, int iArrComputerSubmarinePosition, int iArrComputerDestroyerPosition);
+/*
+writeComputerInput
+Function to generate a random ship position, validate it, and to write it in the board
+Parameters: The board, the array with the position, and the ship size
+Return: nothing
+*/
+void generateRandomPosition(int iMatBoard[10][10], int iArrShipPosition[], int iShipSize)
 {
-	int iShipSize = 5;
+	srand(time(NULL));
 
-	generateRandomPosition(iMatBoard[10][10], iArrComputerCarrierPosition[7], iShipSize);
+	bool bIsOverlapped = true;
+
+	while(bIsOverlapped)
+	{
+		iArrShipPosition[0] = rand() % 2;
+
+		iArrShipPosition[1] = rand() % 10;
+
+		iArrShipPosition[2] = rand() % (10-iShipSize);
+
+		int iExternalCounter = 1;
+
+		for (int iCounter = 3; iCounter < iShipSize + 2 ; ++iCounter)
+		{
+			iArrShipPosition[iCounter] = iArrShipPosition[2] + iExternalCounter++;
+		}
+
+		writeComputerInput(iMatBoard, iArrShipPosition, iShipSize, bIsOverlapped);
+	}
+	
+}
+
+
+/*
+getComputerPositions
+Function to generate a random board for the computer
+Parameters: The board, and a set of arrays for the ship positions
+Return: nothing
+*/
+void getComputerPositions(int iMatBoard[10][10], int iArrComputerCarrierPosition[], int iArrComputerBattleshipPosition[],
+			           	  int iArrComputerCruiserPosition[], int iArrComputerSubmarinePosition[], int iArrComputerDestroyerPosition[])
+{
+	//Computer Carrier
+	int iShipSize = 5;
+	generateRandomPosition(iMatBoard, iArrComputerCarrierPosition, iShipSize);
+
+	//Computer Battleship
+	iShipSize = 4;
+
+	generateRandomPosition(iMatBoard, iArrComputerBattleshipPosition, iShipSize);
+
+	//Computer Cruiser
+	iShipSize = 3;
+
+	generateRandomPosition(iMatBoard, iArrComputerCruiserPosition, iShipSize);
+
+	//Computer Submarine
+	iShipSize = 3;
+
+	generateRandomPosition(iMatBoard, iArrComputerSubmarinePosition, iShipSize);
+
+	//Computer Destroyer
+	iShipSize = 2;
+
+	generateRandomPosition(iMatBoard, iArrComputerDestroyerPosition, iShipSize);
 }
 
 /*
 setupGame
 Function to set the boards and ships for a new game
-Paramenters: two Boards
+Paramenters: Player and computer boards, the player name, the team, a set of arrays to store player ship locations
+and a set of arrays to store computer ship locations
 Return: nothing
 */
 void setupGame(int iMatPlayerBoard[10][10], int iMatComputerBoard[10][10], string &sPlayerName, char &cTeam,
