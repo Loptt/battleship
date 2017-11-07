@@ -28,6 +28,13 @@ const string sAmericanCruiser = "USS Minneapolis Cruiser";
 const string sAmericanSubmarine = "USS Hawkbill Submarine";
 const string sAmericanDestroyer = "USS Frankford Destroyer";
 
+
+/*
+-------------------------------------------------------------
+	GENERAL USE FUNCTIONS
+-------------------------------------------------------------
+*/
+
 /*
 getMenuInput
 Function to get the input in the menu function
@@ -54,6 +61,12 @@ void cleanScreen()
 		cout << endl;
 	}
 }
+
+/*
+-------------------------------------------------------------
+	SETUP FUNCTIONS
+-------------------------------------------------------------
+*/
 
 /*
 getPlayerName
@@ -625,6 +638,17 @@ void setupGame(int iMatPlayerBoard[10][10], int iMatComputerBoard[10][10], strin
 	getComputerPositions(iMatComputerBoard, iArrComputerCarrierPosition, iArrComputerBattleshipPosition, iArrComputerCruiserPosition,
 						 iArrComputerSubmarinePosition, iArrComputerDestroyerPosition);
 }
+
+/*
+-------------------------------------------------------------
+	RUNGAME FUNCTIONS
+-------------------------------------------------------------
+*/
+
+
+
+
+
 
 /*
 main
