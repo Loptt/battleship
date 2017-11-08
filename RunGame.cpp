@@ -20,12 +20,65 @@ const string sAmericanCruiser = "USS Minneapolis Cruiser";
 const string sAmericanSubmarine = "USS Hawkbill Submarine";
 const string sAmericanDestroyer = "USS Frankford Destroyer";
 
+void eraseBoard(int iMatBoard[10][10])
+{
+	for (int iRowIndex = 0; iRowIndex < 10; ++iRowIndex)
+	{
+		for (int iColIndex = 0; iColIndex < 10; ++iColIndex)
+		{
+			iMatBoard[iRowIndex][iColIndex] = 0;
+		}
+	}
+}
+
 void cleanScreen()
 {
 	for (int iCounter = 0; iCounter < 50; ++iCounter)
 	{
 		cout << endl;
 	}
+}
+
+void printRunningBoard(int iMatPlayerBoard[10][10], int iMatComputerBoard[10][10])
+{
+	cout << "\x1b[37m                           YOUR BOARD                                           COMPUTER BOARD" << endl << endl;
+	cout << "              A   B   C   D   E   F   G   H   I   J                      A   B   C   D   E   F   G   H   I   J " << endl;
+	cout << "             _______________________________________                    _______________________________________" << endl;
+
+	for (int iRowIndex = 0; iRowIndex < 10; ++iRowIndex)
+	{
+		cout << "            |   |   |   |   |   |   |   |   |   |   |                  |   |   |   |   |   |   |   |   |   |   |" << endl;
+		cout << "          " << iRowIndex << " ";
+
+		for (int iColIndex = 0; iColIndex < 10; ++iColIndex)
+		{
+			if (iMatPlayerBoard[iRowIndex][iColIndex])
+			{
+				cout << "|\x1b[0m O \x1b[37m";
+			}
+			else
+			{
+				cout << "|\x1b[34m . \x1b[37m";
+			}
+		}
+		cout << "|" << "                  ";
+
+		for (int iColIndex = 0; iColIndex < 10; ++iColIndex)
+		{
+			if (iMatComputerBoard[iRowIndex][iColIndex])
+			{
+				cout << "|\x1b[0m O \x1b[37m";
+			}
+			else
+			{
+				cout << "|\x1b[34m . \x1b[37m";
+			}
+		}
+		cout << "|" << endl;
+
+		cout << "            |___|___|___|___|___|___|___|___|___|___|                  |___|___|___|___|___|___|___|___|___|___|" << endl;		
+	}
+	cout << "\x1b[0m" << endl << endl;
 }
 
 bool checkIfWinner(int iMatBoard[10][10], bool bGameIsRunning)
@@ -51,10 +104,11 @@ bool checkIfWinner(int iMatBoard[10][10], bool bGameIsRunning)
 	return bIsWinner;
 }
 
-void checkIndividualShip(int iMatBoard[10][10], int iArrShipPosition[], int iShipSize)
+void checkIndividualShip(int iMatBoard[10][10], int iArrShipPosition[], int iShipSize, char cTeam)
 {
 	bool bIsSunken = true;
 
+	//Check for horizontal positioning
 	if (iArrShipPosition[0])
 	{
 		int iRowIndex = iArrShipPosition[1];
@@ -86,6 +140,8 @@ void checkIndividualShip(int iMatBoard[10][10], int iArrShipPosition[], int iShi
 			}
 		}
 	}
+
+	//Check for vertical positioning
 	else
 	{
 		int iColIndex = iArrShipPosition[1];
@@ -119,34 +175,34 @@ void checkIndividualShip(int iMatBoard[10][10], int iArrShipPosition[], int iShi
 	}
 }
 
-void checkComputerShips(int iMatBoard[10][10], int iArrComputerCarrierPosition[], int iArrComputerBattleshipPosition[], 
+void checkComputerShips(int iMatBoard[10][10], char cTeam, int iArrComputerCarrierPosition[], int iArrComputerBattleshipPosition[], 
 				        int iArrComputerCruiserPosition[], int iArrComputerSubmarinePosition[], int iArrComputerDestroyerPosition[])
 {
 	int iShipSize;
 
 	//Check Carrier status
 	iShipSize = 5;
-	checkIndividualShip(iMatBoard, iArrComputerCarrierPosition, iShipSize);
+	checkIndividualShip(iMatBoard, iArrComputerCarrierPosition, iShipSize, cTeam);
 
 	//Check Battleship status
 	iShipSize = 4;
-	checkIndividualShip(iMatBoard, iArrComputerBattleshipPosition, iShipSize);
+	checkIndividualShip(iMatBoard, iArrComputerBattleshipPosition, iShipSize, cTeam);
 
 	//Check Cruiser status
 	iShipSize = 3;
-	checkIndividualShip(iMatBoard, iArrComputerCruiserPosition, iShipSize);
+	checkIndividualShip(iMatBoard, iArrComputerCruiserPosition, iShipSize, cTeam);
 
 	//Check Submarine status
 	iShipSize = 3;
-	checkIndividualShip(iMatBoard, iArrComputerSubmarinePosition, iShipSize);
+	checkIndividualShip(iMatBoard, iArrComputerSubmarinePosition, iShipSize, cTeam);
 
 	//Check Destroyer status
 	iShipSize = 2;
-	checkIndividualShip(iMatBoard, iArrComputerDestroyerPosition, iShipSize);
+	checkIndividualShip(iMatBoard, iArrComputerDestroyerPosition, iShipSize, cTeam);
 
 }
 
-void playerExectueShot(int iMatBoard[10][10] int iXCoordinate, int iYCoordinate bool &bIsWrongInput)
+void playerExectueShot(int iMatBoard[10][10], int iXCoordinate, int iYCoordinate, bool &bIsWrongInput)
 {
 	if (iMatBoard[iXCoordinate][iYCoordinate] == 0)
 	{	
@@ -193,7 +249,7 @@ void getPlayerCoordinate(int iMatBoard[10][10], string sPlayerName, char cTeam)
 
 	while (bIsWrongInput)
 	{
-		cin >> sHitCoordinate
+		cin >> sHitCoordinate;
 
 		//Check if the coordinates are two characters long
 		if (sHitCoordinate.length() != 2)
@@ -218,7 +274,7 @@ void getPlayerCoordinate(int iMatBoard[10][10], string sPlayerName, char cTeam)
 				{
 					int iXCoordinate = sHitCoordinate[0] - 65;
 					int iYCoordinate = sHitCoordinate[1] - 48;
-					playerExectueShot(iMatBoard, iXCoordinate, iYCoordinate, bIsWrongInput, cTeam);
+					playerExectueShot(iMatBoard, iXCoordinate, iYCoordinate, bIsWrongInput);
 				}
 			}
 		}
@@ -232,8 +288,8 @@ void playerTurn(int iMatBoard[10][10], string sPlayerName, char cTeam, int iArrC
 {
 	getPlayerCoordinate(iMatBoard, sPlayerName, cTeam);
 
-	checkComputerShips(iMatBoard, iArrComputerCarrierPosition, iArrComputerBattleshipPosition, iArrComputerSubmarinePosition,
-			           iArrComputerDestroyerPosition);
+	checkComputerShips(iMatBoard, cTeam, iArrComputerCarrierPosition, iArrComputerBattleshipPosition, iArrComputerCruiserPosition,
+					   iArrComputerSubmarinePosition, iArrComputerDestroyerPosition);
 }
 
 void runGame(int iMatPlayerBoard[10][10], int iMatComputerBoard[10][10], string sPlayerName, char cTeam,
@@ -257,8 +313,8 @@ void runGame(int iMatPlayerBoard[10][10], int iMatComputerBoard[10][10], string 
 			break;
 		}
 
-		computerTurn(iMatPlayerBoard, iArrPlayerCarrierPosition, iArrPlayerBattleshipPosition,
-			         iArrPlayerCruiserPosition, iArrPlayerSubmarinePosition, iArrPlayerDestroyerPosition);
+		//computerTurn(iMatPlayerBoard, iArrPlayerCarrierPosition, iArrPlayerBattleshipPosition,
+		//	         iArrPlayerCruiserPosition, iArrPlayerSubmarinePosition, iArrPlayerDestroyerPosition);
 
 		bIsWinner = !checkIfWinner(iMatPlayerBoard, bGameIsRunning);
 	}
@@ -275,5 +331,9 @@ void runGame(int iMatPlayerBoard[10][10], int iMatComputerBoard[10][10], string 
 
 int main()
 {
+	int iMatComputerBoard[10][10], iMatPlayerBoard[10][10];
 
+	eraseBoard(iMatPlayerBoard);
+	eraseBoard(iMatComputerBoard);
+	printRunningBoard(iMatPlayerBoard, iMatComputerBoard);
 }
