@@ -12,6 +12,7 @@ Carlos Daniel Estrada Guerra       A01039919
 #include <cstdlib>
 #include <time.h>
 #include <unistd.h>
+#include <iomanip>
 using namespace std;
 
 //Japanese ship names
@@ -44,7 +45,9 @@ Return: a char provided by the user
 char getMenuInput()
 {
 	char cInput;
+	cout << "\x1b[37mEnter an option to continue --> ";
 	cin >> cInput;
+	cout << endl;
 	return cInput;
 }
 
@@ -62,6 +65,142 @@ void cleanScreen()
 	}
 }
 
+void showMenu()
+{
+	cleanScreen();
+
+	int iHeight = 30;
+	int iWidth = 81;
+	char cMatMenu[iHeight][iWidth] =
+	{   "################################################################################",
+	    "#                                                                              #",
+	    "#                                                                              #",
+	    "#          ******   ******     ***     *****    **                             #",
+	    "#          **   **  **        ** **    **  **   **                             #",
+	    "#          ******   *****    *******   *****    **                             #",
+	    "#          **       **      **     **  ** **    **                             #",
+	    "#          **       ****** **       ** **   **  ******                         #",
+	    "#                                                                              #",
+	    "#                **   **      ***      *****    ****      ****    *****        #",
+	    "#                **   **     ** **     **  **   **  *    **  **   **  **       #",
+	    "#                *******    *******    ****     ******  **    **  *****        #",
+	    "#                **   **   **     **   ** **    **   *   **  **   ** **        #",
+	    "#                **   **  **       **  **   **  ******    ****    **  **       #",
+	    "#                                                                              #",
+	    "#                              PLAY GAME  (P)                                  #",
+	    "#                                                                              #",
+	    "#                             INSTRUCTIONS (I)                                 #",
+	    "#                                                                              #",
+	    "#                               ABOUT (A)                                      #",
+	    "#                                                                              #",
+	    "#                               EXIT  (E)                                      #",
+	    "#                                                                              #",
+	    "#                                                                              #",
+	    "#                                                                              #",
+	    "#                                                                              #",
+	    "#                                version 1.0                                   #",
+	    "#                                                                              #",
+	    "################################################################################",
+	}	;
+
+	for (int iRowIndex = 0; iRowIndex < iHeight; ++iRowIndex)
+	{
+		cout << setw(10);
+
+		for (int iColIndex = 0; iColIndex < iWidth; ++iColIndex)
+		{
+			if (iRowIndex > 2 && iRowIndex < 14)
+			{
+				if (iColIndex > 1 && iColIndex < 75)
+				{
+					cout << "\x1b[31m" << cMatMenu[iRowIndex][iColIndex];
+				}
+				else
+				{
+					cout << "\x1b[37m" << cMatMenu[iRowIndex][iColIndex];
+				}
+			}
+			else
+			{
+				cout << "\x1b[37m" << cMatMenu[iRowIndex][iColIndex];	
+			}
+		}
+
+		cout << endl;
+	}
+}
+
+void showHit(bool bIsPlayer)
+{
+	cleanScreen();
+
+	int iIndenting = 60;
+
+	cout << "\x1b[31m";
+	cout << setw(iIndenting) << "**   **   **   ******   ** " << endl;
+	cout << setw(iIndenting) << "**   **   **   ******   ** " << endl;
+	cout << setw(iIndenting) << "*******   **     **     ** " << endl;
+	cout << setw(iIndenting) << "*******   **     **     ** " << endl;
+	cout << setw(iIndenting) << "**   **   **     **        " << endl;
+	cout << setw(iIndenting) << "**   **   **     **     ** " << endl;
+	cout << "\x1b[37m";
+
+	cout << endl << endl;
+
+	if (bIsPlayer)
+	{
+		cout << setw(iIndenting + 7) << "Admiral, we've hit one of the enemy ships!" << endl;
+	}
+	else
+	{
+		cout << setw(iIndenting + 9) << "Admiral, The enemy has hit one of your ships!" << endl;
+	}
+
+	for (int iCounter = 0; iCounter < 7; ++iCounter)
+	{
+		cout << endl;
+	}
+
+	usleep(2000000);
+
+}
+	
+void showMiss(bool bIsPlayer)
+{
+	cleanScreen();
+
+	int iIndenting = 65;
+
+	cout << "\x1b[36m";
+	cout << setw(iIndenting) << "**        **   **    *****    *****   ** " << endl;
+	cout << setw(iIndenting) << "***      ***   **   **       **       ** " << endl;
+	cout << setw(iIndenting) << "****    ****   **   ****     ****     ** " << endl;
+	cout << setw(iIndenting) << "** **  ** **   **     ****     ****   ** " << endl;
+	cout << setw(iIndenting) << "**  ****  **   **       **       **      " << endl;
+	cout << setw(iIndenting) << "**   **   **   **    *****    *****   ** " << endl;
+	cout << "\x1b[37m";
+
+	cout << endl << endl;
+
+	if (bIsPlayer)
+	{
+		cout << setw(iIndenting + 0) << "Admiral, we've miss the shot, a tragedy!" << endl;
+	}
+	else
+	{
+		cout << setw(iIndenting + 19) << "Admiral, The enemy has missed the shot, but our luck might run out soon!" << endl;
+	}
+
+	for (int iCounter = 0; iCounter < 7; ++iCounter)
+	{
+		cout << endl;
+	}
+
+	usleep(2000000);
+
+}
+
+
 /*
 -------------------------------------------------------------
 	SETUP FUNCTIONS
@@ -77,8 +216,57 @@ Return: a string with the name
 string getPlayerName()
 {
 	string sName;
-	cout << "Enter your name: " << endl;
+	cleanScreen();
+
+	int iHeight = 30;
+	int iWidth = 81;
+	char cMatMenu[iHeight][iWidth] =
+	{   "################################################################################",
+	    "#                                                                              #",
+	    "#                                                                              #",
+	    "#                                                                              #",
+	    "#                                                                              #",
+	    "#                                                                              #",
+	    "#                                                                              #",
+	    "#                                                                              #",
+	    "#                    **   **        **                                         #",
+	    "#                    ***  **       ****                                        #",
+	    "#                    **** **      **  **                                       #",
+	    "#                    ** ****     ********                                      #",
+	    "#                    **  ***    **      **                                     #",
+	    "#                    **   **   **        **                                    #",
+	    "#                                                                              #",
+	    "#                                                                              #",
+	    "#                                                                              #",
+	    "#                                                                              #",
+	    "#                                                                              #",
+	    "#                                                                              #",
+	    "#                                                                              #",
+	    "#                                                                              #",
+	    "#                                                                              #",
+	    "#                                                                              #",
+	    "#                                                                              #",
+	    "#                                                                              #",
+	    "#                                                                              #",
+	    "################################################################################",
+	}	;
+
+	for (int iRowIndex = 0; iRowIndex < iHeight; ++iRowIndex)
+	{
+		cout << setw(15);
+
+		for (int iColIndex = 0; iColIndex < iWidth; ++iColIndex)
+		{
+			cout << "\x1b[37m" << cMatMenu[iRowIndex][iColIndex];
+		}
+
+		cout << endl;
+	}
+	cout << endl << endl;
+
+	cout << "Enter your name --> ";	
 	cin >> sName;
+	cout << endl;	
 	return sName;
 }
 
@@ -129,14 +317,15 @@ Return: nothing
 */
 void printSetupBoard(int iMatBoard[10][10])
 {
-	cout << "\x1b[37m                           YOUR BOARD" << endl << endl;
-	cout << "              A   B   C   D   E   F   G   H   I   J" << endl;
-	cout << "             _______________________________________ " << endl;
+	int iIndenting = 7;
+	cout << setw(33+iIndenting) << "\x1b[37mYOUR BOARD" << endl << endl;
+	cout << setw(41+iIndenting) <<"A   B   C   D   E   F   G   H   I   J" << endl;
+	cout << setw(43+iIndenting) << "_______________________________________ " << endl;
 
 	for (int iRowIndex = 0; iRowIndex < 10; ++iRowIndex)
 	{
-		cout << "            |   |   |   |   |   |   |   |   |   |   |" << endl;
-		cout << "          " << iRowIndex << " ";
+		cout << setw(43+iIndenting) << "|   |   |   |   |   |   |   |   |   |   |" << endl;
+		cout << setw(1+iIndenting) << iRowIndex << " ";
 
 		for (int iColIndex = 0; iColIndex < 10; ++iColIndex)
 		{
@@ -150,7 +339,7 @@ void printSetupBoard(int iMatBoard[10][10])
 			}
 		}
 		cout << "|" << endl;
-		cout << "            |___|___|___|___|___|___|___|___|___|___|" << endl;		
+		cout << setw(43+iIndenting) << "|___|___|___|___|___|___|___|___|___|___|" << endl;		
 	}
 	cout << "\x1b[0m" << endl << endl;
 }
@@ -868,7 +1057,7 @@ void playerExectueShot(int iMatComputerBoard[10][10], int iXCoordinate, int iYCo
 {
 	if (iMatComputerBoard[iYCoordinate][iXCoordinate] == 0)
 	{	
-		cout << "You've missed!" << endl;
+		showMiss(1);
 		iMatComputerBoard[iYCoordinate][iXCoordinate] = 3;	
 		bIsWrongInput = false;
 	}
@@ -876,7 +1065,7 @@ void playerExectueShot(int iMatComputerBoard[10][10], int iXCoordinate, int iYCo
 	{
 		if (iMatComputerBoard[iYCoordinate][iXCoordinate] == 1)
 		{
-			cout << "You've hit a ship!" << endl;
+			showHit(1);
 			iMatComputerBoard[iYCoordinate][iXCoordinate] = 2;
 			bIsWrongInput = false;
 		}
@@ -1072,7 +1261,7 @@ void computerExecuteShot(int iMatPlayerBoard[10][10], int iXCoordinate, int iYCo
 {
 	if (iMatPlayerBoard[iYCoordinate][iXCoordinate] == 1)
 	{
-		cout << "The enemy has hit your ship!" << endl;
+		showHit(0);
 		iMatPlayerBoard[iYCoordinate][iXCoordinate] = 2;
 		bIsWrongCoordinate = false;
 	}
@@ -1080,7 +1269,7 @@ void computerExecuteShot(int iMatPlayerBoard[10][10], int iXCoordinate, int iYCo
 	{
 		if (iMatPlayerBoard[iYCoordinate][iXCoordinate] == 0)
 		{
-			cout << "The enemy has missed!" << endl;
+			showMiss(0);
 			iMatPlayerBoard[iYCoordinate][iXCoordinate] = 3;
 			bIsWrongCoordinate = false;
 		}
@@ -1163,6 +1352,8 @@ int main()
 {
 	bool bRunGame = true;
 
+	showMenu();	
+
 	while (bRunGame)
 	{
 		int iMatPlayerBoard[10][10], iMatComputerBoard[10][10];
@@ -1223,7 +1414,8 @@ int main()
 
 			//Case when a wrong letter is introduced
 			default:
-				cout << "Invalid option" << endl;
+				showMenu();
+				cout << "\x1b[31mInvalid option" << endl;
 				break;
 		}
 	}
