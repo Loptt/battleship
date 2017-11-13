@@ -71,6 +71,12 @@ void pressToContinue()
     cin.ignore();
 }
 
+void pressToReturnToMenu()
+{
+	cout << "Press Enter to return to the Main Menu...";
+    cin.ignore();
+}
+
 void showMenu()
 {
 	cleanScreen();
@@ -104,7 +110,7 @@ void showMenu()
 	    "#                                                                              #",
 	    "#                                                                              #",
 	    "#                                                                              #",
-	    "#                                version 1.0                                   #",
+	    "#                                version 1.s0                                   #",
 	    "#                                                                              #",
 	    "################################################################################",
 	}	;
@@ -134,6 +140,11 @@ void showMenu()
 
 		cout << endl;
 	}
+}
+
+void showInstructions()
+{
+	
 }
 
 void showHit(bool bIsPlayer)
@@ -303,6 +314,87 @@ void showSank(bool bIsPlayer, string sShip)
 	pressToContinue();
 }
 
+void showResult(string sPlayerName, char cTeam, bool bIsWinner)
+{
+	cleanScreen();
+
+	int iIndenting = 70;
+
+	if (bIsWinner)
+	{
+		cout << "\x1b[36m";
+		cout << setw(iIndenting) << " **  **      ****      **    **  " << endl;
+		cout << setw(iIndenting) << "  ****     **    **    **    **  " << endl;
+		cout << setw(iIndenting) << "   **     **      **   **    **  " << endl;
+		cout << setw(iIndenting) << "   **     **      **   **    **  " << endl;
+		cout << setw(iIndenting) << "   **      **    **     **  **   " << endl;
+		cout << setw(iIndenting) << "   **        ****        ****    " << endl;
+
+		cout << endl << endl;
+
+		cout << setw(iIndenting + 6) << " **   **   **      ****      **   **   ** " << endl;
+		cout << setw(iIndenting + 6) << " **  ****  **    **    **    ***  **   ** " << endl;
+		cout << setw(iIndenting + 6) << " ** **  ** **   **      **   **** **   ** " << endl;
+		cout << setw(iIndenting + 6) << " ****    ****   **      **   ** ****   ** " << endl;
+		cout << setw(iIndenting + 6) << " ***      ***    **    **    **  ***      " << endl;
+		cout << setw(iIndenting + 6) << " **        **      ****      **   **   ** " << endl;
+		cout << "\x1b[37m";
+
+		cout << endl << endl;
+
+		if (cTeam == 'J' || cTeam == 'j')
+		{
+			cout << setw(iIndenting - 28) << "Admiral " << sPlayerName << "-San, " << "we have defeated the enemy! " << endl;
+			cout << setw(iIndenting + 5) << "Japan shall rule the seas for eternity!" << endl;
+		}
+		else
+		{
+			cout << setw(iIndenting - 28) << "Admiral " << sPlayerName << ", we have defeated the enemy! " << endl;
+			cout << setw(iIndenting + 17) << "The United States shall rule the Pacific for centuries to come!" << endl;
+		}
+	}
+	else
+	{
+		cout << "\x1b[36m";
+		cout << setw(iIndenting) << " **  **      ****      **    **  " << endl;
+		cout << setw(iIndenting) << "  ****     **    **    **    **  " << endl;
+		cout << setw(iIndenting) << "   **     **      **   **    **  " << endl;
+		cout << setw(iIndenting) << "   **     **      **   **    **  " << endl;
+		cout << setw(iIndenting) << "   **      **    **     **  **   " << endl;
+		cout << setw(iIndenting) << "   **        ****        ****    " << endl;
+
+		cout << endl << endl;
+
+		cout << setw(iIndenting + 6) << " **         ****       *****   ******   **" << endl;
+		cout << setw(iIndenting + 6) << " **       **    **    **       ******   **" << endl;
+		cout << setw(iIndenting + 6) << " **      **      **   ****       **     **" << endl;
+		cout << setw(iIndenting + 6) << " **      **      **    ****      **     **" << endl;
+		cout << setw(iIndenting + 6) << " **       **    **       **      **       " << endl;
+		cout << setw(iIndenting + 6) << " *****      ****      *****      **     **" << endl;
+		cout << "\x1b[37m";
+
+		cout << endl << endl;
+
+		if (cTeam == 'J' || cTeam == 'j')
+		{
+			cout << setw(iIndenting - 28) << "Admiral " << sPlayerName << "-San, " << "the enemy is victorious! " << endl;
+			cout << setw(iIndenting + 10) << "Dishonor for our families and generations to come!" << endl;
+		}
+		else
+		{
+			cout << setw(iIndenting - 28	) << "Admiral " << sPlayerName << ", the enemy has defeated us! " << endl;
+			cout << setw(iIndenting + 6) << "The founding fathers shall be ashamed of us!" << endl;
+		}
+	}
+
+	for (int iCounter = 0; iCounter < 7; ++iCounter)
+	{
+		cout << endl;
+	}
+
+	pressToReturnToMenu();
+}
+
 
 /*
 -------------------------------------------------------------
@@ -335,7 +427,7 @@ string getPlayerName()
 		cout << endl;
 	}
 
-	cout << "Enter your name --> ";	
+	cout << "Admiral, what is your name? --> ";	
 	cin >> sName;
 	cout << endl;	
 	return sName;
@@ -351,6 +443,7 @@ char chooseTeam()
 {
 	char cTeam;
 
+	cout << "Choose your country!" << endl;
 	cout << "Do you want to play as Japan (J) or the United States (U)?" << endl;
 	cin >> cTeam;
 
@@ -1420,14 +1513,7 @@ void runGame(int iMatPlayerBoard[10][10], int iMatComputerBoard[10][10], string 
 		bIsWinner = !checkIfWinner(iMatPlayerBoard, bGameIsRunning);
 	}
 
-	if (bIsWinner)	
-	{
-		cout << "You won!" << endl;
-	}
-	else
-	{
-		cout << "You lost!" << endl;
-	}
+	showResult(sPlayerName, cTeam, bIsWinner);
 }
 
 /*
@@ -1506,6 +1592,8 @@ int main()
 				cout << "\x1b[31mInvalid option" << endl;
 				break;
 		}
+
+		showMenu();
 	}
 
 	return 0;    
