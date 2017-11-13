@@ -29,6 +29,38 @@ void cleanScreen()
 	}
 }
 
+void pressToContinue()
+{
+	cout << "Press Enter to continue...";
+    cin.ignore();
+}
+
+void showComputerTurn()
+{
+	cleanScreen();
+
+	int iIndenting = 75;
+
+	cout << "\x1b[31m";
+	cout << setw(iIndenting) << " ******   **   **   ******   **        **  **  **   ** " << endl;
+	cout << setw(iIndenting) << " **       ***  **   **       ***      ***   ****    ** " << endl;
+	cout << setw(iIndenting) << " ******   **** **   ******   ****    ****    **     ** " << endl;
+	cout << setw(iIndenting) << " **       ** ****   **       ** **  ** **    **     ** " << endl;
+	cout << setw(iIndenting) << " **       **  ***   **       **  ****  **    **        " << endl;
+	cout << setw(iIndenting) << " ******   **   **   ******   **   **   **    **     ** " << endl;
+	cout << "\x1b[37m";
+
+	cout << endl << endl;
+
+	cout << setw(iIndenting + 2) << "It's the enemy's turn to strike! Brace yourself for impact!" << endl;	
+
+	for (int iCounter = 0; iCounter < 7; ++iCounter)
+	{
+		cout << endl;
+	}
+
+	usleep(2000000);
+}
 
 void showHit(bool bIsPlayer)
 {
@@ -61,6 +93,40 @@ void showHit(bool bIsPlayer)
 
 	usleep(3000000);
 
+}
+
+void showSank(bool bIsPlayer, string sShip)
+{
+	cleanScreen();
+
+	int iIndenting = 75;
+
+	cout << "\x1b[31m";
+	cout << setw(iIndenting) << "  *****        **        **   **    **  **   ** " << endl;
+	cout << setw(iIndenting) << " **           ****       ***  **    ** **    ** " << endl;
+	cout << setw(iIndenting) << " ****        **  **      **** **    ***      ** " << endl;
+	cout << setw(iIndenting) << "   ****     ********     ** ****    ****     ** " << endl;
+	cout << setw(iIndenting) << "     **    **      **    **  ***    ** **       " << endl;
+	cout << setw(iIndenting) << "  *****   **        **   **   **    **  **   ** " << endl;
+	cout << "\x1b[37m";
+
+	cout << endl << endl;
+
+	if (bIsPlayer)
+	{
+		cout << setw(iIndenting - 21) << "You have sank the enemy " << "\x1b[36m" << sShip << "\x1b[37m" << "!";
+	}
+	else
+	{
+		cout << setw(iIndenting - 25) << "The enemy has sank our " << "\x1b[36m" << sShip << "\x1b[37m" << "! A black day!";
+	}
+
+	for (int iCounter = 0; iCounter < 7; ++iCounter)
+	{
+		cout << endl;
+	}
+
+	pressToContinue();
 }
 
 void showMiss(bool bIsPlayer)
@@ -98,8 +164,9 @@ void showMiss(bool bIsPlayer)
 
 int main()
 {
-	showHit(1);
-	showHit(0);
-	showMiss(1);
-	showMiss(0);
+	//showHit(1);
+	//showHit(0);
+	//showMiss(1);
+	//showMiss(0);
+	showSank(1, "HOLIII");
 }
