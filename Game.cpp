@@ -12,6 +12,7 @@ Carlos Daniel Estrada Guerra       A01039919
 #include <cstdlib>
 #include <time.h>
 #include <unistd.h>
+#include <iomanip>
 using namespace std;
 
 //Japanese ship names
@@ -44,7 +45,9 @@ Return: a char provided by the user
 char getMenuInput()
 {
 	char cInput;
+	cout << "\x1b[37mEnter an option to continue --> ";
 	cin >> cInput;
+	cout << endl;
 	return cInput;
 }
 
@@ -62,6 +65,337 @@ void cleanScreen()
 	}
 }
 
+void pressToContinue()
+{
+	cout << "Press Enter to continue...";
+    cin.ignore();
+}
+
+void pressToReturnToMenu()
+{
+	cout << "Press Enter to return to the Main Menu...";
+    cin.ignore();
+}
+
+void showMenu()
+{
+	cleanScreen();
+
+	int iHeight = 30;
+	int iWidth = 81;
+	char cMatMenu[iHeight][iWidth] =
+	{   "################################################################################",
+	    "#                                                                              #",
+	    "#                                                                              #",
+	    "#          ******   ******     ***     *****    **                             #",
+	    "#          **   **  **        ** **    **  **   **                             #",
+	    "#          ******   *****    *******   *****    **                             #",
+	    "#          **       **      **     **  ** **    **                             #",
+	    "#          **       ****** **       ** **   **  ******                         #",
+	    "#                                                                              #",
+	    "#                **   **      ***      *****    ****      ****    *****        #",
+	    "#                **   **     ** **     **  **   **  *    **  **   **  **       #",
+	    "#                *******    *******    ****     ******  **    **  *****        #",
+	    "#                **   **   **     **   ** **    **   *   **  **   ** **        #",
+	    "#                **   **  **       **  **   **  ******    ****    **  **       #",
+	    "#                                                                              #",
+	    "#                              PLAY GAME  (P)                                  #",
+	    "#                                                                              #",
+	    "#                             INSTRUCTIONS (I)                                 #",
+	    "#                                                                              #",
+	    "#                               ABOUT (A)                                      #",
+	    "#                                                                              #",
+	    "#                               EXIT  (E)                                      #",
+	    "#                                                                              #",
+	    "#                                                                              #",
+	    "#                                                                              #",
+	    "#                                                                              #",
+	    "#                                version 1.0                                   #",
+	    "#                                                                              #",
+	    "################################################################################",
+	}	;
+
+	for (int iRowIndex = 0; iRowIndex < iHeight; ++iRowIndex)
+	{
+		cout << setw(10);
+
+		for (int iColIndex = 0; iColIndex < iWidth; ++iColIndex)
+		{
+			if (iRowIndex > 2 && iRowIndex < 14)
+			{
+				if (iColIndex > 1 && iColIndex < 75)
+				{
+					cout << "\x1b[5;31m" << cMatMenu[iRowIndex][iColIndex];
+				}
+				else
+				{
+					cout << "\x1b[25;37m" << cMatMenu[iRowIndex][iColIndex];
+				}
+			}
+			else
+			{
+				cout << "\x1b[25;37m" << cMatMenu[iRowIndex][iColIndex];	
+			}
+		}
+
+		cout << endl;
+	}
+}
+
+void showInstructions()
+{
+	
+}
+
+void showHit(bool bIsPlayer)
+{
+	cleanScreen();
+
+	int iIndenting = 60;
+
+	cout << "\x1b[31m";
+	cout << setw(iIndenting) << "**   **   **   ******   ** " << endl;
+	cout << setw(iIndenting) << "**   **   **   ******   ** " << endl;
+	cout << setw(iIndenting) << "*******   **     **     ** " << endl;
+	cout << setw(iIndenting) << "*******   **     **     ** " << endl;
+	cout << setw(iIndenting) << "**   **   **     **        " << endl;
+	cout << setw(iIndenting) << "**   **   **     **     ** " << endl;
+	cout << "\x1b[37m";
+
+	cout << endl << endl;
+
+	if (bIsPlayer)
+	{
+		cout << setw(iIndenting + 7) << "Admiral, we've hit one of the enemy ships!" << endl;
+		//usleep(2000000);
+	}
+	else
+	{
+		cout << setw(iIndenting + 9) << "Admiral, The enemy has hit one of your ships!" << endl;
+	}
+
+	for (int iCounter = 0; iCounter < 7; ++iCounter)
+	{
+		cout << endl;
+	}
+
+
+	pressToContinue();
+}
+
+void showComputerTurn()
+{
+	cleanScreen();
+
+	int iIndenting = 75;
+
+	cout << "\x1b[31m";
+	cout << setw(iIndenting) << " ******   **   **   ******   **        **  **  **   ** " << endl;
+	cout << setw(iIndenting) << " **       ***  **   **       ***      ***   ****    ** " << endl;
+	cout << setw(iIndenting) << " ******   **** **   ******   ****    ****    **     ** " << endl;
+	cout << setw(iIndenting) << " **       ** ****   **       ** **  ** **    **     ** " << endl;
+	cout << setw(iIndenting) << " **       **  ***   **       **  ****  **    **        " << endl;
+	cout << setw(iIndenting) << " ******   **   **   ******   **   **   **    **     ** " << endl;
+	cout << "\x1b[37m";
+
+	cout << endl << endl;
+
+	cout << setw(iIndenting + 2) << "It's the enemy's turn to strike! Brace yourself for impact!" << endl;	
+
+	for (int iCounter = 0; iCounter < 7; ++iCounter)
+	{
+		cout << endl;
+	}
+
+	pressToContinue();
+}
+
+void showPlayerTurn()
+{
+	cleanScreen();
+
+	int iIndenting = 80;
+
+	cout << "\x1b[36m";
+	cout << setw(iIndenting) << " **  **      ****      **    **   **  " << endl;
+	cout << setw(iIndenting) << "  ****     **    **    **    **   **  " << endl;
+	cout << setw(iIndenting) << "   **     **      **   **    **   **  " << endl;
+	cout << setw(iIndenting) << "   **     **      **   **    **   **  " << endl;
+	cout << setw(iIndenting) << "   **      **    **     **  **        " << endl;
+	cout << setw(iIndenting) << "   **        ****        ****     **  " << endl;
+	cout << "\x1b[37m";
+
+	cout << endl << endl;
+
+	cout << setw(iIndenting + 15) << "It's your turn to strike! Let's show them who rules the sea!" << endl;	
+
+	for (int iCounter = 0; iCounter < 7; ++iCounter)
+	{
+		cout << endl;
+	}
+
+	usleep(3000000);
+
+	pressToContinue();
+}
+	
+void showMiss(bool bIsPlayer)
+{
+	cleanScreen();
+
+	int iIndenting = 65;
+
+	cout << "\x1b[36m";
+	cout << setw(iIndenting) << "**        **   **    *****    *****   ** " << endl;
+	cout << setw(iIndenting) << "***      ***   **   **       **       ** " << endl;
+	cout << setw(iIndenting) << "****    ****   **   ****     ****     ** " << endl;
+	cout << setw(iIndenting) << "** **  ** **   **     ****     ****   ** " << endl;
+	cout << setw(iIndenting) << "**  ****  **   **       **       **      " << endl;
+	cout << setw(iIndenting) << "**   **   **   **    *****    *****   ** " << endl;
+	cout << "\x1b[37m";
+
+	cout << endl << endl;
+
+	if (bIsPlayer)
+	{
+		cout << setw(iIndenting + 0) << "Admiral, we've miss the shot, a tragedy!" << endl;
+		for (int iCounter = 0; iCounter < 7; ++iCounter)
+		{
+			cout << endl;
+		}
+		
+		//usleep(2000000);
+	}
+	else
+	{
+		cout << setw(iIndenting + 19) << "Admiral, The enemy has missed the shot, but our luck might run out soon!" << endl;
+	}
+
+	for (int iCounter = 0; iCounter < 7; ++iCounter)
+	{
+		cout << endl;
+	}
+
+	pressToContinue();
+
+}
+
+void showSank(bool bIsPlayer, string sShip)
+{
+	cleanScreen();
+
+	int iIndenting = 75;
+
+	cout << "\x1b[31m";
+	cout << setw(iIndenting) << "  *****        **        **   **    **  **   ** " << endl;
+	cout << setw(iIndenting) << " **           ****       ***  **    ** **    ** " << endl;
+	cout << setw(iIndenting) << " ****        **  **      **** **    ***      ** " << endl;
+	cout << setw(iIndenting) << "   ****     ********     ** ****    ****     ** " << endl;
+	cout << setw(iIndenting) << "     **    **      **    **  ***    ** **       " << endl;
+	cout << setw(iIndenting) << "  *****   **        **   **   **    **  **   ** " << endl;
+	cout << "\x1b[37m";
+
+	cout << endl << endl;
+
+	if (bIsPlayer)
+	{
+		cout << setw(iIndenting - 21) << "You have sank the enemy " << "\x1b[36m" << sShip << "\x1b[37m" << "!";
+	}
+	else
+	{
+		cout << setw(iIndenting - 21) << "The enemy has sank our " << "\x1b[36m" << sShip << "\x1b[37m" << "! A black day!";
+	}
+
+	for (int iCounter = 0; iCounter < 7; ++iCounter)
+	{
+		cout << endl;
+	}
+
+	pressToContinue();
+}
+
+void showResult(string sPlayerName, char cTeam, bool bIsWinner)
+{
+	cleanScreen();
+
+	int iIndenting = 70;
+
+	if (bIsWinner)
+	{
+		cout << "\x1b[36m";
+		cout << setw(iIndenting) << " **  **      ****      **    **  " << endl;
+		cout << setw(iIndenting) << "  ****     **    **    **    **  " << endl;
+		cout << setw(iIndenting) << "   **     **      **   **    **  " << endl;
+		cout << setw(iIndenting) << "   **     **      **   **    **  " << endl;
+		cout << setw(iIndenting) << "   **      **    **     **  **   " << endl;
+		cout << setw(iIndenting) << "   **        ****        ****    " << endl;
+
+		cout << endl << endl;
+
+		cout << setw(iIndenting + 6) << " **   **   **      ****      **   **   ** " << endl;
+		cout << setw(iIndenting + 6) << " **  ****  **    **    **    ***  **   ** " << endl;
+		cout << setw(iIndenting + 6) << " ** **  ** **   **      **   **** **   ** " << endl;
+		cout << setw(iIndenting + 6) << " ****    ****   **      **   ** ****   ** " << endl;
+		cout << setw(iIndenting + 6) << " ***      ***    **    **    **  ***      " << endl;
+		cout << setw(iIndenting + 6) << " **        **      ****      **   **   ** " << endl;
+		cout << "\x1b[37m";
+
+		cout << endl << endl;
+
+		if (cTeam == 'J' || cTeam == 'j')
+		{
+			cout << setw(iIndenting - 28) << "Admiral " << sPlayerName << "-San, " << "we have defeated the enemy! " << endl;
+			cout << setw(iIndenting + 5) << "Japan shall rule the seas for eternity!" << endl;
+		}
+		else
+		{
+			cout << setw(iIndenting - 28) << "Admiral " << sPlayerName << ", we have defeated the enemy! " << endl;
+			cout << setw(iIndenting + 17) << "The United States shall rule the Pacific for centuries to come!" << endl;
+		}
+	}
+	else
+	{
+		cout << "\x1b[36m";
+		cout << setw(iIndenting) << " **  **      ****      **    **  " << endl;
+		cout << setw(iIndenting) << "  ****     **    **    **    **  " << endl;
+		cout << setw(iIndenting) << "   **     **      **   **    **  " << endl;
+		cout << setw(iIndenting) << "   **     **      **   **    **  " << endl;
+		cout << setw(iIndenting) << "   **      **    **     **  **   " << endl;
+		cout << setw(iIndenting) << "   **        ****        ****    " << endl;
+
+		cout << endl << endl;
+
+		cout << setw(iIndenting + 6) << " **         ****       *****   ******   **" << endl;
+		cout << setw(iIndenting + 6) << " **       **    **    **       ******   **" << endl;
+		cout << setw(iIndenting + 6) << " **      **      **   ****       **     **" << endl;
+		cout << setw(iIndenting + 6) << " **      **      **    ****      **     **" << endl;
+		cout << setw(iIndenting + 6) << " **       **    **       **      **       " << endl;
+		cout << setw(iIndenting + 6) << " *****      ****      *****      **     **" << endl;
+		cout << "\x1b[37m";
+
+		cout << endl << endl;
+
+		if (cTeam == 'J' || cTeam == 'j')
+		{
+			cout << setw(iIndenting - 28) << "Admiral " << sPlayerName << "-San, " << "the enemy is victorious! " << endl;
+			cout << setw(iIndenting + 10) << "Dishonor for our families and generations to come!" << endl;
+		}
+		else
+		{
+			cout << setw(iIndenting - 28	) << "Admiral " << sPlayerName << ", the enemy has defeated us! " << endl;
+			cout << setw(iIndenting + 6) << "The founding fathers shall be ashamed of us!" << endl;
+		}
+	}
+
+	for (int iCounter = 0; iCounter < 7; ++iCounter)
+	{
+		cout << endl;
+	}
+
+	pressToReturnToMenu();
+}
+
+
 /*
 -------------------------------------------------------------
 	SETUP FUNCTIONS
@@ -77,8 +411,25 @@ Return: a string with the name
 string getPlayerName()
 {
 	string sName;
-	cout << "Enter your name: " << endl;
+	cleanScreen();
+
+	cout << "\x1b[36m";
+	cout << setw(70) << "**   **        **      ****     ****  ******    ******  " << endl;
+	cout << setw(70) << "***  **       ****     *****   *****  **            **  " << endl;
+	cout << setw(70) << "** * **      **  **    **  ** **  **  ******        **  " << endl;
+	cout << setw(70) << "**  ***     ********   **   ****  **  **        ******  " << endl;
+	cout << setw(70) << "**   **    **      **  **         **  **        **      " << endl;
+	cout << setw(70) << "**   **   **        ** **         **  ******    *       " << endl;
+	cout << "\x1b[0m" << "\x1b[37m";
+
+	for (int iCounter = 0; iCounter < 7; ++iCounter)
+	{
+		cout << endl;
+	}
+
+	cout << "Admiral, what is your name? --> ";	
 	cin >> sName;
+	cout << endl;	
 	return sName;
 }
 
@@ -92,6 +443,7 @@ char chooseTeam()
 {
 	char cTeam;
 
+	cout << "Choose your country!" << endl;
 	cout << "Do you want to play as Japan (J) or the United States (U)?" << endl;
 	cin >> cTeam;
 
@@ -102,6 +454,32 @@ char chooseTeam()
 	}
 
 	return cTeam;
+}
+
+int getDifficulty()
+{
+	char cDifficulty;
+	int iDifficulty;
+
+	cleanScreen();
+
+	cout << "Choose your game difficulty! Easy (E) or Normal (N):" << endl << "--> ";
+	cin >> cDifficulty;
+
+	while (cDifficulty != 'N' && cDifficulty != 'n' && cDifficulty != 'e' && cDifficulty != 'E')
+
+	if (cDifficulty == 'N' || cDifficulty == 'n')
+	{
+		iDifficulty = 2;
+	}
+	else
+	{
+		iDifficulty = 1;
+	}
+
+	cleanScreen();
+
+	return iDifficulty;
 }
 
 /*
@@ -129,14 +507,15 @@ Return: nothing
 */
 void printSetupBoard(int iMatBoard[10][10])
 {
-	cout << "\x1b[37m                           YOUR BOARD" << endl << endl;
-	cout << "              A   B   C   D   E   F   G   H   I   J" << endl;
-	cout << "             _______________________________________ " << endl;
+	int iIndenting = 7;
+	cout << setw(33+iIndenting) << "\x1b[37mYOUR BOARD" << endl << endl;
+	cout << setw(41+iIndenting) <<"A   B   C   D   E   F   G   H   I   J" << endl;
+	cout << setw(43+iIndenting) << "_______________________________________ " << endl;
 
 	for (int iRowIndex = 0; iRowIndex < 10; ++iRowIndex)
 	{
-		cout << "            |   |   |   |   |   |   |   |   |   |   |" << endl;
-		cout << "          " << iRowIndex << " ";
+		cout << setw(43+iIndenting) << "|   |   |   |   |   |   |   |   |   |   |" << endl;
+		cout << setw(1+iIndenting) << iRowIndex << " ";
 
 		for (int iColIndex = 0; iColIndex < 10; ++iColIndex)
 		{
@@ -150,7 +529,7 @@ void printSetupBoard(int iMatBoard[10][10])
 			}
 		}
 		cout << "|" << endl;
-		cout << "            |___|___|___|___|___|___|___|___|___|___|" << endl;		
+		cout << setw(43+iIndenting) << "|___|___|___|___|___|___|___|___|___|___|" << endl;		
 	}
 	cout << "\x1b[0m" << endl << endl;
 }
@@ -361,8 +740,9 @@ void getPlayerPositions(int iMatPlayerBoard[10][10], string sPlayerName, char cT
 		//Carrier
 		iShipSize = 5;
 
-		cout << "Admiral " << sPlayerName << "-San, enter the starting and ending coordinates of your " << sJapaneseCarrier;
-		cout << " (" << iShipSize << " spaces)" << endl;
+		cout << "Admiral " << sPlayerName << "-San, enter the starting and ending coordinates of your "  << "\x1b[36m" << sJapaneseCarrier;
+		cout << "\x1b[0m" << " (" << iShipSize << " spaces)" << endl; 
+	    cout << "Example : A1 E1 (Separated by spaces)" << endl << "-->";
 
 		readUserPositions(iMatPlayerBoard, iShipSize, iArrPlayerCarrierPosition);
 
@@ -373,8 +753,9 @@ void getPlayerPositions(int iMatPlayerBoard[10][10], string sPlayerName, char cT
 		//Battleship
 		iShipSize = 4;
 
-		cout << "Admiral " << sPlayerName << "-San, enter the starting and ending coordinates of your " << sJapaneseBattleship;
-		cout << " (" << iShipSize << " spaces)" << endl;
+		cout << "Admiral " << sPlayerName << "-San, enter the starting and ending coordinates of your "  << "\x1b[36m" << sJapaneseBattleship;
+		cout << "\x1b[0m" << " (" << iShipSize << " spaces)" << endl;
+		cout << "Example : A1 E1 (Separated by spaces)" << endl << "-->";
 
 		readUserPositions(iMatPlayerBoard, iShipSize, iArrPlayerBattleshipPosition);	
 
@@ -385,8 +766,9 @@ void getPlayerPositions(int iMatPlayerBoard[10][10], string sPlayerName, char cT
 		//Cruiser
 		iShipSize = 3;
 
-		cout << "Admiral " << sPlayerName << "-San, enter the starting and ending coordinates of your " << sJapaneseCruiser;
-		cout << " (" << iShipSize << " spaces)" << endl;
+		cout << "Admiral " << sPlayerName << "-San, enter the starting and ending coordinates of your "  << "\x1b[36m" << sJapaneseCruiser;
+		cout << "\x1b[0m" << " (" << iShipSize << " spaces)" << endl;
+		cout << "Example : A1 E1 (Separated by spaces)" << endl << "-->";
 
 		readUserPositions(iMatPlayerBoard, iShipSize, iArrPlayerCruiserPosition);
 
@@ -395,8 +777,9 @@ void getPlayerPositions(int iMatPlayerBoard[10][10], string sPlayerName, char cT
 		printSetupBoard(iMatPlayerBoard);
 
 		//Submarine
-		cout << "Admiral " << sPlayerName << "-San, enter the starting and ending coordinates of your " << sJapaneseSubmarine;
-		cout << " (" << iShipSize << " spaces)" << endl;
+		cout << "Admiral " << sPlayerName << "-San, enter the starting and ending coordinates of your "  << "\x1b[36m" << sJapaneseSubmarine;
+		cout << "\x1b[0m" << " (" << iShipSize << " spaces)" << endl;
+		cout << "Example : A1 E1 (Separated by spaces)" << endl << "-->";
 
 		readUserPositions(iMatPlayerBoard, iShipSize, iArrPlayerSubmarinePosition);
 
@@ -407,8 +790,9 @@ void getPlayerPositions(int iMatPlayerBoard[10][10], string sPlayerName, char cT
 		//Destroyer
 		int iShipSize = 2;
 
-		cout << "Admiral " << sPlayerName << "-San, enter the starting and ending coordinates of your " << sJapaneseDestroyer;
-		cout << " (" << iShipSize << " spaces)" << endl;
+		cout << "Admiral " << sPlayerName << "-San, enter the starting and ending coordinates of your "  << "\x1b[36m" << sJapaneseDestroyer;
+		cout << "\x1b[0m" << " (" << iShipSize << " spaces)" << endl;
+	 	cout << "Example : A1 E1 (Separated by spaces)" << endl << "-->";
 
 		readUserPositions(iMatPlayerBoard, iShipSize, iArrPlayerDestroyerPosition);
 
@@ -424,8 +808,9 @@ void getPlayerPositions(int iMatPlayerBoard[10][10], string sPlayerName, char cT
 		//Carrier
 		iShipSize = 5;
 
-		cout << "Admiral " << sPlayerName << ", enter the starting and ending coordinates of your " << sAmericanCarrier;
-		cout << " (" << iShipSize << " spaces)" << endl;
+		cout << "Admiral " << sPlayerName << ", enter the starting and ending coordinates of your " << "\x1b[36m" << sAmericanCarrier;
+		cout << "\x1b[0m" << " (" << iShipSize << " spaces)" << endl;
+		cout << "Example : A1 E1 (Separated by spaces)" << endl << "-->";
 
 		readUserPositions(iMatPlayerBoard, iShipSize, iArrPlayerCarrierPosition);
 
@@ -436,8 +821,9 @@ void getPlayerPositions(int iMatPlayerBoard[10][10], string sPlayerName, char cT
 		//Battleship
 		iShipSize = 4;
 
-		cout << "Admiral " << sPlayerName << ", enter the starting and ending coordinates of your " << sAmericanBattleship;
-		cout << " (" << iShipSize << " spaces)" << endl;
+		cout << "Admiral " << sPlayerName << ", enter the starting and ending coordinates of your " << "\x1b[36m" << sAmericanBattleship;
+		cout << "\x1b[0m" << " (" << iShipSize << " spaces)" << endl;
+		cout << "Example : A1 E1 (Separated by spaces)" << endl << "-->";
 
 		readUserPositions(iMatPlayerBoard, iShipSize, iArrPlayerBattleshipPosition);
 
@@ -448,8 +834,9 @@ void getPlayerPositions(int iMatPlayerBoard[10][10], string sPlayerName, char cT
 		//Cruiser
 		iShipSize = 3;
 
-		cout << "Admiral " << sPlayerName << ", enter the starting and ending coordinates of your " << sAmericanCruiser;
-		cout << " (" << iShipSize << " spaces)" << endl;
+		cout << "Admiral " << sPlayerName << ", enter the starting and ending coordinates of your "  << "\x1b[36m" << sAmericanCruiser;
+		cout << "\x1b[0m" << " (" << iShipSize << " spaces)" << endl;
+		cout << "Example : A1 E1 (Separated by spaces)" << endl << "-->";
 
 		readUserPositions(iMatPlayerBoard, iShipSize, iArrPlayerCruiserPosition);
 
@@ -458,8 +845,9 @@ void getPlayerPositions(int iMatPlayerBoard[10][10], string sPlayerName, char cT
 		printSetupBoard(iMatPlayerBoard);
 
 		//Submarine
-		cout << "Admiral " << sPlayerName << ", enter the starting and ending coordinates of your " << sAmericanSubmarine;
-		cout << " (" << iShipSize << " spaces)" << endl;
+		cout << "Admiral " << sPlayerName << ", enter the starting and ending coordinates of your "  << "\x1b[36m" << sAmericanSubmarine;
+		cout << "\x1b[0m" << " (" << iShipSize << " spaces)" << endl;
+		cout << "Example : A1 E1 (Separated by spaces)" << endl << "-->";
 
 		readUserPositions(iMatPlayerBoard, iShipSize, iArrPlayerSubmarinePosition);
 
@@ -470,8 +858,9 @@ void getPlayerPositions(int iMatPlayerBoard[10][10], string sPlayerName, char cT
 		//Destroyer
 		int iShipSize = 2;
 
-		cout << "Admiral " << sPlayerName << ", enter the starting and ending coordinates of your " << sAmericanDestroyer;
-		cout << " (" << iShipSize << " spaces)" << endl;
+		cout << "Admiral " << sPlayerName << ", enter the starting and ending coordinates of your "  << "\x1b[36m" << sAmericanDestroyer;
+		cout << "\x1b[0m" << " (" << iShipSize << " spaces)" << endl;
+		cout << "Example : A1 E1 (Separated by spaces)" << endl << "-->";
 
 		readUserPositions(iMatPlayerBoard, iShipSize, iArrPlayerDestroyerPosition);
 
@@ -617,7 +1006,7 @@ void setupGame(int iMatPlayerBoard[10][10], int iMatComputerBoard[10][10], strin
                int iArrPlayerCarrierPosition[7], int iArrPlayerBattleshipPosition[6], int iArrPlayerCruiserPosition[5],
 			   int iArrPlayerSubmarinePosition[5], int iArrPlayerDestroyerPosition[4], int iArrComputerCarrierPosition[7],
 			   int iArrComputerBattleshipPosition[6], int iArrComputerCruiserPosition[5], int iArrComputerSubmarinePosition[5],
-			   int iArrComputerDestroyerPosition[4])	
+			   int iArrComputerDestroyerPosition[4], int &iDifficulty)	
 {
 	eraseBoard(iMatPlayerBoard);
 	eraseBoard(iMatComputerBoard);
@@ -631,6 +1020,8 @@ void setupGame(int iMatPlayerBoard[10][10], int iMatComputerBoard[10][10], strin
 	cTeam = chooseTeam();
 
 	cleanScreen();
+
+	iDifficulty = getDifficulty();
 
 	getPlayerPositions(iMatPlayerBoard, sPlayerName, cTeam, iArrPlayerCarrierPosition, iArrPlayerBattleshipPosition,
 			           iArrPlayerCruiserPosition, iArrPlayerSubmarinePosition, iArrPlayerDestroyerPosition);
@@ -648,9 +1039,11 @@ void setupGame(int iMatPlayerBoard[10][10], int iMatComputerBoard[10][10], strin
 
 void printRunningBoard(int iMatPlayerBoard[10][10], int iMatComputerBoard[10][10])
 {
+	cleanScreen();
+
 	cout << "           Legend: \x1b[34m . \x1b[37m = Water |\x1b[0m O \x1b[37m = Your ships |\x1b[31m X \x1b[37m= Part of ship sunken ";	
 	cout << "|\x1b[31m # \x1b[37m = Ship sunken |\x1b[37m @ \x1b[37m = Missed Shot" << endl << endl; 
-	cout << "\x1b[37m                           YOUR BOARD                                                COMPUTER BOARD" << endl << endl;
+	cout << "\x1b[37m                           YOUR BOARD                                                  ENEMY BOARD" << endl << endl;
 	cout << "              A   B   C   D   E   F   G   H   I   J                      A   B   C   D   E   F   G   H   I   J " << endl;
 	cout << "             _______________________________________                    _______________________________________" << endl;
 
@@ -776,15 +1169,14 @@ void checkComputerIndividualShip(int iMatComputerBoard[10][10], int iArrShipPosi
 
 		if (bIsSunken)
 		{
-			cout << "You have sank the enemy ";
 
 			if (cTeam == 'J' || cTeam == 'j')
 			{
-				cout << sArrShips[iCounter] << "!" << endl;
+				showSank(1, sArrShips[iCounter]);
 			}
 			else
 			{
-				cout << sArrShips[iCounter + 1] << "!" << endl;
+				showSank(1, sArrShips[iCounter + 1]);
 			}
 
 			for (int iColIndex = iArrShipPosition[2]; iColIndex <= iArrShipPosition[iShipSize + 1]; ++iColIndex)
@@ -809,15 +1201,13 @@ void checkComputerIndividualShip(int iMatComputerBoard[10][10], int iArrShipPosi
 
 		if (bIsSunken)
 		{
-			cout << "You have sank the enemy ";
-
 			if (cTeam == 'J' || cTeam == 'j')
 			{
-				cout << sArrShips[iCounter] << "!" << endl;
+				showSank(1, sArrShips[iCounter]);
 			}
 			else
 			{
-				cout << sArrShips[iCounter + 1] << "!" << endl;
+				showSank(1, sArrShips[iCounter + 1]);
 			}
 
 			for (int iRowIndex = iArrShipPosition[2]; iRowIndex <= iArrShipPosition[iShipSize + 1]; ++iRowIndex)
@@ -868,7 +1258,7 @@ void playerExectueShot(int iMatComputerBoard[10][10], int iXCoordinate, int iYCo
 {
 	if (iMatComputerBoard[iYCoordinate][iXCoordinate] == 0)
 	{	
-		cout << "You've missed!" << endl;
+		showMiss(1);
 		iMatComputerBoard[iYCoordinate][iXCoordinate] = 3;	
 		bIsWrongInput = false;
 	}
@@ -876,7 +1266,7 @@ void playerExectueShot(int iMatComputerBoard[10][10], int iXCoordinate, int iYCo
 	{
 		if (iMatComputerBoard[iYCoordinate][iXCoordinate] == 1)
 		{
-			cout << "You've hit a ship!" << endl;
+			showHit(1);
 			iMatComputerBoard[iYCoordinate][iXCoordinate] = 2;
 			bIsWrongInput = false;
 		}
@@ -903,8 +1293,6 @@ void getPlayerCoordinate(int iMatPlayerBoard[10][10], int iMatComputerBoard[10][
 
 	bool bIsWrongInput = true;
 
-	printRunningBoard(iMatPlayerBoard, iMatComputerBoard);
-
 	cout << "Admiral " << sPlayerName;
 
 	if (cTeam == 'J' || cTeam == 'j')
@@ -913,6 +1301,7 @@ void getPlayerCoordinate(int iMatPlayerBoard[10][10], int iMatComputerBoard[10][
 	}
 
 	cout << ",  enter the coordinates where you want to strike!" << endl;
+	cout << "--> ";
 
 	while (bIsWrongInput)
 	{
@@ -961,9 +1350,9 @@ void playerTurn(int iMatPlayerBoard[10][10], int iMatComputerBoard[10][10], stri
 
 void checkPlayerIndividualShip(int iMatPlayerBoard[10][10], int iArrShipPosition[10], int iShipSize, char cTeam, int iCounter)
 {
-		bool bIsSunken = true;
-		string sArrShips[10] = {sAmericanCarrier, sJapaneseCarrier, sAmericanBattleship, sJapaneseBattleship, sAmericanCruiser,
-							    sJapaneseCruiser, sAmericanSubmarine, sJapaneseSubmarine, sAmericanDestroyer, sJapaneseDestroyer};
+	bool bIsSunken = true;
+	string sArrShips[10] = {sAmericanCarrier, sJapaneseCarrier, sAmericanBattleship, sJapaneseBattleship, sAmericanCruiser,
+							sJapaneseCruiser, sAmericanSubmarine, sJapaneseSubmarine, sAmericanDestroyer, sJapaneseDestroyer};
  
 	//Check for horizontal positioning
 	if (iArrShipPosition[0])
@@ -980,15 +1369,14 @@ void checkPlayerIndividualShip(int iMatPlayerBoard[10][10], int iArrShipPosition
 
 		if (bIsSunken)
 		{
-			cout << "The enemy has sank your ";
 
 			if (cTeam == 'J' || cTeam == 'j')
 			{
-				cout << sArrShips[iCounter + 1] << "!" << endl;
+				showSank(0, sArrShips[iCounter + 1]);
 			}
 			else
 			{
-				cout << sArrShips[iCounter] << "!" << endl;
+				showSank(0, sArrShips[iCounter]);
 			}
 
 			for (int iColIndex = iArrShipPosition[2]; iColIndex <= iArrShipPosition[iShipSize + 1]; ++iColIndex)
@@ -1013,15 +1401,14 @@ void checkPlayerIndividualShip(int iMatPlayerBoard[10][10], int iArrShipPosition
 
 		if (bIsSunken)
 		{
-			cout << "The enemy has sank your ";
 
 			if (cTeam == 'J' || cTeam == 'j')
 			{
-				cout << sArrShips[iCounter + 1] << "!" << endl;
+				showSank(0, sArrShips[iCounter + 1]);
 			}
 			else
 			{
-				cout << sArrShips[iCounter] << "!" << endl;
+				showSank(0, sArrShips[iCounter]);
 			}
 
 			for (int iRowIndex = iArrShipPosition[2]; iRowIndex <= iArrShipPosition[iShipSize + 1]; ++iRowIndex)
@@ -1068,24 +1455,331 @@ void checkPlayerShips(int iMatPlayerBoard[10][10], int iMatComputerBoard[10][10]
 	checkPlayerIndividualShip(iMatPlayerBoard, iArrPlayerDestroyerPosition, iShipSize, cTeam, iCounter);
 }
 
-void computerExecuteShot(int iMatPlayerBoard[10][10], int iXCoordinate, int iYCoordinate, bool &bIsWrongCoordinate)
+void checkHitIndividualShip(int iArrPlayerShipPosition[], int iShipSize, int iArrShipHit[], int iXCoordinate, int iYCoordinate,
+							bool &bIsShip)
 {
-	if (iMatPlayerBoard[iYCoordinate][iXCoordinate] == 1)
+	bIsShip = false;
+
+	if (iArrPlayerShipPosition[0])
 	{
-		cout << "The enemy has hit your ship!" << endl;
-		iMatPlayerBoard[iYCoordinate][iXCoordinate] = 2;
-		bIsWrongCoordinate = false;
+		if (iArrPlayerShipPosition[1] == iYCoordinate)
+		{
+			for (int iCounter = 0; iCounter < 7; ++iCounter)
+			{
+				if (iArrPlayerShipPosition[iCounter] == iXCoordinate)
+				{
+					bIsShip = true;
+				}
+			}
+
+			if (bIsShip)
+			{
+				for (int iCounter = 0; iCounter < iShipSize + 2; ++iCounter)
+				{
+					iArrShipHit[iCounter] = iArrPlayerShipPosition[iCounter];
+				}
+			}
+		}
 	}
 	else
 	{
+		if (iArrPlayerShipPosition[1] == iXCoordinate)
+		{
+			for (int iCounter = 0; iCounter < 7; ++iCounter)
+			{
+				if (iArrPlayerShipPosition[iCounter] == iYCoordinate)
+				{
+					bIsShip = true;
+				}
+			}
+
+			if (bIsShip)
+			{
+				for (int iCounter = 0; iCounter < iShipSize + 2; ++iCounter)
+				{
+					iArrShipHit[iCounter] = iArrPlayerShipPosition[iCounter];
+				}
+			}
+		}
+	}
+}
+
+void checkHitShip(int iMatPlayerBoard[10][10], int iXCoordinate, int iYCoordinate, int iArrPlayerCarrierPosition[7], 
+				  int iArrPlayerBattleshipPosition[6], int iArrPlayerCruiserPosition[5], int iArrPlayerSubmarinePosition[5],
+				  int iArrPlayerDestroyerPosition[4], int iArrShipHit[7], int &iShipSize)
+{
+	bool bIsShip;
+
+	iShipSize = 5;
+	checkHitIndividualShip(iArrPlayerCarrierPosition, iShipSize, iArrShipHit, iXCoordinate, iYCoordinate, bIsShip);
+
+	if (!bIsShip)
+	{
+		iShipSize = 4;
+		checkHitIndividualShip(iArrPlayerBattleshipPosition, iShipSize, iArrShipHit, iXCoordinate, iYCoordinate,
+							   bIsShip);
+
+		if (!bIsShip)
+		{
+			iShipSize = 3;
+			checkHitIndividualShip(iArrPlayerCruiserPosition, iShipSize, iArrShipHit, iXCoordinate, iYCoordinate,
+								   bIsShip);
+
+			if (!bIsShip)
+			{
+				iShipSize = 3;
+				checkHitIndividualShip(iArrPlayerSubmarinePosition, iShipSize, iArrShipHit, iXCoordinate, iYCoordinate,
+									   bIsShip);
+
+				if (!bIsShip)
+				{
+					
+					iShipSize = 2;
+					checkHitIndividualShip(iArrPlayerDestroyerPosition, iShipSize, iArrShipHit, iXCoordinate, iYCoordinate,
+						                   bIsShip);
+				}
+			}
+		}
+	}
+}
+
+void computerSinkShip(int iMatPlayerBoard[10][10], int iArrShipHit[], int iShipSize, bool &bHasHitShip, bool &bHasHitAdyacent,
+					  bool &bIsWrongCoordinate)
+{
+	srand(time(NULL));
+
+	int iDirection = rand() % 2;
+
+	bool bIsSunken = true;
+
+	if (iDirection)
+	{
+		if (iArrShipHit[0])
+		{
+			int iRowIndex = iArrShipHit[1];
+
+			for (int iColIndex = iArrShipHit[2]; iColIndex <= iArrShipHit[iShipSize + 1]; ++iColIndex)
+			{
+				if (iMatPlayerBoard[iRowIndex][iColIndex] == 1)
+				{
+					showHit(0);
+					iMatPlayerBoard[iRowIndex][iColIndex] = 2;
+					bIsWrongCoordinate = false;
+					bIsSunken = false;
+					break;
+				}
+			}
+		}
+		else
+		{
+			int iColIndex = iArrShipHit[1];
+
+			for (int iRowIndex = iArrShipHit[2]; iRowIndex <= iArrShipHit[iShipSize + 1]; ++iRowIndex)
+			{
+				if (iMatPlayerBoard[iRowIndex][iColIndex] == 1)
+				{
+					showHit(0);
+					iMatPlayerBoard[iRowIndex][iColIndex] = 2;
+					bIsWrongCoordinate = false;
+					bIsSunken = false;
+					break;
+				}
+			}
+		}
+	}
+	else
+	{
+		if (iArrShipHit[0])
+		{
+			int iRowIndex = iArrShipHit[1];
+
+			for (int iColIndex = iArrShipHit[iShipSize + 1] ; iColIndex >= iArrShipHit[2]; --iColIndex)
+			{
+				if (iMatPlayerBoard[iRowIndex][iColIndex] == 1)
+				{
+					showHit(0);
+					iMatPlayerBoard[iRowIndex][iColIndex] = 2;
+					bIsWrongCoordinate = false;
+					bIsSunken = false;
+					break;
+				}
+			}
+		}
+		else
+		{
+			int iColIndex = iArrShipHit[1];
+
+			for (int iRowIndex = iArrShipHit[iShipSize + 1]; iRowIndex >= iArrShipHit[2]; --iRowIndex)
+			{
+				if (iMatPlayerBoard[iRowIndex][iColIndex] == 1)
+				{
+					showHit(0);
+					iMatPlayerBoard[iRowIndex][iColIndex] = 2;
+					bIsWrongCoordinate = false;
+					bIsSunken = false;
+					break;
+				}
+			}
+		}
+	}
+
+	if (bIsSunken)
+	{
+		bHasHitShip = false;
+		bHasHitAdyacent = false;
+
+	}
+}
+
+void computerExecuteRandomShot(int iMatPlayerBoard[10][10], int iXCoordinate, int iYCoordinate, bool &bIsWrongCoordinate,
+						       bool &bHasHitShip, int iArrPlayerCarrierPosition[7], int iArrPlayerBattleshipPosition[6],
+						       int iArrPlayerCruiserPosition[5], int iArrPlayerSubmarinePosition[5], int iArrPlayerDestroyerPosition[4],
+						       int iArrPlayerShipPosition[], int &iShipSize)
+{
+	int iXRemainder = iXCoordinate % 2;
+	int iYRemainder = iYCoordinate % 2;
+
+	if(iXRemainder == iYRemainder)
+	{
+		if (iMatPlayerBoard[iYCoordinate][iXCoordinate] == 1)
+		{
+			showHit(0);
+
+			iMatPlayerBoard[iYCoordinate][iXCoordinate] = 2;
+
+			bIsWrongCoordinate = false;
+			bHasHitShip = true;
+
+			//Check which ship has been hit
+			checkHitShip(iMatPlayerBoard, iXCoordinate, iYCoordinate, iArrPlayerCarrierPosition,
+						 iArrPlayerBattleshipPosition, iArrPlayerCruiserPosition, iArrPlayerSubmarinePosition,
+						 iArrPlayerDestroyerPosition, iArrPlayerShipPosition, iShipSize);
+
+		}
+		else
+
+		{
+			if (iMatPlayerBoard[iYCoordinate][iXCoordinate] == 0)
+			{	
+				showMiss(0);
+
+				iMatPlayerBoard[iYCoordinate][iXCoordinate] = 3;
+				bIsWrongCoordinate = false;
+
+				bHasHitShip = false;
+			}
+		}
+	}
+	else
+	{
+		bIsWrongCoordinate = true;
+	}
+}
+
+void computerExecuteRandomEasyShot(int iMatPlayerBoard[10][10], int iXCoordinate, int iYCoordinate, bool &bIsWrongCoordinate)
+{
+	if (iMatPlayerBoard[iYCoordinate][iXCoordinate] == 1)
+	{
+		iMatPlayerBoard[iYCoordinate][iXCoordinate] = 2;
+
+		bIsWrongCoordinate = false;
+
+		showHit(0);
+
+	}
+	else
+
+	{
 		if (iMatPlayerBoard[iYCoordinate][iXCoordinate] == 0)
 		{
-			cout << "The enemy has missed!" << endl;
+			showMiss(0);
+
 			iMatPlayerBoard[iYCoordinate][iXCoordinate] = 3;
 			bIsWrongCoordinate = false;
 		}
 	}
 }
+
+void computerExecuteRandomAdyacentShot(int iMatPlayerBoard[10][10], int &iXCoordinate, int &iYCoordinate, int iPrevXCoor,
+									   int iPrevYCoor, bool &bIsWrongCoordinate, bool &bHasHitAdyacent, bool &bHasHitShip,
+									   int iArrShipHit[], int iShipSize)
+{
+	srand(time(NULL));
+
+	iXCoordinate = iPrevXCoor; 
+	iYCoordinate = iPrevYCoor;
+
+	int iWillSum = rand() % 2;
+	int iOrientation = rand() % 2;
+	
+	if (iOrientation)
+	{
+		if (iWillSum)
+		{
+			if (iPrevXCoor != 9)
+			{
+				iXCoordinate = iPrevXCoor + 1;
+			}
+		}
+		else
+		{
+			if (iPrevXCoor != 0)
+			{
+				iXCoordinate = iPrevXCoor - 1;
+			}
+		}
+	}
+	else
+	{
+		if (iWillSum)
+		{
+			if (iPrevYCoor != 9)
+			{
+				iYCoordinate = iPrevYCoor + 1;
+			}
+		}
+		else
+		{
+			if (iPrevYCoor != 0)
+			{
+				iYCoordinate = iPrevYCoor - 1;
+			}
+		}
+	}
+
+	if (iMatPlayerBoard[iYCoordinate][iXCoordinate] == 1)
+	{
+		showHit(0);
+
+		iMatPlayerBoard[iYCoordinate][iXCoordinate] = 2;
+
+		bIsWrongCoordinate = false;
+		bHasHitAdyacent = true;
+
+		if (iShipSize == 2)
+		{
+			bHasHitShip = false;
+			bHasHitAdyacent = false;
+		}
+	}
+	else
+	{
+		if (iMatPlayerBoard[iYCoordinate][iXCoordinate] == 0)
+		{
+			showMiss(0);
+			iMatPlayerBoard[iYCoordinate][iXCoordinate] = 3;
+
+			bIsWrongCoordinate = false;
+			bHasHitAdyacent = false;
+		}
+		else
+		{
+			bIsWrongCoordinate = true;
+			bHasHitAdyacent = false;
+		}
+	}
+}
+
 
 void generateRandomCoordinate(int &iXCoordinate, int &iYCoordinate)
 {
@@ -1097,17 +1791,70 @@ void generateRandomCoordinate(int &iXCoordinate, int &iYCoordinate)
 
 void computerTurn(int iMatPlayerBoard[10][10], int iMatComputerBoard[10][10], string sPlayerName, char cTeam, 
 				  int iArrPlayerCarrierPosition[7], int iArrPlayerBattleshipPosition[6], int iArrPlayerCruiserPosition[5], 
-				  int iArrPlayerSubmarinePosition[5], int iArrPlayerDestroyerPosition[4])
+				  int iArrPlayerSubmarinePosition[5], int iArrPlayerDestroyerPosition[4],int iArrShipHit[], 
+				  bool &bHasHitShip, bool &bHasHitAdyacent, int &iPrevXCoor, int &iPrevYCoor, int &iShipSize, int &iDifficulty)
 {
-	//Easy mode
 
-	int iXCoordinate, iYCoordinate;
+	int iXCoordinate = 0, iYCoordinate = 0;
+	int iProbabilityHit;
+
 	bool bIsWrongCoordinate = true;
+
 	while (bIsWrongCoordinate)
 	{
-		generateRandomCoordinate(iXCoordinate, iYCoordinate);
+		if (iDifficulty = 2)
+		{
+			//Normal Mode
+			if (bHasHitShip)
+			{
+				if (bHasHitAdyacent)
+				{
+					//srand(time(NULL));
 
-		computerExecuteShot(iMatPlayerBoard, iXCoordinate, iYCoordinate, bIsWrongCoordinate);
+					//iProbabilityHit = rand() % 8;
+
+					//if (iProbabilityHit)
+					//{
+						computerSinkShip(iMatPlayerBoard, iArrShipHit, iShipSize, bHasHitShip, bHasHitAdyacent, bIsWrongCoordinate);
+					//}
+					//else
+					//{
+					//	generateRandomCoordinate(iXCoordinate, iYCoordinate);
+
+					//	computerExecuteRandomShot(iMatPlayerBoard, iXCoordinate, iYCoordinate, bIsWrongCoordinate, bHasHitShip,
+						//	                      iArrPlayerCarrierPosition, iArrPlayerBattleshipPosition, iArrPlayerCruiserPosition,
+						//	                      iArrPlayerSubmarinePosition, iArrPlayerDestroyerPosition, iArrShipHit, iShipSize);
+
+						//iPrevXCoor = iXCoordinate;
+					   // iPrevYCoor = iYCoordinate;
+					//}
+				}
+				else
+				{
+					computerExecuteRandomAdyacentShot(iMatPlayerBoard, iXCoordinate, iYCoordinate, iPrevXCoor, 
+												  iPrevYCoor, bIsWrongCoordinate, bHasHitAdyacent, bHasHitShip, 
+												  iArrShipHit, iShipSize);
+				}
+			}
+			else
+			{
+				generateRandomCoordinate(iXCoordinate, iYCoordinate);
+
+				computerExecuteRandomShot(iMatPlayerBoard, iXCoordinate, iYCoordinate, bIsWrongCoordinate, bHasHitShip,
+					                      iArrPlayerCarrierPosition, iArrPlayerBattleshipPosition, iArrPlayerCruiserPosition,
+					                      iArrPlayerSubmarinePosition, iArrPlayerDestroyerPosition, iArrShipHit, iShipSize);
+
+				iPrevXCoor = iXCoordinate;
+			    iPrevYCoor = iYCoordinate;
+			}
+		}
+		else
+		{
+			//Easy mode
+			generateRandomCoordinate(iXCoordinate, iYCoordinate);
+
+			computerExecuteRandomEasyShot(iMatPlayerBoard, iXCoordinate, iYCoordinate, bIsWrongCoordinate);
+		}
 	}
 
 	checkPlayerShips(iMatPlayerBoard, iMatComputerBoard, sPlayerName, cTeam, iArrPlayerCarrierPosition, iArrPlayerBattleshipPosition,
@@ -1118,17 +1865,32 @@ void runGame(int iMatPlayerBoard[10][10], int iMatComputerBoard[10][10], string 
              int iArrPlayerCarrierPosition[7], int iArrPlayerBattleshipPosition[6], int iArrPlayerCruiserPosition[5],
 		     int iArrPlayerSubmarinePosition[5], int iArrPlayerDestroyerPosition[4], int iArrComputerCarrierPosition[7],
 		     int iArrComputerBattleshipPosition[6], int iArrComputerCruiserPosition[5], int iArrComputerSubmarinePosition[5],
-		     int iArrComputerDestroyerPosition[4])
+		     int iArrComputerDestroyerPosition[4], int &iDifficulty)
 {
 	bool bGameIsRunning = true;
 	bool bIsWinner = false;
+	bool bComputerHitShip = false;
+	bool bComputerHitAdyacent = false;
+
+	int iComputerPrevXCoor = 0;
+	int iComputerPrevYCoor = 0;
+	int iShipToSinkSize = 0;
 
 	cleanScreen();
 
+	int iArrShipHit[7];
+
+	showPlayerTurn();
+
 	while (bGameIsRunning)
 	{
+
+		printRunningBoard(iMatPlayerBoard, iMatComputerBoard);
+
 		playerTurn(iMatPlayerBoard, iMatComputerBoard, sPlayerName, cTeam, iArrComputerCarrierPosition, iArrComputerBattleshipPosition,
 		           iArrComputerCruiserPosition, iArrComputerSubmarinePosition, iArrComputerDestroyerPosition);
+
+		printRunningBoard(iMatPlayerBoard, iMatComputerBoard);
 
 		bIsWinner = checkIfWinner(iMatComputerBoard, bGameIsRunning);
 
@@ -1137,20 +1899,19 @@ void runGame(int iMatPlayerBoard[10][10], int iMatComputerBoard[10][10], string 
 			break;
 		}
 
-		computerTurn(iMatPlayerBoard, iMatComputerBoard, sPlayerName, cTeam, iArrPlayerCarrierPosition, iArrPlayerBattleshipPosition,
-		         	 iArrPlayerCruiserPosition, iArrPlayerSubmarinePosition, iArrPlayerDestroyerPosition);
+		pressToContinue();
 
-		//bIsWinner = !checkIfWinner(iMatPlayerBoard, bGameIsRunning);
+		showComputerTurn();
+
+		computerTurn(iMatPlayerBoard, iMatComputerBoard, sPlayerName, cTeam, iArrPlayerCarrierPosition, 
+					 iArrPlayerBattleshipPosition, iArrPlayerCruiserPosition, iArrPlayerSubmarinePosition,
+					 iArrPlayerDestroyerPosition, iArrShipHit, bComputerHitShip, bComputerHitAdyacent,
+					 iComputerPrevXCoor, iComputerPrevYCoor, iShipToSinkSize, iDifficulty);
+
+		bIsWinner = !checkIfWinner(iMatPlayerBoard, bGameIsRunning);
 	}
 
-	if (bIsWinner)
-	{
-		cout << "You won!" << endl;
-	}
-	else
-	{
-		cout << "You lost!" << endl;
-	}
+	showResult(sPlayerName, cTeam, bIsWinner);
 }
 
 /*
@@ -1162,6 +1923,8 @@ Return: 0
 int main()
 {
 	bool bRunGame = true;
+
+	showMenu();	
 
 	while (bRunGame)
 	{
@@ -1177,7 +1940,9 @@ int main()
 		int iArrComputerBattleshipPosition[6];
 		int iArrComputerCruiserPosition[5];
 		int iArrComputerSubmarinePosition[5];
-		int iArrComputerDestroyerPosition[4];	 
+		int iArrComputerDestroyerPosition[4];
+
+		int iDifficulty;	 
 
 		string sPlayerName;
 
@@ -1194,12 +1959,14 @@ int main()
 				setupGame(iMatPlayerBoard, iMatComputerBoard, sPlayerName, cTeam, iArrPlayerCarrierPosition,
 						  iArrPlayerBattleshipPosition, iArrPlayerCruiserPosition, iArrPlayerSubmarinePosition,
 						  iArrPlayerDestroyerPosition, iArrComputerCarrierPosition, iArrComputerBattleshipPosition,
-						  iArrComputerCruiserPosition, iArrComputerSubmarinePosition, iArrComputerDestroyerPosition);
+						  iArrComputerCruiserPosition, iArrComputerSubmarinePosition, iArrComputerDestroyerPosition,
+						  iDifficulty);
 
 				runGame(iMatPlayerBoard, iMatComputerBoard, sPlayerName, cTeam, iArrPlayerCarrierPosition,
 						iArrPlayerBattleshipPosition, iArrPlayerCruiserPosition, iArrPlayerSubmarinePosition,
 						iArrPlayerDestroyerPosition, iArrComputerCarrierPosition, iArrComputerBattleshipPosition,
-						iArrComputerCruiserPosition, iArrComputerSubmarinePosition, iArrComputerDestroyerPosition);
+						iArrComputerCruiserPosition, iArrComputerSubmarinePosition, iArrComputerDestroyerPosition,
+						iDifficulty);
 
 				break;
 
@@ -1223,9 +1990,12 @@ int main()
 
 			//Case when a wrong letter is introduced
 			default:
-				cout << "Invalid option" << endl;
+				showMenu();
+				cout << "\x1b[31mInvalid option" << endl;
 				break;
 		}
+
+		showMenu();
 	}
 
 	return 0;    
