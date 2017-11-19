@@ -45,7 +45,7 @@ Return: a char provided by the user
 char getMenuInput()
 {
 	char cInput;
-	cout << "\x1b[37mEnter an option to continue --> ";
+	cout << "\x1b[30mEnter an option to continue --> ";
 	cin >> cInput;
 	cout << endl;
 	return cInput;
@@ -67,14 +67,13 @@ void cleanScreen()
 
 void pressToContinue()
 {
-	cout << "\x1b[36mPress Enter to continue...\x1b[37m";
-	cin.clear();
+	cout << "Press Enter to continue...";
     cin.ignore();
 }
 
 void pressToReturnToMenu()
 {
-	cout << "\x1b[36mPress Enter to return to the Main Menu...\x1b[37m";
+	cout << "Press Enter to return to the Main Menu...";
     cin.ignore();
 }
 
@@ -130,12 +129,12 @@ void showMenu()
 				}
 				else
 				{
-					cout << "\x1b[25;37m" << cMatMenu[iRowIndex][iColIndex];
+					cout << "\x1b[25;30m" << cMatMenu[iRowIndex][iColIndex];
 				}
 			}
 			else
 			{
-				cout << "\x1b[25;37m" << cMatMenu[iRowIndex][iColIndex];	
+				cout << "\x1b[25;30m" << cMatMenu[iRowIndex][iColIndex];	
 			}
 		}
 
@@ -161,14 +160,14 @@ void showHit(bool bIsPlayer)
 	cout << setw(iIndenting) << "*******   **     **     ** " << endl;
 	cout << setw(iIndenting) << "**   **   **     **        " << endl;
 	cout << setw(iIndenting) << "**   **   **     **     ** " << endl;
-	cout << "\x1b[37m";
+	cout << "\x1b[30m";
 
 	cout << endl << endl;
 
 	if (bIsPlayer)
 	{
 		cout << setw(iIndenting + 7) << "Admiral, we've hit one of the enemy ships!" << endl;
-		cin.ignore();
+		//usleep(2000000);
 	}
 	else
 	{
@@ -197,7 +196,7 @@ void showComputerTurn()
 	cout << setw(iIndenting) << " **       ** ****   **       ** **  ** **    **     ** " << endl;
 	cout << setw(iIndenting) << " **       **  ***   **       **  ****  **    **        " << endl;
 	cout << setw(iIndenting) << " ******   **   **   ******   **   **   **    **     ** " << endl;
-	cout << "\x1b[37m";
+	cout << "\x1b[30m";
 
 	cout << endl << endl;
 
@@ -211,33 +210,31 @@ void showComputerTurn()
 	pressToContinue();
 }
 
-void showBeginGame()
+void showPlayerTurn()
 {
 	cleanScreen();
 
-	int iIndenting = 70;
+	int iIndenting = 80;
 
-	cout << "\x1b[36m"; 
-	cout << setw(iIndenting) << " ******   **      *****    **   **   ******   ** " << endl;
-	cout << setw(iIndenting) << " **       **    **         **   **   ******   ** " << endl;
-	cout << setw(iIndenting) << " ******   **   **          *******     **     ** " << endl;
-	cout << setw(iIndenting) << " **       **   **   ****   *******     **     ** " << endl;
-	cout << setw(iIndenting) << " **       **    **    **   **   **     **        " << endl;
-	cout << setw(iIndenting) << " **       **      ****     **   **     **     ** " << endl;
-	cout << "\x1b[37m";
+	cout << "\x1b[36m";
+	cout << setw(iIndenting) << " **  **      ****      **    **   **  " << endl;
+	cout << setw(iIndenting) << "  ****     **    **    **    **   **  " << endl;
+	cout << setw(iIndenting) << "   **     **      **   **    **   **  " << endl;
+	cout << setw(iIndenting) << "   **     **      **   **    **   **  " << endl;
+	cout << setw(iIndenting) << "   **      **    **     **  **        " << endl;
+	cout << setw(iIndenting) << "   **        ****        ****     **  " << endl;
+	cout << "\x1b[30m";
 
 	cout << endl << endl;
 
-	cout << setw(iIndenting - 1) << "Let the battle begin! Show the enemy no mercy!" << endl << endl;
-	cout << setw(iIndenting + 1) << "Remember, the objective of the game is to sink all" << endl;
-	cout << setw(iIndenting - 3) <<"enemy ships in the least amount of turns" << endl;	
+	cout << setw(iIndenting + 15) << "It's your turn to strike! Let's show them who rules the sea!" << endl;	
 
 	for (int iCounter = 0; iCounter < 7; ++iCounter)
 	{
 		cout << endl;
 	}
 
-	cin.ignore();
+	usleep(3000000);
 
 	pressToContinue();
 }
@@ -255,14 +252,19 @@ void showMiss(bool bIsPlayer)
 	cout << setw(iIndenting) << "** **  ** **   **     ****     ****   ** " << endl;
 	cout << setw(iIndenting) << "**  ****  **   **       **       **      " << endl;
 	cout << setw(iIndenting) << "**   **   **   **    *****    *****   ** " << endl;
-	cout << "\x1b[37m";
+	cout << "\x1b[30m";
 
 	cout << endl << endl;
 
 	if (bIsPlayer)
 	{
 		cout << setw(iIndenting + 0) << "Admiral, we've miss the shot, a tragedy!" << endl;
-		cin.ignore();
+		for (int iCounter = 0; iCounter < 7; ++iCounter)
+		{
+			cout << endl;
+		}
+		
+		//usleep(2000000);
 	}
 	else
 	{
@@ -285,23 +287,23 @@ void showSank(bool bIsPlayer, string sShip)
 	int iIndenting = 75;
 
 	cout << "\x1b[31m";
-	cout << setw(iIndenting) << "  *****   **    **   **   **    **  **   ** " << endl;
-	cout << setw(iIndenting) << " **       **    **   ***  **    ** **    ** " << endl;
-	cout << setw(iIndenting) << " ****     **    **   **** **    ***      ** " << endl;
-	cout << setw(iIndenting) << "   ****   **    **   ** ****    ****     ** " << endl;
-	cout << setw(iIndenting) << "     **   **    **   **  ***    ** **       " << endl;
-	cout << setw(iIndenting) << "  *****     ****     **   **    **  **   ** " << endl;
-	cout << "\x1b[37m";
+	cout << setw(iIndenting) << "  *****        **        **   **    **  **   ** " << endl;
+	cout << setw(iIndenting) << " **           ****       ***  **    ** **    ** " << endl;
+	cout << setw(iIndenting) << " ****        **  **      **** **    ***      ** " << endl;
+	cout << setw(iIndenting) << "   ****     ********     ** ****    ****     ** " << endl;
+	cout << setw(iIndenting) << "     **    **      **    **  ***    ** **       " << endl;
+	cout << setw(iIndenting) << "  *****   **        **   **   **    **  **   ** " << endl;
+	cout << "\x1b[30m";
 
 	cout << endl << endl;
 
 	if (bIsPlayer)
 	{
-		cout << setw(iIndenting - 21) << "You have sank the enemy " << "\x1b[36m" << sShip << "\x1b[37m" << "!";
+		cout << setw(iIndenting - 21) << "You have sank the enemy " << "\x1b[36m" << sShip << "\x1b[30m" << "!";
 	}
 	else
 	{
-		cout << setw(iIndenting - 21) << "The enemy has sank our " << "\x1b[36m" << sShip << "\x1b[37m" << "! A black day!";
+		cout << setw(iIndenting - 21) << "The enemy has sank our " << "\x1b[36m" << sShip << "\x1b[30m" << "! A black day!";
 	}
 
 	for (int iCounter = 0; iCounter < 7; ++iCounter)
@@ -312,7 +314,7 @@ void showSank(bool bIsPlayer, string sShip)
 	pressToContinue();
 }
 
-void showResult(string sPlayerName, char cTeam, bool bIsWinner, int iScore)
+void showResult(string sPlayerName, char cTeam, bool bIsWinner)
 {
 	cleanScreen();
 
@@ -336,7 +338,7 @@ void showResult(string sPlayerName, char cTeam, bool bIsWinner, int iScore)
 		cout << setw(iIndenting + 6) << " ****    ****   **      **   ** ****   ** " << endl;
 		cout << setw(iIndenting + 6) << " ***      ***    **    **    **  ***      " << endl;
 		cout << setw(iIndenting + 6) << " **        **      ****      **   **   ** " << endl;
-		cout << "\x1b[37m";
+		cout << "\x1b[30m";
 
 		cout << endl << endl;
 
@@ -369,7 +371,7 @@ void showResult(string sPlayerName, char cTeam, bool bIsWinner, int iScore)
 		cout << setw(iIndenting + 6) << " **      **      **    ****      **     **" << endl;
 		cout << setw(iIndenting + 6) << " **       **    **       **      **       " << endl;
 		cout << setw(iIndenting + 6) << " *****      ****      *****      **     **" << endl;
-		cout << "\x1b[37m";
+		cout << "\x1b[30m";
 
 		cout << endl << endl;
 
@@ -384,8 +386,6 @@ void showResult(string sPlayerName, char cTeam, bool bIsWinner, int iScore)
 			cout << setw(iIndenting + 6) << "The founding fathers shall be ashamed of us!" << endl;
 		}
 	}
-
-	cout << setw(iIndenting - 33) << "\x1b[36mYou had a score of: " << iScore;
 
 	for (int iCounter = 0; iCounter < 7; ++iCounter)
 	{
@@ -420,7 +420,7 @@ string getPlayerName()
 	cout << setw(70) << "**  ***     ********   **   ****  **  **        ******  " << endl;
 	cout << setw(70) << "**   **    **      **  **         **  **        **      " << endl;
 	cout << setw(70) << "**   **   **        ** **         **  ******    *       " << endl;
-	cout << "\x1b[37m";
+	cout << "\x1b[30m";
 
 	for (int iCounter = 0; iCounter < 7; ++iCounter)
 	{
@@ -508,7 +508,7 @@ Return: nothing
 void printSetupBoard(int iMatBoard[10][10])
 {
 	int iIndenting = 7;
-	cout << setw(33+iIndenting) << "\x1b[37mYOUR BOARD" << endl << endl;
+	cout << setw(33+iIndenting) << "\x1b[30mYOUR BOARD" << endl << endl;
 	cout << setw(41+iIndenting) <<"A   B   C   D   E   F   G   H   I   J" << endl;
 	cout << setw(43+iIndenting) << "_______________________________________ " << endl;
 
@@ -521,11 +521,11 @@ void printSetupBoard(int iMatBoard[10][10])
 		{
 			if (iMatBoard[iRowIndex][iColIndex])
 			{
-				cout << "|\x1b[32m O \x1b[37m";
+				cout << "|\x1b[32m O \x1b[30m";
 			}
 			else
 			{
-				cout << "|\x1b[34m . \x1b[37m";
+				cout << "|\x1b[34m . \x1b[30m";
 			}
 		}
 		cout << "|" << endl;
@@ -584,7 +584,7 @@ void writeUserInput(int iMatBoard[10][10], bool &bIsWrongInput, string sFirstPos
 		{
 			if (iMatBoard[iRowIndexStart][iColIndex])
 			{	
-				cout << "\x1b[31mInvalid coordinates. Space already occupied by another ship\x1b[37m" << endl;
+				cout << "\x1b[31mInvalid coordinates. Space already occupied by another ship\x1b[30m" << endl;
 				bIsWrongInput = true;
 				break;
 			}
@@ -629,7 +629,7 @@ void writeUserInput(int iMatBoard[10][10], bool &bIsWrongInput, string sFirstPos
 		{
 			if (iMatBoard[iRowIndex][iColIndexStart])
 			{
-				cout << "\x1b[31mInvalid coordinates. Space already occupied by another ship\x1b[37m" << endl;
+				cout << "\x1b[31mInvalid coordinates. Space already occupied by another ship\x1b[30m" << endl;
 				bIsWrongInput = true;
 				break;
 			}
@@ -669,21 +669,21 @@ void readUserPositions(int iMatBoard[10][10], int iShipSize, int iArrShipPositio
 		//Check if the coordinates are two characters long
 		if (sFirstPosition.length() != 2 || sSecondPosition.length() != 2)
 		{
-			cout << "\x1b[31mInvalid coordinates. Please enter two characters per coordinate\x1b[37m" << endl;
+			cout << "\x1b[31mInvalid coordinates. Please enter two characters per coordinate\x1b[30m" << endl;
 		}
 		else
 		{
 			//Check if the first character is a letter in valid range
 			if (sFirstPosition[0] < 65 || sFirstPosition[0] > 74)
 			{
-				cout << "\x1b[31mInvalid coordinates. Please enter letters from A to J capitalized\x1b[37m" << endl;
+				cout << "\x1b[31mInvalid coordinates. Please enter letters from A to J capitalized\x1b[30m" << endl;
 			}
 			else
 			{
 				//Check if the second character is a number in valid range
 				if (sFirstPosition[1] < 48 || sSecondPosition[1] > 57)
 				{
-					cout << "\x1b[31mInvalid coordinates. Please enter a digit as second parameter\x1b[37m" << endl;
+					cout << "\x1b[31mInvalid coordinates. Please enter a digit as second parameter\x1b[30m" << endl;
 				}
 				else
 				{
@@ -691,7 +691,7 @@ void readUserPositions(int iMatBoard[10][10], int iShipSize, int iArrShipPositio
 					if (sFirstPosition[0] != sSecondPosition[0] &&
 	      	   			sFirstPosition[1] != sSecondPosition[1])
 					{
-						cout << "\x1b[31mInvalid coordinates. Please place ships horizontally or vertically\x1b[37m" << endl;
+						cout << "\x1b[31mInvalid coordinates. Please place ships horizontally or vertically\x1b[30m" << endl;
 					}
 					else
 					{
@@ -708,7 +708,7 @@ void readUserPositions(int iMatBoard[10][10], int iShipSize, int iArrShipPositio
 						if (iDifference != iShipSize)
 						{
 							cout << "\x1b[31mInvalid coordinates. Please make sure the coordinates are for a ship of size ";
-							cout << iShipSize << "\x1b[37m" <<endl;
+							cout << iShipSize << "\x1b[30m" <<endl;
 						}
 						else
 						{
@@ -741,7 +741,7 @@ void getPlayerPositions(int iMatPlayerBoard[10][10], string sPlayerName, char cT
 		iShipSize = 5;
 
 		cout << "Admiral " << sPlayerName << "-San, enter the starting and ending coordinates of your "  << "\x1b[36m" << sJapaneseCarrier;
-		cout << "\x1b[37m" << " (" << iShipSize << " spaces)" << endl; 
+		cout << "\x1b[30m" << " (" << iShipSize << " spaces)" << endl; 
 	    cout << "Example : A1 E1 (Separated by spaces)" << endl << "-->";
 
 		readUserPositions(iMatPlayerBoard, iShipSize, iArrPlayerCarrierPosition);
@@ -754,7 +754,7 @@ void getPlayerPositions(int iMatPlayerBoard[10][10], string sPlayerName, char cT
 		iShipSize = 4;
 
 		cout << "Admiral " << sPlayerName << "-San, enter the starting and ending coordinates of your "  << "\x1b[36m" << sJapaneseBattleship;
-		cout << "\x1b[37m" << " (" << iShipSize << " spaces)" << endl;
+		cout << "\x1b[30m" << " (" << iShipSize << " spaces)" << endl;
 		cout << "Example : A1 E1 (Separated by spaces)" << endl << "-->";
 
 		readUserPositions(iMatPlayerBoard, iShipSize, iArrPlayerBattleshipPosition);	
@@ -767,7 +767,7 @@ void getPlayerPositions(int iMatPlayerBoard[10][10], string sPlayerName, char cT
 		iShipSize = 3;
 
 		cout << "Admiral " << sPlayerName << "-San, enter the starting and ending coordinates of your "  << "\x1b[36m" << sJapaneseCruiser;
-		cout << "\x1b[37m" << " (" << iShipSize << " spaces)" << endl;
+		cout << "\x1b[30m" << " (" << iShipSize << " spaces)" << endl;
 		cout << "Example : A1 E1 (Separated by spaces)" << endl << "-->";
 
 		readUserPositions(iMatPlayerBoard, iShipSize, iArrPlayerCruiserPosition);
@@ -778,7 +778,7 @@ void getPlayerPositions(int iMatPlayerBoard[10][10], string sPlayerName, char cT
 
 		//Submarine
 		cout << "Admiral " << sPlayerName << "-San, enter the starting and ending coordinates of your "  << "\x1b[36m" << sJapaneseSubmarine;
-		cout << "\x1b[37m" << " (" << iShipSize << " spaces)" << endl;
+		cout << "\x1b[30m" << " (" << iShipSize << " spaces)" << endl;
 		cout << "Example : A1 E1 (Separated by spaces)" << endl << "-->";
 
 		readUserPositions(iMatPlayerBoard, iShipSize, iArrPlayerSubmarinePosition);
@@ -791,7 +791,7 @@ void getPlayerPositions(int iMatPlayerBoard[10][10], string sPlayerName, char cT
 		int iShipSize = 2;
 
 		cout << "Admiral " << sPlayerName << "-San, enter the starting and ending coordinates of your "  << "\x1b[36m" << sJapaneseDestroyer;
-		cout << "\x1b[37m" << " (" << iShipSize << " spaces)" << endl;
+		cout << "\x1b[30m" << " (" << iShipSize << " spaces)" << endl;
 	 	cout << "Example : A1 E1 (Separated by spaces)" << endl << "-->";
 
 		readUserPositions(iMatPlayerBoard, iShipSize, iArrPlayerDestroyerPosition);
@@ -809,7 +809,7 @@ void getPlayerPositions(int iMatPlayerBoard[10][10], string sPlayerName, char cT
 		iShipSize = 5;
 
 		cout << "Admiral " << sPlayerName << ", enter the starting and ending coordinates of your " << "\x1b[36m" << sAmericanCarrier;
-		cout << "\x1b[37m" << " (" << iShipSize << " spaces)" << endl;
+		cout << "\x1b[30m" << " (" << iShipSize << " spaces)" << endl;
 		cout << "Example : A1 E1 (Separated by spaces)" << endl << "-->";
 
 		readUserPositions(iMatPlayerBoard, iShipSize, iArrPlayerCarrierPosition);
@@ -822,7 +822,7 @@ void getPlayerPositions(int iMatPlayerBoard[10][10], string sPlayerName, char cT
 		iShipSize = 4;
 
 		cout << "Admiral " << sPlayerName << ", enter the starting and ending coordinates of your " << "\x1b[36m" << sAmericanBattleship;
-		cout << "\x1b[37m" << " (" << iShipSize << " spaces)" << endl;
+		cout << "\x1b[30m" << " (" << iShipSize << " spaces)" << endl;
 		cout << "Example : A1 E1 (Separated by spaces)" << endl << "-->";
 
 		readUserPositions(iMatPlayerBoard, iShipSize, iArrPlayerBattleshipPosition);
@@ -835,7 +835,7 @@ void getPlayerPositions(int iMatPlayerBoard[10][10], string sPlayerName, char cT
 		iShipSize = 3;
 
 		cout << "Admiral " << sPlayerName << ", enter the starting and ending coordinates of your "  << "\x1b[36m" << sAmericanCruiser;
-		cout << "\x1b[37m" << " (" << iShipSize << " spaces)" << endl;
+		cout << "\x1b[30m" << " (" << iShipSize << " spaces)" << endl;
 		cout << "Example : A1 E1 (Separated by spaces)" << endl << "-->";
 
 		readUserPositions(iMatPlayerBoard, iShipSize, iArrPlayerCruiserPosition);
@@ -846,7 +846,7 @@ void getPlayerPositions(int iMatPlayerBoard[10][10], string sPlayerName, char cT
 
 		//Submarine
 		cout << "Admiral " << sPlayerName << ", enter the starting and ending coordinates of your "  << "\x1b[36m" << sAmericanSubmarine;
-		cout << "\x1b[37m" << " (" << iShipSize << " spaces)" << endl;
+		cout << "\x1b[30m" << " (" << iShipSize << " spaces)" << endl;
 		cout << "Example : A1 E1 (Separated by spaces)" << endl << "-->";
 
 		readUserPositions(iMatPlayerBoard, iShipSize, iArrPlayerSubmarinePosition);
@@ -859,7 +859,7 @@ void getPlayerPositions(int iMatPlayerBoard[10][10], string sPlayerName, char cT
 		int iShipSize = 2;
 
 		cout << "Admiral " << sPlayerName << ", enter the starting and ending coordinates of your "  << "\x1b[36m" << sAmericanDestroyer;
-		cout << "\x1b[37m" << " (" << iShipSize << " spaces)" << endl;
+		cout << "\x1b[30m" << " (" << iShipSize << " spaces)" << endl;
 		cout << "Example : A1 E1 (Separated by spaces)" << endl << "-->";
 
 		readUserPositions(iMatPlayerBoard, iShipSize, iArrPlayerDestroyerPosition);
@@ -1037,13 +1037,13 @@ void setupGame(int iMatPlayerBoard[10][10], int iMatComputerBoard[10][10], strin
 */
 
 
-void printRunningBoard(int iMatPlayerBoard[10][10], int iMatComputerBoard[10][10], int iScore)
+void printRunningBoard(int iMatPlayerBoard[10][10], int iMatComputerBoard[10][10])
 {
 	cleanScreen();
 
-	cout << "           Legend: \x1b[34m . \x1b[37m = Water |\x1b[32m O \x1b[37m = Your ships |\x1b[31m X \x1b[37m= Part of ship sunken ";	
-	cout << "|\x1b[31m # \x1b[37m = Ship sunken |\x1b[37m @ \x1b[37m = Missed Shot" << endl << endl; 
-	cout << "\x1b[37m                           YOUR BOARD                                                  ENEMY BOARD" << endl << endl;
+	cout << "           Legend: \x1b[34m . \x1b[30m = Water |\x1b[32m O \x1b[30m = Your ships |\x1b[31m X \x1b[30m= Part of ship sunken ";	
+	cout << "|\x1b[31m # \x1b[30m = Ship sunken |\x1b[30m @ \x1b[30m = Missed Shot" << endl << endl; 
+	cout << "\x1b[30m                           YOUR BOARD                                                  ENEMY BOARD" << endl << endl;
 	cout << "              A   B   C   D   E   F   G   H   I   J                      A   B   C   D   E   F   G   H   I   J " << endl;
 	cout << "             _______________________________________                    _______________________________________" << endl;
 
@@ -1056,29 +1056,29 @@ void printRunningBoard(int iMatPlayerBoard[10][10], int iMatComputerBoard[10][10
 			{
 				if (iMatPlayerBoard[iRowIndex][iColIndex] == 1)
 				{
-					cout << "|\x1b[32m O \x1b[37m";
+					cout << "|\x1b[32m O \x1b[30m";
 				}
 				else
 				{
 					if (iMatPlayerBoard[iRowIndex][iColIndex] == 2)
 					{
-						cout << "|\x1b[31m X \x1b[37m";
+						cout << "|\x1b[31m X \x1b[30m";
 					}
 					else
 					{
 						if (iMatPlayerBoard[iRowIndex][iColIndex] == 4)
 						{
-							cout << "|\x1b[31m # \x1b[37m";
+							cout << "|\x1b[31m # \x1b[30m";
 						}
 						else
 						{
 							if (iMatPlayerBoard[iRowIndex][iColIndex] == 3)
 							{
-								cout << "|\x1b[37m @ \x1b[37m";					
+								cout << "|\x1b[30m @ \x1b[30m";					
 							}
 							else
 							{
-								cout << "|\x1b[34m . \x1b[37m";
+								cout << "|\x1b[34m . \x1b[30m";
 							}
 						}
 					}
@@ -1090,29 +1090,29 @@ void printRunningBoard(int iMatPlayerBoard[10][10], int iMatComputerBoard[10][10
 		{
 			if (iMatComputerBoard[iRowIndex][iColIndex] == 1)
 			{
-				cout << "|\x1b[34m . \x1b[37m";
+				cout << "|\x1b[34m . \x1b[30m";
 			}
 			else
 			{
 				if (iMatComputerBoard[iRowIndex][iColIndex] == 2)
 				{
-					cout << "|\x1b[31m X \x1b[37m";
+					cout << "|\x1b[31m X \x1b[30m";
 				}
 				else
 				{
 					if (iMatComputerBoard[iRowIndex][iColIndex] == 4)
 					{
-						cout << "|\x1b[31m # \x1b[37m";
+						cout << "|\x1b[31m # \x1b[30m";
 					}
 					else
 					{
 						if (iMatComputerBoard[iRowIndex][iColIndex] == 3)
 						{
-							cout << "|\x1b[37m @ \x1b[37m";					
+							cout << "|\x1b[30m @ \x1b[30m";					
 						}
 						else
 						{
-							cout << "|\x1b[34m . \x1b[37m";
+							cout << "|\x1b[34m . \x1b[30m";
 						}
 					}
 				}
@@ -1122,8 +1122,7 @@ void printRunningBoard(int iMatPlayerBoard[10][10], int iMatComputerBoard[10][10
 
 		cout << "            |___|___|___|___|___|___|___|___|___|___|                  |___|___|___|___|___|___|___|___|___|___|" << endl;		
 	}
-	cout << "\x1b[37m" << endl << endl;
-	cout << setw(68) << "\x1b[36mScore: " << iScore << "\x1b[37m" << endl << endl;
+	cout << "\x1b[30m" << endl << endl;
 }
 
 bool checkIfWinner(int iMatBoard[10][10], bool &bGameIsRunning)
@@ -1255,7 +1254,7 @@ void checkComputerShips(int iMatComputerBoard[10][10], char cTeam, int iArrCompu
 
 }
 
-void playerExectueShot(int iMatComputerBoard[10][10], int iXCoordinate, int iYCoordinate, bool &bIsWrongInput, bool &bPlayerHasHit)
+void playerExectueShot(int iMatComputerBoard[10][10], int iXCoordinate, int iYCoordinate, bool &bIsWrongInput)
 {
 	if (iMatComputerBoard[iYCoordinate][iXCoordinate] == 0)
 	{	
@@ -1270,26 +1269,25 @@ void playerExectueShot(int iMatComputerBoard[10][10], int iXCoordinate, int iYCo
 			showHit(1);
 			iMatComputerBoard[iYCoordinate][iXCoordinate] = 2;
 			bIsWrongInput = false;
-			bPlayerHasHit = true;
 		}
 		else
 		{
 			if (iMatComputerBoard[iYCoordinate][iXCoordinate] == 2 || iMatComputerBoard[iYCoordinate][iXCoordinate] == 4)
 			{
-				cout << "\x1b[31mInvalid coordinate, you've already hit that spot\x1b[37m" << endl;
+				cout << "\x1b[31mInvalid coordinate, you've already hit that spot\x1b[30m" << endl;
 			}
 			else
 			{
 				if (iMatComputerBoard[iYCoordinate][iXCoordinate] == 3)
 				{
-					cout << "\x1b[31mInvalid coordinate, you've already hit that spot\x1b[37m" << endl;
+					cout << "\x1b[31mInvalid coordinate, you've already hit that spot\x1b[30m" << endl;
 				}
 			}
 		}
 	}
 }
 
-void getPlayerCoordinate(int iMatPlayerBoard[10][10], int iMatComputerBoard[10][10], string sPlayerName, char cTeam, bool &bPlayerHasHit)
+void getPlayerCoordinate(int iMatPlayerBoard[10][10], int iMatComputerBoard[10][10], string sPlayerName, char cTeam)
 {
 	string sHitCoordinate;
 
@@ -1312,27 +1310,27 @@ void getPlayerCoordinate(int iMatPlayerBoard[10][10], int iMatComputerBoard[10][
 		//Check if the coordinates are two characters long
 		if (sHitCoordinate.length() != 2)
 		{
-			cout << "\x1b[31mInvalid coordinate. Please enter two characters as coordinate\x1b[37m" << endl;
+			cout << "\x1b[31mInvalid coordinate. Please enter two characters as coordinate\x1b[30m" << endl;
 		}
 		else
 		{
 			//Check if the first character is a letter in valid range
 			if (sHitCoordinate[0] < 65 || sHitCoordinate[0] > 74)
 			{
-				cout << "\x1b[31mInvalid coordinate. Please enter letters from A to J capitalized\x1b[37m" << endl;
+				cout << "\x1b[31mInvalid coordinate. Please enter letters from A to J capitalized\x1b[30m" << endl;
 			}
 			else
 			{
 				//Check if the second character is a number in valid range
 				if (sHitCoordinate[1] < 48 || sHitCoordinate[1] > 57)
 				{
-					cout << "\x1b[31mInvalid coordinate. Please enter a digit as second parameter\x1b[37m" << endl;
+					cout << "\x1b[31mInvalid coordinate. Please enter a digit as second parameter\x1b[30m" << endl;
 				}
 				else
 				{
 					int iXCoordinate = sHitCoordinate[0] - 65;
 					int iYCoordinate = sHitCoordinate[1] - 48;
-					playerExectueShot(iMatComputerBoard, iXCoordinate, iYCoordinate, bIsWrongInput, bPlayerHasHit);
+					playerExectueShot(iMatComputerBoard, iXCoordinate, iYCoordinate, bIsWrongInput);
 				}
 			}
 		}
@@ -1342,9 +1340,9 @@ void getPlayerCoordinate(int iMatPlayerBoard[10][10], int iMatComputerBoard[10][
 
 void playerTurn(int iMatPlayerBoard[10][10], int iMatComputerBoard[10][10], string sPlayerName, char cTeam, 
 	            int iArrComputerCarrierPosition[], int iArrComputerBattleshipPosition[], int iArrComputerCruiserPosition[], 
-				int iArrComputerSubmarinePosition[], int iArrComputerDestroyerPosition[], bool &bPlayerHasHit)
+				int iArrComputerSubmarinePosition[], int iArrComputerDestroyerPosition[])
 {
-	getPlayerCoordinate(iMatPlayerBoard, iMatComputerBoard, sPlayerName, cTeam, bPlayerHasHit);
+	getPlayerCoordinate(iMatPlayerBoard, iMatComputerBoard, sPlayerName, cTeam);
 
 	checkComputerShips(iMatComputerBoard, cTeam, iArrComputerCarrierPosition, iArrComputerBattleshipPosition, iArrComputerCruiserPosition,
 					   iArrComputerSubmarinePosition, iArrComputerDestroyerPosition);
@@ -1870,52 +1868,29 @@ void runGame(int iMatPlayerBoard[10][10], int iMatComputerBoard[10][10], string 
 		     int iArrComputerDestroyerPosition[4], int &iDifficulty)
 {
 	bool bGameIsRunning = true;
-	bool bPlayerHasHit = false;
 	bool bIsWinner = false;
 	bool bComputerHitShip = false;
 	bool bComputerHitAdyacent = false;
 
 	int iComputerPrevXCoor = 0;
 	int iComputerPrevYCoor = 0;
-	int iPlayerScore = 0;
-	int iScoreAmountToSum = 500;
-	int iTurnPenalty = 0;
 	int iShipToSinkSize = 0;
 
 	cleanScreen();
 
 	int iArrShipHit[7];
 
-	showBeginGame();
+	showPlayerTurn();
 
 	while (bGameIsRunning)
 	{
 
-		printRunningBoard(iMatPlayerBoard, iMatComputerBoard, iPlayerScore);
+		printRunningBoard(iMatPlayerBoard, iMatComputerBoard);
 
 		playerTurn(iMatPlayerBoard, iMatComputerBoard, sPlayerName, cTeam, iArrComputerCarrierPosition, iArrComputerBattleshipPosition,
-		           iArrComputerCruiserPosition, iArrComputerSubmarinePosition, iArrComputerDestroyerPosition, bPlayerHasHit);
-		
-		if (bPlayerHasHit)
-		{
-			if (iTurnPenalty < 500)
-			{
-				iPlayerScore += iScoreAmountToSum - iTurnPenalty;
-			}
-			else
-			{
-				iPlayerScore += iScoreAmountToSum - 490;
-			}
+		           iArrComputerCruiserPosition, iArrComputerSubmarinePosition, iArrComputerDestroyerPosition);
 
-		}
-		else
-		{
-			iTurnPenalty += 10;
-		}
-
-		bPlayerHasHit = false;
-		
-		printRunningBoard(iMatPlayerBoard, iMatComputerBoard, iPlayerScore);
+		printRunningBoard(iMatPlayerBoard, iMatComputerBoard);
 
 		bIsWinner = checkIfWinner(iMatComputerBoard, bGameIsRunning);
 
@@ -1936,7 +1911,7 @@ void runGame(int iMatPlayerBoard[10][10], int iMatComputerBoard[10][10], string 
 		bIsWinner = !checkIfWinner(iMatPlayerBoard, bGameIsRunning);
 	}
 
-	showResult(sPlayerName, cTeam, bIsWinner, iPlayerScore);
+	showResult(sPlayerName, cTeam, bIsWinner);
 }
 
 /*
