@@ -167,7 +167,7 @@ void showHit(bool bIsPlayer)
 	if (bIsPlayer)
 	{
 		cout << setw(iIndenting + 7) << "Admiral, we've hit one of the enemy ships!" << endl;
-		usleep(2000000);
+		//usleep(2000000);
 	}
 	else
 	{
@@ -264,7 +264,7 @@ void showMiss(bool bIsPlayer)
 			cout << endl;
 		}
 		
-		usleep(2000000);
+		//usleep(2000000);
 	}
 	else
 	{
