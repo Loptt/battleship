@@ -13,7 +13,14 @@ Carlos Daniel Estrada Guerra       A01039919
 #include <time.h>
 #include <unistd.h>
 #include <iomanip>
+#include <thread>
+#include <chrono>
 using namespace std;
+using std::cout;
+using std::flush;
+using std::string;
+using std::this_thread::sleep_for;
+using std::chrono::milliseconds;
 
 //Japanese ship names
 const string sJapaneseCarrier = "Ryujo Carrier";
@@ -31,9 +38,16 @@ const string sAmericanDestroyer = "USS Frankford Destroyer";
 
 
 /*
--------------------------------------------------------------
-	GENERAL USE FUNCTIONS
--------------------------------------------------------------
+-------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------
+
+
+		gENERAL USE FUNCTIONS
+
+
+-------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------
+
 */
 
 /*
@@ -76,6 +90,67 @@ void pressToReturnToMenu()
 {
 	cout << "\x1b[36mPress Enter to return to the Main Menu...\x1b[37m";
     cin.ignore();
+}
+
+void showIntro(unsigned int millis_per_char)
+{
+    string sMessage1 = "\x1b[37mPearl Harbor attack, (December 7, 1941), a surprise aerial attack \n";
+	string sMessage2 = "on the U.S. naval base at Pearl Harbor, by the Japanese \n";
+	string sMessage3 = "precipitated the entry of the United States into World War II. \n";
+	string sMessage4 = "Now both countires shall face eachother in the sea to show \n";
+	string sMessage5 = "who is the king of the pacific... \n";
+
+	cleanScreen();
+
+	for (const char c: sMessage1)
+	{
+
+		cout << c << flush;
+		
+
+		sleep_for(milliseconds(millis_per_char));
+	}
+
+	for (const char c: sMessage2)
+	{
+
+		cout << c << flush;
+		
+
+		sleep_for(milliseconds(millis_per_char));
+	}
+
+	for (const char c: sMessage3)
+	{
+
+		cout << c << flush;
+		
+
+		sleep_for(milliseconds(millis_per_char));
+	}
+
+	for (const char c: sMessage4)
+	{
+
+		cout << c << flush;
+		
+
+		sleep_for(milliseconds(millis_per_char));
+	}
+
+	for (const char c: sMessage5)
+	{
+
+		cout << c << flush;
+		
+
+		sleep_for(milliseconds(millis_per_char));
+	}
+
+	cout << endl << endl;
+
+	cin.ignore();
+	pressToContinue();
 }
 
 void showMenu()
@@ -143,9 +218,117 @@ void showMenu()
 	}
 }
 
-void showInstructions()
+void displayInstructions()
 {
-	
+	cleanScreen();
+
+	char cMatInstructions[37][81] = {
+		"################################################################################",
+		"#                                 Instructions                                 #",
+		"#------------------------------------------------------------------------------#",
+		"# Objective of the Game                                                        #",
+		"#  -Sink all the ships from the opponent and change the course of history      #",
+		"#                                                                              #",
+		"# Prepare for Battle                                                           #",
+		"#         1. Enter your name                                                   #",
+		"#         2. Choose a side: Either Japan (J) or United States (U)              #",
+		"#         3. Choose a difficulty                                               #",
+		"#         4. Set up all your battleships in the board by entering the starting #",
+		"#        and finishing coordinates of each ship. WATCH OUT FOR SPACES!         #",
+		"#                                                                              #",
+		"#  How to Fight for the Glory                                                  #",
+		"#      **Check the legend within the game**                                    #",
+		"#  1. Your SHOT!                                                               #",
+		"#      -You call the shots. Enter a coordinate where you want to strike.       #",
+		"#                                                                              #",
+		"# 	2. HIT or MISS--->Sink a boat                                               #",
+		"#      -Each shot will be declared as a shot or a miss.                        #",
+		"#      -In case that you have sank a boat a message will be displayed.         #",
+		"#                                                                              #",
+		"#  3. Wait for Opponent                                                        #",
+		"#      -Press enter to continue the game                                       #",
+		"#      -In case that the opponent has sunk a boat a message will be displayed  #",
+		"#                                                                              #",
+		"#  4. Be defeated or win the glory                                             #",
+		"#                                                                              #",
+		"#------------------------------------------------------------------------------#",
+		"#                                                                              #",
+		"#                                    ENJOY!                                    #",
+		"#                                                                              #",
+		"################################################################################",
+	}	;
+	for (int iRowIndex = 0; iRowIndex < 37; ++iRowIndex)
+	{
+		cout << setw(10);
+		
+		for (int iColIndex = 0; iColIndex < 81; ++iColIndex)
+		{
+			
+				cout << "\x1b[37m" << cMatInstructions[iRowIndex][iColIndex];
+		
+		}
+		
+		cout << endl;
+	}
+
+	cin.ignore();
+	pressToReturnToMenu();
+}
+
+void displayAbout()
+{
+	cleanScreen();
+
+	char cMatAbout[37][81] = 
+	   {"################################################################################",
+		"#                                   About                                      #",
+		"#------------------------------------------------------------------------------#",
+		"#  Developers:                                 -This game is (E) rated.        #",
+		"#  -Carlos Estrada                             -One Player vs. Computer        #",
+		"#  -Erick Gonzalez                             -(Soon) PvP                     #",
+		"#  Special Mention:                                                            #",
+		"#  -Javier Giese                                                               #",
+		"#                                                                              #",
+		"#                            IN COLLABORATION WITH                             #",
+		"#                                _ _ _ _ _ _ _ _                               #",
+		"#                              /                |                              #",
+		"#                             |   ----    ----  |                              #",
+		"#                             |  |       |____  |                              #",
+		"#                             |  |     & |      |                              #",
+		"#                             |   ----    ----  |                              #",
+		"#                             |      GAMES      |                              #",
+		"#                             |_ _ _ _ _ _ _ _ /                               #",
+		"#                                                                              #",
+		"#                                                                              #",
+		"#                                                                              #",
+		"#                                                                              #",
+		"#**This game does not mean offense to any of the names and/or situations       #",
+		"#  mentioned in the game.                                                      #",
+		"#***The abuse of this product may cause health issues.                         #",
+		"#****Remember this game is just for fun.                                       #",
+		"#                                                                              #",
+		"#------------------------------------------------------------------------------#",
+		"#                                                                              #",
+		"#                                    ENJOY!                                    #",
+		"#                                                                              #",
+		"################################################################################",
+	}	;
+	for (int iRowIndex = 0; iRowIndex < 37; ++iRowIndex)
+	{
+	    cout << setw(10);
+		
+		for (int iColIndex = 0; iColIndex < 81; ++iColIndex)
+		{
+			
+			cout << "\x1b[37m" << cMatAbout[iRowIndex][iColIndex];
+			
+		}
+		
+		cout << endl;
+	}
+
+	cin.ignore();
+	pressToReturnToMenu();
 }
 
 void showHit(bool bIsPlayer)
@@ -395,11 +578,28 @@ void showResult(string sPlayerName, char cTeam, bool bIsWinner, int iScore)
 	pressToReturnToMenu();
 }
 
+void showComputerThinking()
+{
+	cout << setw(20) << "THE ENEMY IS THINKING THEIR NEXT MOVE..." << endl;
+
+	for (int iCounter = 0; iCounter < 10; ++iCounter)
+	{
+		cout << endl;
+	}
+}
+
 
 /*
--------------------------------------------------------------
-	SETUP FUNCTIONS
--------------------------------------------------------------
+-------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------
+
+
+		SETUP FUNCTIONS
+
+
+-------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------
+
 */
 
 /*
@@ -408,7 +608,7 @@ Function to let the user input a name to use
 Paramenters: none
 Return: a string with the name
 */
-string getPlayerName()
+string getPlayerName(char cTeam)
 {
 	string sName;
 	cleanScreen();
@@ -427,9 +627,22 @@ string getPlayerName()
 		cout << endl;
 	}
 
-	cout << "Admiral, what is your name? --> ";	
-	cin >> sName;
+	if (cTeam == 'j' || cTeam == 'J')
+	{
+		cout << "Admiral, I am your senior advisor Takuya-San, the Americans are gettig ready for battle and so should we," << endl << endl;
+	}
+	else
+	{
+		cout << "Admiral, I am your senior advisor Thomas Charles, the japanese are gettig ready for battle and so should we," << endl << endl;
+	}
+
+	cin.ignore();
+	cout << "but first, what is your name? --> ";
+
+	getline(cin, sName);
+
 	cout << endl;	
+
 	return sName;
 }
 
@@ -443,13 +656,13 @@ char chooseTeam()
 {
 	char cTeam;
 
-	cout << "Choose your country!" << endl;
+	cout << "Choose your side!" << endl;
 	cout << "Do you want to play as Japan (J) or the United States (U)?" << endl;
 	cin >> cTeam;
 
 	while (cTeam != 'J' && cTeam != 'U' && cTeam != 'j' && cTeam != 'u')
 	{
-		cout << "Invalid team, please enter a valid letter" << endl;
+		cout << "\x1b[31mInvalid team, please enter 'J' for Japan or 'U' for the USA\x1b[37m" << endl;
 		cin >> cTeam;
 	}
 
@@ -467,6 +680,10 @@ int getDifficulty()
 	cin >> cDifficulty;
 
 	while (cDifficulty != 'N' && cDifficulty != 'n' && cDifficulty != 'e' && cDifficulty != 'E')
+	{
+		cout << "\x1b[31mInvalid letter, please enter N for normal or E for easy\x1b[37m" << endl;
+		cin >> cDifficulty;
+	}
 
 	if (cDifficulty == 'N' || cDifficulty == 'n')
 	{
@@ -481,6 +698,7 @@ int getDifficulty()
 
 	return iDifficulty;
 }
+
 
 /*
 eraseBoard
@@ -533,6 +751,7 @@ void printSetupBoard(int iMatBoard[10][10])
 	}
 	cout << endl << endl;
 }
+
 
 /*
 writeUserInput
@@ -1011,9 +1230,7 @@ void setupGame(int iMatPlayerBoard[10][10], int iMatComputerBoard[10][10], strin
 	eraseBoard(iMatPlayerBoard);
 	eraseBoard(iMatComputerBoard);
 
-	cleanScreen();
-
-	sPlayerName = getPlayerName();
+	iDifficulty = getDifficulty();
 
 	cleanScreen();
 
@@ -1021,7 +1238,9 @@ void setupGame(int iMatPlayerBoard[10][10], int iMatComputerBoard[10][10], strin
 
 	cleanScreen();
 
-	iDifficulty = getDifficulty();
+	sPlayerName = getPlayerName(cTeam);
+
+	cleanScreen();
 
 	getPlayerPositions(iMatPlayerBoard, sPlayerName, cTeam, iArrPlayerCarrierPosition, iArrPlayerBattleshipPosition,
 			           iArrPlayerCruiserPosition, iArrPlayerSubmarinePosition, iArrPlayerDestroyerPosition);
@@ -1031,9 +1250,16 @@ void setupGame(int iMatPlayerBoard[10][10], int iMatComputerBoard[10][10], strin
 }
 
 /*
--------------------------------------------------------------
-	RUNGAME FUNCTIONS
--------------------------------------------------------------
+-------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------
+
+
+		RUNGAME FUNCTIONS
+
+
+-------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------
+
 */
 
 
@@ -1548,6 +1774,8 @@ void checkHitShip(int iMatPlayerBoard[10][10], int iXCoordinate, int iYCoordinat
 void computerSinkShip(int iMatPlayerBoard[10][10], int iArrShipHit[], int iShipSize, bool &bHasHitShip, bool &bHasHitAdyacent,
 					  bool &bIsWrongCoordinate)
 {
+	showComputerThinking();
+
 	srand(time(NULL));
 
 	int iDirection = rand() % 2;
@@ -1638,6 +1866,8 @@ void computerExecuteRandomShot(int iMatPlayerBoard[10][10], int iXCoordinate, in
 						       int iArrPlayerCruiserPosition[5], int iArrPlayerSubmarinePosition[5], int iArrPlayerDestroyerPosition[4],
 						       int iArrPlayerShipPosition[], int &iShipSize)
 {
+	showComputerThinking();
+
 	int iXRemainder = iXCoordinate % 2;
 	int iYRemainder = iYCoordinate % 2;
 
@@ -1680,6 +1910,8 @@ void computerExecuteRandomShot(int iMatPlayerBoard[10][10], int iXCoordinate, in
 
 void computerExecuteRandomEasyShot(int iMatPlayerBoard[10][10], int iXCoordinate, int iYCoordinate, bool &bIsWrongCoordinate)
 {
+	showComputerThinking();
+
 	if (iMatPlayerBoard[iYCoordinate][iXCoordinate] == 1)
 	{
 		iMatPlayerBoard[iYCoordinate][iXCoordinate] = 2;
@@ -1706,6 +1938,8 @@ void computerExecuteRandomAdyacentShot(int iMatPlayerBoard[10][10], int &iXCoord
 									   int iPrevYCoor, bool &bIsWrongCoordinate, bool &bHasHitAdyacent, bool &bHasHitShip,
 									   int iArrShipHit[], int iShipSize)
 {
+	showComputerThinking();
+
 	srand(time(NULL));
 
 	iXCoordinate = iPrevXCoor; 
@@ -1811,25 +2045,7 @@ void computerTurn(int iMatPlayerBoard[10][10], int iMatComputerBoard[10][10], st
 			{
 				if (bHasHitAdyacent)
 				{
-					//srand(time(NULL));
-
-					//iProbabilityHit = rand() % 8;
-
-					//if (iProbabilityHit)
-					//{
-						computerSinkShip(iMatPlayerBoard, iArrShipHit, iShipSize, bHasHitShip, bHasHitAdyacent, bIsWrongCoordinate);
-					//}
-					//else
-					//{
-					//	generateRandomCoordinate(iXCoordinate, iYCoordinate);
-
-					//	computerExecuteRandomShot(iMatPlayerBoard, iXCoordinate, iYCoordinate, bIsWrongCoordinate, bHasHitShip,
-						//	                      iArrPlayerCarrierPosition, iArrPlayerBattleshipPosition, iArrPlayerCruiserPosition,
-						//	                      iArrPlayerSubmarinePosition, iArrPlayerDestroyerPosition, iArrShipHit, iShipSize);
-
-						//iPrevXCoor = iXCoordinate;
-					   // iPrevYCoor = iYCoordinate;
-					//}
+					computerSinkShip(iMatPlayerBoard, iArrShipHit, iShipSize, bHasHitShip, bHasHitAdyacent, bIsWrongCoordinate);
 				}
 				else
 				{
@@ -1980,6 +2196,7 @@ int main()
 			//Start game
 			case 'P':
 			case 'p':
+				showIntro(30);
 
 				setupGame(iMatPlayerBoard, iMatComputerBoard, sPlayerName, cTeam, iArrPlayerCarrierPosition,
 						  iArrPlayerBattleshipPosition, iArrPlayerCruiserPosition, iArrPlayerSubmarinePosition,
@@ -1998,13 +2215,13 @@ int main()
 			//Show instructions
 			case 'I':
 			case 'i':
-				//displayInstructions();
+				displayInstructions();
 				break;
 
 			//Show about information	
 			case 'A':
 			case 'a':
-				//displayAbout();
+				displayAbout();
 				break;
 
 			//Exit game
