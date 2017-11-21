@@ -178,7 +178,7 @@ void showMenu()
 
   int iHeight = 30;
   int iWidth = 81;
-  char cMatMenu[iHeight][iWidth] =
+  char cMatMenu[30][81] =
   {   "################################################################################",
       "#                                                                              #",
       "#                                                                              #",
@@ -265,7 +265,7 @@ void displayInstructions()
     "#  1. Your SHOT!                                                               #",
     "#      -You call the shots. Enter a coordinate where you want to strike.       #",
     "#                                                                              #",
-    "#   2. HIT or MISS--->Sink a boat                                               #",
+    "#   2. HIT or MISS--->Sink a boat                                              #",
     "#      -Each shot will be declared as a shot or a miss.                        #",
     "#      -In case that you have sank a boat a message will be displayed.         #",
     "#                                                                              #",
