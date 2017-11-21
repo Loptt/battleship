@@ -2038,7 +2038,7 @@ void computerTurn(int iMatPlayerBoard[10][10], int iMatComputerBoard[10][10], st
 
 	while (bIsWrongCoordinate)
 	{
-		if (iDifficulty = 2)
+		if (iDifficulty == 2)
 		{
 			//Normal Mode
 			if (bHasHitShip)
