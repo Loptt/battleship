@@ -1908,8 +1908,6 @@ Return: nothing
 void computerSinkShip(int iMatPlayerBoard[10][10], int iArrShipHit[], int iShipSize, bool &bHasHitShip, bool &bHasHitAdyacent,
             bool &bIsWrongCoordinate)
 {
-  showComputerThinking();
-
   srand(time(NULL));
 
   int iDirection = rand() % 2;
@@ -2008,8 +2006,6 @@ void computerExecuteRandomShot(int iMatPlayerBoard[10][10], int iXCoordinate, in
                    int iArrPlayerCruiserPosition[5], int iArrPlayerSubmarinePosition[5], int iArrPlayerDestroyerPosition[4],
                    int iArrPlayerShipPosition[], int &iShipSize)
 {
-  showComputerThinking();
-
   int iXRemainder = iXCoordinate % 2;
   int iYRemainder = iYCoordinate % 2;
 
@@ -2058,8 +2054,6 @@ Return: nothing
 */
 void computerExecuteRandomEasyShot(int iMatPlayerBoard[10][10], int iXCoordinate, int iYCoordinate, bool &bIsWrongCoordinate)
 {
-  showComputerThinking();
-
   if (iMatPlayerBoard[iYCoordinate][iXCoordinate] == 1)
   {
     iMatPlayerBoard[iYCoordinate][iXCoordinate] = 2;
@@ -2094,8 +2088,6 @@ void computerExecuteRandomAdyacentShot(int iMatPlayerBoard[10][10], int &iXCoord
                      int iPrevYCoor, bool &bIsWrongCoordinate, bool &bHasHitAdyacent, bool &bHasHitShip,
                      int iArrShipHit[], int iShipSize)
 {
-  showComputerThinking();
-
   srand(time(NULL));
 
   iXCoordinate = iPrevXCoor; 
@@ -2172,7 +2164,12 @@ void computerExecuteRandomAdyacentShot(int iMatPlayerBoard[10][10], int &iXCoord
   }
 }
 
-
+/*
+generateRandomCoordinate
+Function to generate an x and y random coordinate
+Parameters: the x and y coordinates as reference
+Return: nothing
+*/
 void generateRandomCoordinate(int &iXCoordinate, int &iYCoordinate)
 {
   srand(time(NULL));
@@ -2200,6 +2197,8 @@ void computerTurn(int iMatPlayerBoard[10][10], int iMatComputerBoard[10][10], st
   int iProbabilityHit;
 
   bool bIsWrongCoordinate = true;
+
+  showComputerThinking();
 
   while (bIsWrongCoordinate)
   {
@@ -2322,6 +2321,8 @@ void runGame(int iMatPlayerBoard[10][10], int iMatComputerBoard[10][10], string 
            iComputerPrevXCoor, iComputerPrevYCoor, iShipToSinkSize, iDifficulty);
 
     bIsWinner = !checkIfWinner(iMatPlayerBoard, bGameIsRunning);
+
+    printRunningBoard(iMatPlayerBoard, iMatComputerBoard, iPlayerScore);
   }
 
   showResult(sPlayerName, cTeam, bIsWinner, iPlayerScore);
