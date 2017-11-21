@@ -111,7 +111,7 @@ void showIntro(unsigned int millis_per_char)
     string sMessage1 = "\x1b[37mPearl Harbor attack, (December 7, 1941), a surprise aerial attack \n";
   string sMessage2 = "on the U.S. naval base at Pearl Harbor, by the Japanese \n";
   string sMessage3 = "precipitated the entry of the United States into World War II. \n";
-  string sMessage4 = "Now both countires shall face eachother in the sea to show \n";
+  string sMessage4 = "Now both countries shall face each other in the sea to show \n";
   string sMessage5 = "who is the king of the pacific... \n";
 
   cleanScreen();
@@ -480,14 +480,14 @@ void showMiss(bool bIsPlayer)
 
   int iIndenting = 65;
 
-  cout << "\x1b[36m";
+  cout << "\x1b[5;36m";
   cout << setw(iIndenting) << "**        **   **    *****    *****   ** " << endl;
   cout << setw(iIndenting) << "***      ***   **   **       **       ** " << endl;
   cout << setw(iIndenting) << "****    ****   **   ****     ****     ** " << endl;
   cout << setw(iIndenting) << "** **  ** **   **     ****     ****   ** " << endl;
   cout << setw(iIndenting) << "**  ****  **   **       **       **      " << endl;
   cout << setw(iIndenting) << "**   **   **   **    *****    *****   ** " << endl;
-  cout << "\x1b[37m";
+  cout << "\x1b[25;37m";
 
   cout << endl << endl;
 
@@ -521,14 +521,14 @@ void showSank(bool bIsPlayer, string sShip)
 
   int iIndenting = 75;
 
-  cout << "\x1b[31m";
+  cout << "\x1b[5;31m";
   cout << setw(iIndenting) << "  *****   **    **   **   **    **  **   ** " << endl;
   cout << setw(iIndenting) << " **       **    **   ***  **    ** **    ** " << endl;
   cout << setw(iIndenting) << " ****     **    **   **** **    ***      ** " << endl;
   cout << setw(iIndenting) << "   ****   **    **   ** ****    ****     ** " << endl;
   cout << setw(iIndenting) << "     **   **    **   **  ***    ** **       " << endl;
   cout << setw(iIndenting) << "  *****     ****     **   **    **  **   ** " << endl;
-  cout << "\x1b[37m";
+  cout << "\x1b[25;37m";
 
   cout << endl << endl;
 
@@ -562,7 +562,7 @@ void showResult(string sPlayerName, char cTeam, bool bIsWinner, int iScore)
 
   if (bIsWinner)
   {
-    cout << "\x1b[36m";
+    cout << "\x1b[5;36m";
     cout << setw(iIndenting) << " **  **      ****      **    **  " << endl;
     cout << setw(iIndenting) << "  ****     **    **    **    **  " << endl;
     cout << setw(iIndenting) << "   **     **      **   **    **  " << endl;
@@ -578,7 +578,7 @@ void showResult(string sPlayerName, char cTeam, bool bIsWinner, int iScore)
     cout << setw(iIndenting + 6) << " ****    ****   **      **   ** ****   ** " << endl;
     cout << setw(iIndenting + 6) << " ***      ***    **    **    **  ***      " << endl;
     cout << setw(iIndenting + 6) << " **        **      ****      **   **   ** " << endl;
-    cout << "\x1b[37m";
+    cout << "\x1b[25;37m";
 
     cout << endl << endl;
 
@@ -595,7 +595,7 @@ void showResult(string sPlayerName, char cTeam, bool bIsWinner, int iScore)
   }
   else
   {
-    cout << "\x1b[36m";
+    cout << "\x1b[5;36m";
     cout << setw(iIndenting) << " **  **      ****      **    **  " << endl;
     cout << setw(iIndenting) << "  ****     **    **    **    **  " << endl;
     cout << setw(iIndenting) << "   **     **      **   **    **  " << endl;
@@ -611,7 +611,7 @@ void showResult(string sPlayerName, char cTeam, bool bIsWinner, int iScore)
     cout << setw(iIndenting + 6) << " **      **      **    ****      **     **" << endl;
     cout << setw(iIndenting + 6) << " **       **    **       **      **       " << endl;
     cout << setw(iIndenting + 6) << " *****      ****      *****      **     **" << endl;
-    cout << "\x1b[37m";
+    cout << "\x1b[25;37m";
 
     cout << endl << endl;
 
@@ -673,14 +673,14 @@ string getPlayerName(char cTeam)
   string sName;
   cleanScreen();
 
-  cout << "\x1b[36m";
+  cout << "\x1b[5;36m";
   cout << setw(70) << "**   **        **      ****     ****  ******    ******  " << endl;
   cout << setw(70) << "***  **       ****     *****   *****  **            **  " << endl;
   cout << setw(70) << "** * **      **  **    **  ** **  **  ******        **  " << endl;
   cout << setw(70) << "**  ***     ********   **   ****  **  **        ******  " << endl;
   cout << setw(70) << "**   **    **      **  **         **  **        **      " << endl;
   cout << setw(70) << "**   **   **        ** **         **  ******    *       " << endl;
-  cout << "\x1b[37m";
+  cout << "\x1b[25;37m";
 
   for (int iCounter = 0; iCounter < 7; ++iCounter)
   {
