@@ -58,7 +58,7 @@ Return: a char provided by the user
 char getMenuInput()
 {
   char cInput;
-  cout << "cEnter an option to continue --> ";
+  cout << "\x1b[30mEnter an option to continue --> ";
   cin >> cInput;
   cout << endl;
   return cInput;
@@ -108,7 +108,7 @@ Return: nothing
 */
 void showIntro(unsigned int millis_per_char)
 {
-    string sMessage1 = "\x1b[30mPearl Harbor attack, (December 7, 1941), a surprise aerial attack \n";
+  string sMessage1 = "\x1b[30mPearl Harbor attack, (December 7, 1941), a surprise aerial attack \n";
   string sMessage2 = "on the U.S. naval base at Pearl Harbor, by the Japanese \n";
   string sMessage3 = "precipitated the entry of the United States into World War II. \n";
   string sMessage4 = "Now both countries shall face each other in the sea to show \n";
@@ -423,7 +423,8 @@ void showComputerTurn()
 
   cout << endl << endl;
 
-  cout << setw(iIndenting + 2) << "It's the enemy's turn to strike! Brace yourself for impact!" << endl;  
+  cout << setw(iIndenting + 2) << "It's the enemy's turn to strike!";
+  cout << " Brace yourself for impact!" << endl;  
 
   for (int iCounter = 0; iCounter < 7; ++iCounter)
   {
@@ -498,7 +499,8 @@ void showMiss(bool bIsPlayer)
   }
   else
   {
-    cout << setw(iIndenting + 19) << "Admiral, The enemy has missed the shot, but our luck might run out soon!" << endl;
+    cout << setw(iIndenting + 19) << "Admiral, The enemy has missed the shot,";
+    cout << " but our luck might run out soon!" << endl;
   }
 
   for (int iCounter = 0; iCounter < 7; ++iCounter)
@@ -534,11 +536,13 @@ void showSank(bool bIsPlayer, string sShip)
 
   if (bIsPlayer)
   {
-    cout << setw(iIndenting - 21) << "You have sank the enemy " << "\x1b[36m" << sShip << "\x1b[30m" << "!";
+    cout << setw(iIndenting - 21) << "You have sank the enemy ";
+    cout << "\x1b[36m" << sShip << "\x1b[30m" << "!";
   }
   else
   {
-    cout << setw(iIndenting - 21) << "The enemy has sank our " << "\x1b[36m" << sShip << "\x1b[30m" << "! A black day!";
+    cout << setw(iIndenting - 21) << "The enemy has sank our ";
+    cout << "\x1b[36m" << sShip << "\x1b[30m" << "! A black day!";
   }
 
   for (int iCounter = 0; iCounter < 7; ++iCounter)
@@ -551,7 +555,8 @@ void showSank(bool bIsPlayer, string sShip)
  /*  
 showResult
 Function that displays the final status of the user
-Parameters: The name of the user, the team it chose, whether it is a winner or not, and the total score of the game
+Parameters: The name of the user, the team it chose, whether it is a winner or not,
+and the total score of the game
 Return: nothing
 */
 void showResult(string sPlayerName, char cTeam, bool bIsWinner, int iScore)
@@ -584,13 +589,16 @@ void showResult(string sPlayerName, char cTeam, bool bIsWinner, int iScore)
 
     if (cTeam == 'J' || cTeam == 'j')
     {
-      cout << setw(iIndenting - 28) << "Admiral " << sPlayerName << "-San, " << "we have defeated the enemy! " << endl;
+      cout << setw(iIndenting - 28) << "Admiral " << sPlayerName;
+      cout << "-San, " << "we have defeated the enemy! " << endl;
       cout << setw(iIndenting + 5) << "Japan shall rule the seas for eternity!" << endl;
     }
     else
     {
-      cout << setw(iIndenting - 28) << "Admiral " << sPlayerName << ", we have defeated the enemy! " << endl;
-      cout << setw(iIndenting + 17) << "The United States shall rule the Pacific for centuries to come!" << endl;
+      cout << setw(iIndenting - 28) << "Admiral " << sPlayerName;
+      cout << ", we have defeated the enemy! " << endl;
+      cout << setw(iIndenting + 17) << "The United States shall rule";
+      cout << " the Pacific for centuries to come!" << endl;
     }
   }
   else
@@ -617,17 +625,19 @@ void showResult(string sPlayerName, char cTeam, bool bIsWinner, int iScore)
 
     if (cTeam == 'J' || cTeam == 'j')
     {
-      cout << setw(iIndenting - 28) << "Admiral " << sPlayerName << "-San, " << "the enemy is victorious! " << endl;
+      cout << setw(iIndenting - 28) << "Admiral " << sPlayerName;
+      cout << "-San, " << "the enemy is victorious! " << endl;
       cout << setw(iIndenting + 10) << "Dishonor for our families and generations to come!" << endl;
     }
     else
     {
-      cout << setw(iIndenting - 28  ) << "Admiral " << sPlayerName << ", the enemy has defeated us! " << endl;
+      cout << setw(iIndenting - 28  ) << "Admiral " << sPlayerName;
+      cout << ", the enemy has defeated us! " << endl;
       cout << setw(iIndenting + 6) << "The founding fathers shall be ashamed of us!" << endl;
     }
   }
 
-  cout << setw(iIndenting - 33) << "\x1b[36mYou had a score of: " << iScore;
+  cout << endl << setw(iIndenting - 5) << "\x1b[36mYou had a score of: " << iScore;
 
   for (int iCounter = 0; iCounter < 7; ++iCounter)
   {
@@ -689,11 +699,13 @@ string getPlayerName(char cTeam)
 
   if (cTeam == 'j' || cTeam == 'J')
   {
-    cout << "Admiral, I am your senior advisor Takuya-San, the Americans are gettig ready for battle and so should we," << endl << endl;
+    cout << "Admiral, I am your senior advisor Takuya-San,"; 
+    cout << " the Americans are gettig ready for battle and so should we," << endl << endl;
   }
   else
   {
-    cout << "Admiral, I am your senior advisor Thomas Charles, the japanese are gettig ready for battle and so should we," << endl << endl;
+    cout << "Admiral, I am your senior advisor Thomas Charles,";
+    cout << " the japanese are gettig ready for battle and so should we," << endl << endl;
   }
 
   cin.ignore();
@@ -816,11 +828,12 @@ void printSetupBoard(int iMatBoard[10][10])
 /*
 writeUserInput
 Function to write the ship position on the board
-Parameters: The board, a boolean to validate the position, the first position, and the second position, and an array to store the location
+Parameters: The board, a boolean to validate the position, the first position,
+and the second position, and an array to store the location
 Return: nothing
 */
-void writeUserInput(int iMatBoard[10][10], bool &bIsWrongInput, string sFirstPosition, string sSecondPosition, int iArrShipPosition[],
-        int iShipSize)
+void writeUserInput(int iMatBoard[10][10], bool &bIsWrongInput, string sFirstPosition,
+                  string sSecondPosition, int iArrShipPosition[], int iShipSize)
 {
   int iFirstLetterCoordinate = sFirstPosition[0] - 65;
   int iSecondLetterCoordinate = sSecondPosition[0] - 65;
@@ -1006,9 +1019,10 @@ Function to ask the user for the ship positions
 Parameters: The Player board, the name, the char of the team, and an array for each ship to store location
 Retrun nothing
 */
-void getPlayerPositions(int iMatPlayerBoard[10][10], string sPlayerName, char cTeam, int iArrPlayerCarrierPosition[7],
-                        int iArrPlayerBattleshipPosition[6], int iArrPlayerCruiserPosition[5],
-               int iArrPlayerSubmarinePosition[5], int iArrPlayerDestroyerPosition[4])
+void getPlayerPositions(int iMatPlayerBoard[10][10], string sPlayerName, char cTeam,
+                        int iArrPlayerCarrierPosition[7], int iArrPlayerBattleshipPosition[6], 
+                        int iArrPlayerCruiserPosition[5], int iArrPlayerSubmarinePosition[5], 
+                        int iArrPlayerDestroyerPosition[4])
 {
   int iShipSize;
 
@@ -1019,7 +1033,8 @@ void getPlayerPositions(int iMatPlayerBoard[10][10], string sPlayerName, char cT
     //Carrier
     iShipSize = 5;
 
-    cout << "Admiral " << sPlayerName << "-San, enter the starting and ending coordinates of your "  << "\x1b[36m" << sJapaneseCarrier;
+    cout << "Admiral " << sPlayerName << "-San, enter the starting and ending coordinates of your ";
+    cout << "\x1b[36m" << sJapaneseCarrier;
     cout << "\x1b[30m" << " (" << iShipSize << " spaces)" << endl; 
       cout << "Example : A1 E1 (Separated by spaces)" << endl << "-->";
 
@@ -1032,7 +1047,8 @@ void getPlayerPositions(int iMatPlayerBoard[10][10], string sPlayerName, char cT
     //Battleship
     iShipSize = 4;
 
-    cout << "Admiral " << sPlayerName << "-San, enter the starting and ending coordinates of your "  << "\x1b[36m" << sJapaneseBattleship;
+    cout << "Admiral " << sPlayerName << "-San, enter the starting and ending coordinates of your ";
+    cout << "\x1b[36m" << sJapaneseBattleship;
     cout << "\x1b[30m" << " (" << iShipSize << " spaces)" << endl;
     cout << "Example : A1 E1 (Separated by spaces)" << endl << "-->";
 
@@ -1045,7 +1061,8 @@ void getPlayerPositions(int iMatPlayerBoard[10][10], string sPlayerName, char cT
     //Cruiser
     iShipSize = 3;
 
-    cout << "Admiral " << sPlayerName << "-San, enter the starting and ending coordinates of your "  << "\x1b[36m" << sJapaneseCruiser;
+    cout << "Admiral " << sPlayerName << "-San, enter the starting and ending coordinates of your ";
+    cout << "\x1b[36m" << sJapaneseCruiser;
     cout << "\x1b[30m" << " (" << iShipSize << " spaces)" << endl;
     cout << "Example : A1 E1 (Separated by spaces)" << endl << "-->";
 
@@ -1056,7 +1073,8 @@ void getPlayerPositions(int iMatPlayerBoard[10][10], string sPlayerName, char cT
     printSetupBoard(iMatPlayerBoard);
 
     //Submarine
-    cout << "Admiral " << sPlayerName << "-San, enter the starting and ending coordinates of your "  << "\x1b[36m" << sJapaneseSubmarine;
+    cout << "Admiral " << sPlayerName << "-San, enter the starting and ending coordinates of your ";
+    cout << "\x1b[36m" << sJapaneseSubmarine;
     cout << "\x1b[30m" << " (" << iShipSize << " spaces)" << endl;
     cout << "Example : A1 E1 (Separated by spaces)" << endl << "-->";
 
@@ -1069,9 +1087,10 @@ void getPlayerPositions(int iMatPlayerBoard[10][10], string sPlayerName, char cT
     //Destroyer
     int iShipSize = 2;
 
-    cout << "Admiral " << sPlayerName << "-San, enter the starting and ending coordinates of your "  << "\x1b[36m" << sJapaneseDestroyer;
+    cout << "Admiral " << sPlayerName << "-San, enter the starting and ending coordinates of your ";
+    cout << "\x1b[36m" << sJapaneseDestroyer;
     cout << "\x1b[30m" << " (" << iShipSize << " spaces)" << endl;
-     cout << "Example : A1 E1 (Separated by spaces)" << endl << "-->";
+    cout << "Example : A1 E1 (Separated by spaces)" << endl << "-->";
 
     readUserPositions(iMatPlayerBoard, iShipSize, iArrPlayerDestroyerPosition);
 
@@ -1087,7 +1106,8 @@ void getPlayerPositions(int iMatPlayerBoard[10][10], string sPlayerName, char cT
     //Carrier
     iShipSize = 5;
 
-    cout << "Admiral " << sPlayerName << ", enter the starting and ending coordinates of your " << "\x1b[36m" << sAmericanCarrier;
+    cout << "Admiral " << sPlayerName << ", enter the starting and ending coordinates of your ";
+    cout << "\x1b[36m" << sAmericanCarrier;
     cout << "\x1b[30m" << " (" << iShipSize << " spaces)" << endl;
     cout << "Example : A1 E1 (Separated by spaces)" << endl << "-->";
 
@@ -1100,7 +1120,8 @@ void getPlayerPositions(int iMatPlayerBoard[10][10], string sPlayerName, char cT
     //Battleship
     iShipSize = 4;
 
-    cout << "Admiral " << sPlayerName << ", enter the starting and ending coordinates of your " << "\x1b[36m" << sAmericanBattleship;
+    cout << "Admiral " << sPlayerName << ", enter the starting and ending coordinates of your ";
+    cout << "\x1b[36m" << sAmericanBattleship;
     cout << "\x1b[30m" << " (" << iShipSize << " spaces)" << endl;
     cout << "Example : A1 E1 (Separated by spaces)" << endl << "-->";
 
@@ -1113,7 +1134,8 @@ void getPlayerPositions(int iMatPlayerBoard[10][10], string sPlayerName, char cT
     //Cruiser
     iShipSize = 3;
 
-    cout << "Admiral " << sPlayerName << ", enter the starting and ending coordinates of your "  << "\x1b[36m" << sAmericanCruiser;
+    cout << "Admiral " << sPlayerName << ", enter the starting and ending coordinates of your ";
+    cout << "\x1b[36m" << sAmericanCruiser;
     cout << "\x1b[30m" << " (" << iShipSize << " spaces)" << endl;
     cout << "Example : A1 E1 (Separated by spaces)" << endl << "-->";
 
@@ -1124,7 +1146,8 @@ void getPlayerPositions(int iMatPlayerBoard[10][10], string sPlayerName, char cT
     printSetupBoard(iMatPlayerBoard);
 
     //Submarine
-    cout << "Admiral " << sPlayerName << ", enter the starting and ending coordinates of your "  << "\x1b[36m" << sAmericanSubmarine;
+    cout << "Admiral " << sPlayerName << ", enter the starting and ending coordinates of your ";
+    cout << "\x1b[36m" << sAmericanSubmarine;
     cout << "\x1b[30m" << " (" << iShipSize << " spaces)" << endl;
     cout << "Example : A1 E1 (Separated by spaces)" << endl << "-->";
 
@@ -1137,7 +1160,8 @@ void getPlayerPositions(int iMatPlayerBoard[10][10], string sPlayerName, char cT
     //Destroyer
     int iShipSize = 2;
 
-    cout << "Admiral " << sPlayerName << ", enter the starting and ending coordinates of your "  << "\x1b[36m" << sAmericanDestroyer;
+    cout << "Admiral " << sPlayerName << ", enter the starting and ending coordinates of your ";
+    cout << "\x1b[36m" << sAmericanDestroyer;
     cout << "\x1b[30m" << " (" << iShipSize << " spaces)" << endl;
     cout << "Example : A1 E1 (Separated by spaces)" << endl << "-->";
 
@@ -1246,8 +1270,9 @@ Function to generate a random board for the computer
 Parameters: The board, and a set of arrays for the ship positions
 Return: nothing
 */
-void getComputerPositions(int iMatBoard[10][10], int iArrComputerCarrierPosition[], int iArrComputerBattleshipPosition[],
-                     int iArrComputerCruiserPosition[], int iArrComputerSubmarinePosition[], int iArrComputerDestroyerPosition[])
+void getComputerPositions(int iMatBoard[10][10], int iArrComputerCarrierPosition[], 
+                        int iArrComputerBattleshipPosition[], int iArrComputerCruiserPosition[],
+                        int iArrComputerSubmarinePosition[], int iArrComputerDestroyerPosition[])
 {
   //Computer Carrier
   int iShipSize = 5;
@@ -1281,11 +1306,13 @@ Parameters: Player and computer boards, the player name, the team, a set of arra
 and a set of arrays to store computer ship locations
 Return: nothing
 */
-void setupGame(int iMatPlayerBoard[10][10], int iMatComputerBoard[10][10], string &sPlayerName, char &cTeam,
-               int iArrPlayerCarrierPosition[7], int iArrPlayerBattleshipPosition[6], int iArrPlayerCruiserPosition[5],
-         int iArrPlayerSubmarinePosition[5], int iArrPlayerDestroyerPosition[4], int iArrComputerCarrierPosition[7],
-         int iArrComputerBattleshipPosition[6], int iArrComputerCruiserPosition[5], int iArrComputerSubmarinePosition[5],
-         int iArrComputerDestroyerPosition[4], int &iDifficulty)  
+void setupGame(int iMatPlayerBoard[10][10], int iMatComputerBoard[10][10], 
+               string &sPlayerName, char &cTeam, int iArrPlayerCarrierPosition[7], 
+               int iArrPlayerBattleshipPosition[6], int iArrPlayerCruiserPosition[5],
+               int iArrPlayerSubmarinePosition[5], int iArrPlayerDestroyerPosition[4],
+               int iArrComputerCarrierPosition[7], int iArrComputerBattleshipPosition[6],
+               int iArrComputerCruiserPosition[5], int iArrComputerSubmarinePosition[5],
+               int iArrComputerDestroyerPosition[4], int &iDifficulty)  
 {
   eraseBoard(iMatPlayerBoard);
   eraseBoard(iMatComputerBoard);
@@ -1642,7 +1669,7 @@ void getPlayerCoordinate(int iMatPlayerBoard[10][10], int iMatComputerBoard[10][
         //Check if the second character is a number in valid range
         if (sHitCoordinate[1] < 48 || sHitCoordinate[1] > 57)
         {
-          cout << "\x1b[31mInvalid coordinate. Please enter a digit as second parameter\x1b[30mx1b[30m" << endl;
+          cout << "\x1b[31mInvalid coordinate. Please enter a digit as second parameter\x1b[30m" << endl;
         }
         else
         {
@@ -2416,3 +2443,153 @@ int main()
 
   return 0;    
 }
+
+/*
+ ----------------
+    Analysis
+ ----------------
+ -------Input-------
+ 
+ *General Use Functions*
+ 
+ In these functions there are no input since the display is already
+ developed. This includes the boards, messages, legend, screen.
+ 
+ *Setup Functions*
+ 
+ Menu: The user is able to enter a letter to navigate in the menu
+ 
+ Name: Enters the number, which will be used as reference throughout the
+  game.
+ 
+ Team: The user enters a letter indicating the team he/she wants to play
+  with.
+ 
+ Difficulty: It receives whether the user decides to choose difficulty as easy or normal.
+ 
+ Setup Board: It setups the board for the player. The player enters the starting
+  and ending coordinates of each boat.
+ 
+ *Run Game Functions*
+ 
+  Coordinates: The user enters a capital lettter and a number within the matrix of the 
+  computer in attempt to hit a boat.
+  
+  Overall, the user inputs an enter to progress through the playing screens.
+  
+ 
+-------Process-------
+ 
+ *General Use Functions*
+ 
+ Since the titles are matrices, the process function is to display the matrix 
+ through a loop that goes throughout all the cells. There are several matrices 
+ to display there is a variation among them.
+ 
+ The other general use functions are to clean the screen which jumps 60 break lines.
+ 
+ The press to continue ignores the cin and waits for the user to enter anythin
+ g and continue playing.
+ 
+ *Setup Functions*
+ 
+ Menu: It receives a letter depending on the user, which can lead to instructions, 
+ about, exit or play the game.
+ 
+ Name: This reference is used throughout the game in order to identify whether is the
+  user's turn or it has won.
+ 
+ Difficulty: The Easy Mode-->
+ 
+             The Normal Mode-->
+ 
+ Setup Player Board: The two coordinates are interpreted and changed into numbers which 
+ are placed in the desired locations in
+ the matrix.
+ 
+ Setup Computer Board: Since the location of each ship is stored in an array.
+ The program generates random values for each array of the ship, indicating a specific
+ location in the matrix, then the program evaluates if the space is avaiable to place a ship 
+ if it is not, the process is repeated again until a place is found. This process is repeated
+ for each of the 5 ships
+
+ 
+ *Run Game Functions*
+The program enters a loop while the game is running, and will not end until either of the players wins. 
+ 
+Player turn:
+
+the program transforms the coordinate given by the user into actual matrix coordinates.
+Then, the program searches in the computer matrix for that coordinate. If the coordinate 
+contains a ship, or if it is empty water, the program will validate the coordinate and will
+change the status of that coordinate into either ship hit, or shot missed. However, 
+if the coordinate is invalid (it has been executed before) the program will ask the user again
+for a coordinate until a valid value is inputted.
+
+CheckShips: After the player turn, the program scans all the ships to see whether a ship
+has been sunk (all its parts have been hit) if so, the 
+program indicates the corresponding output.
+
+To end the player turn, the program checks if the player has won, in other words, if there are
+no more parts of the computer ship alive in the  computer board. If so, the loops breaks with
+a boolean value indicating the player won
+
+Computer Turn: 
+
+Normal mode: The computer generates random coordinates with one characteristic, the modulus two of
+the x and y coordinates must be equal. This ensures that the coordinates are generated in a
+checkboard pattern, which ensures maximum area efficiency. Again, if the coordinate
+generated has already been used, the program repeats until a valid coorinate is found.
+The program repeats each turn until a ship has been hit. In this case, the program analyzes
+the coordinate and indentifies the player ship that has been hit. Then, the next turns the program
+executes random shots adyacent to the initial hit, until another part of the ship is hit. This
+simulate what a human player would do. Once the adyacent part has been hit, the program proceeds
+to sink the ship found during the following turns at all costs. All this process repeats until
+ all ships have been sunk, or the game ends. 
+
+Easy Mode: The computer generates random coordinates with no restrictions. Once a coordinate has been
+generated, the program checks if the coordinate is valid (if it has not been used before) and executes
+the shot in that position. If it is not valid, the program generates a new
+random cooridnate until a valid coordinate is found.
+
+CheckShips: After the computer turn, the program scans all the ships to see whether a ship has been sunk
+(all its parts have been hit) if so, the program indicates the corresponding output.
+
+To end the computer turn, the program checks if the computer has won, in other words, if there are no more
+parts of the player ship alive in the player board. If so, the loops breaks with a boolean value
+ indicating the computer won.
+
+
+After exiting the loop, the program outputs the corresponding message wether the player won or lost.
+
+
+ -------Output-------
+ 
+ *General Use Functions*
+ 
+ Functions to display the main menu, the intro, the instructions, and the about.
+ Also, display functions for messages such as HIT, MISS, SUNK.
+ 
+ *Setup Functions*
+ 
+  The setup board of the player is displayed as the player inputs the coordinates of the ships to place.
+  Also, the program indicates which ship to place next, as well as the corresponding size.
+ 
+ 
+ *Run Game Functions*
+ 
+ The program output a message when the battle is about to begin.
+ Then it prints the player board with the ships and the enemy board with the ships hidden, 
+ a message is displayed to indicate the user to enter coordinates. 
+ A message, HIT or MISS is displayed wether the player hit a ship, then, 
+ a message ENEMY is displayed indicating the computer turn, then a message MISS or HIT is displayed wther the
+ computer hit a ship.
+ 
+ If either the player or the computer sinks an entire ship, the message SUNK is displayed follwed by the ship 
+ sunk.
+ 
+ The process of displaying is repeated thoughout the game until the game ends
+ 
+ At the end, the Message YOU WON or YOU LOST is displayed wether the player won, also the final score is displayed.
+ 
+ */
